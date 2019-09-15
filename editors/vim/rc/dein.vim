@@ -19,11 +19,14 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 
-let s:base           = fnamemodify(expand('<sfile>'), ':p:h')
-let s:dein_toml      = s:base . '/plugins.toml'
-let s:dein_toml_coc  = s:base . '/coc_lazy.toml'
-let s:dein_toml_lazy = s:base . '/plugins_lazy.toml'
-let s:dein_toml_ft   = s:base . '/ftplugin.toml'
+let s:base       = $VIM_CONFIG_HOME . '/rc/dein/'
+let s:toml_files = [
+      \ { 'name': 'plugins.toml',      'lazy': 0 },
+      \ { 'name': 'defx.toml',         'lazy': 1 },
+      \ { 'name': 'denite.toml',       'lazy': 1 },
+      \ { 'name': 'plugins_lazy.toml', 'lazy': 1 },
+      \ { 'name': 'ftplugin.toml',     'lazy': 0 },
+      \ ]
 
 " Load dein's state from the chache script
 "   REMARK: It overwrites 'runtimepath' completely.
@@ -34,10 +37,9 @@ endif
 " Reaches here if the cache script is old, invalid, or not found.
 " Now initialize dein.vim and start plugin configuration block.
 call dein#begin(s:dein_dir, expand('<sfile>'))
-call dein#load_toml(s:dein_toml,      {'lazy': 0})
-call dein#load_toml(s:dein_toml_coc,  {'lazy': 1})
-call dein#load_toml(s:dein_toml_lazy, {'lazy': 1})
-call dein#load_toml(s:dein_toml_ft)
+for t in s:toml_files
+  call dein#load_toml(s:base . t['name'], {'lazy': t['lazy']})
+endfor
 
 " End dein configuration block
 "   REMARK: 'runtimepath' is changed after dein#end()
