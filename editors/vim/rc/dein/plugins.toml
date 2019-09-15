@@ -1,6 +1,8 @@
 # === Plugins (loaded on startup) ===
 
-# --- Fundamentals {{{
+#==============================================================================
+# Fundamentals
+#==============================================================================
 
 # Dark powered Vim/Neovim plugin manager
 [[plugins]]
@@ -18,10 +20,18 @@ hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
 
-# ---
-# }}}
+# Remote plugin frameworks
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if = '!has("nvim")'
 
-# --- Interfaces {{{
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+on_if = '!has("nvim")'
+
+#==============================================================================
+# Interfaces
+#==============================================================================
 
 # Provides the branch name of the current git repository
 [[plugins]]
@@ -35,17 +45,17 @@ repo = 'itchyny/vim-parenmatch'
 # Visually displaying indent levels with thin vertical lines
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_add = ''' " {{{
+hook_add = '''
   let g:indentLine_enable = 1
   let g:indentLine_char = '¦'
   " Keep my conceal setting
   let g:indentLine_setConceal = 0
-" }}} '''
+'''
 
 # Better whitespace highlighting for Vim
 [[plugins]]
 repo = 'ntpeters/vim-better-whitespace'
-hook_add = ''' " {{{
+hook_add = '''
   let g:better_whitespace_enabled = 1
   let g:strip_whitespace_on_save  = 1
   let g:show_spaces_that_precede_tabs = 1
@@ -55,12 +65,12 @@ hook_add = ''' " {{{
       \ ]
 
   nnoremap <silent><Leader>x  :<C-u>StripWhitespace<CR>
-" }}} '''
+'''
 
 # Seemless navitation between Tmux and Vim
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
-hook_add = ''' " {{{
+hook_add = '''
   let g:tmux_navigator_no_mappings = 1
   nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
   nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
@@ -73,11 +83,11 @@ hook_add = ''' " {{{
     tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
     tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   endif
-" }}} '''
+'''
 
-# --- }}}
-
-# --- Plugin dependencies (non-lazy loading) {{{
+#==============================================================================
+# Plugin dependencies (non-lazy loading)
+#==============================================================================
 
 # Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
 [[plugins]]
@@ -100,15 +110,22 @@ repo = 'tpope/vim-repeat'
 repo = 'honza/vim-snippets'
 
 [[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
 repo = 'ujihisa/neco-look'
 if = 'executable("look")'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 
-# --- }}}
+[[plugins]]
+repo = 'tbodt/deoplete-tabnine'
+build = './install.sh'
 
-# --- Appearance {{{
+#==============================================================================
+# Appearance
+#==============================================================================
 
 # Custom status line
 [[plugins]]
@@ -151,9 +168,9 @@ repo = 'joshdick/onedark.vim'
 [[plugins]]
 repo = 'rakr/vim-one'
 
-# --- }}}
-
-# --- Syntax, filetype (not necessary for lazy loading) {{{
+#==============================================================================
+# Syntax, filetype (not necessary for lazy loading)
+#==============================================================================
 
 # A collection of language packs for Vim
 [[plugins]]
@@ -186,7 +203,3 @@ repo = 'chrisbra/vim-zsh'
 [[plugins]]
 repo = 'Shirk/vim-gas'
 
-# --- }}}
-
-#-----------------------------------------------------------------------------
-# vim: foldmethod=marker

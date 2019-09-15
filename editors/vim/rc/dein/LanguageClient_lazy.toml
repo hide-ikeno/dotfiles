@@ -8,5 +8,18 @@ build = 'bash install.sh'
 on_event = 'VimEnter'
 
 hook_source = '''
+  let g:LanguageClient_completionPreferTextEdit = 1
 
+  " --- Configure language servers
+  let g:LanguageClient_serverCommand = {}
+
+  " Rust
+  if executable('rustup')
+    let g:LanguageClient_serverCommand['rust'] = ['rustup', 'run', 'stable', 'rls']
+  endif
+
+  " VimL
+  if executable('vim-language-server')
+    let g:LanguageClient_serverCommand['vim'] = ['vim-language-server', '--stdio']
+  endif
 '''

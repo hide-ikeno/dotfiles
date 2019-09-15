@@ -1,6 +1,8 @@
 # === Plugins (lazy loading) ===
 
-# --- Auto completion {{{
+#==============================================================================
+# Auto completion
+#==============================================================================
 
 # Tag/include sources for neocomlete/deoplete/ncm2
 [[plugins]]
@@ -19,33 +21,33 @@ on_event = 'InsertCharPre'
 hook_source = '''
   let g:lexima_ctrlh_as_backspace = 1
 '''
-hook_post_source = ''' "{{{
+hook_post_source = '''
   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
   call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
-"}}} '''
+'''
 
 # Auto create TAG files
 [[plugins]]
 repo = 'ludovicchabant/vim-gutentags'
 if = "executable('ctags')"
 on_path = '.*'
-hook_add = ''' "{{{
-  let g:gutentags_cache_dir           = $VIM_CACHE_HOME . '/tags'
+hook_add = '''
+  let g:gutentags_cache_dir = $VIM_CACHE_HOME . '/tags'
   let g:gutentags_generate_on_missing = 0
-  let g:gutentags_generate_on_new     = 0
-  let g:gutentags_generate_on_save    = 1
-  let g:gutentags_exclude_filetype    = []
+  let g:gutentags_generate_on_new = 0
+  let g:gutentags_generate_on_save = 1
+  let g:gutentags_exclude_filetype = []
   let g:gutentags_ctags_exclude_wildignore = 1
   let g:gutentags_ctags_exclude = [
         \ '*/build', '*/wp-admin', '*/wp-content', '*/wp-includes',
         \ '*/application/vendor', '*/vendor/ckeditor', '*/media/vendor'
         \ ]
-"}}} '''
+'''
 
-# --- }}}
-
-# --- Commands {{{
+#==============================================================================
+# Commands
+#==============================================================================
 
 # Utility commands for dein.vim
 [[plugins]]
@@ -81,76 +83,6 @@ hook_add = '''
        \ 'yaml':       'coc',
        \ }
 '''
-
-
-# Defx --- Dark ppowered file explorer implementation
-[[plugins]]
-repo = 'Shougo/defx.nvim'
-on_cmd = ['Defx']
-hook_add = '''
-  nnoremap <silent><Space>d  :<C-u>Defx<CR>
-'''
-hook_source = ''' "{{{
-  call defx#custom#option('_', {
-        \ 'columns': 'icons:git:filename:type',
-        \ 'winwidth': 30,
-        \ 'split': 'vertical',
-        \ 'direction': 'topleft'
-        \ })
-  call defx#custom#column('mark', {
-        \ 'directory_icon': '▸',
-        \ 'readonly_icon': '✗',
-        \ 'selected_icon': '✓',
-        \ })
-"}}} '''
-[plugins.ftplugin]
-defx = ''' "{{{
-  " Define mappings
-  nnoremap <silent><buffer><expr> <CR> defx#async_action('drop')
-  nnoremap <silent><buffer><expr> c    defx#do_action('copy')
-  nnoremap <silent><buffer><expr> !    defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> m    defx#do_action('move')
-  nnoremap <silent><buffer><expr> p    defx#do_action('paste')
-  nnoremap <silent><buffer><expr> l    defx#async_action('open')
-  nnoremap <silent><buffer><expr> E    defx#do_action('open', 'vsplit')
-  nnoremap <silent><buffer><expr> P    defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> K    defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> N    defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> M    defx#do_action('new_multiple_files')
-  nnoremap <silent><buffer><expr> C    defx#do_action('toggle_columns', 'mark:filename:type:size:time')
-  nnoremap <silent><buffer><expr> S    defx#do_action('toggle_sort', 'Time')
-  nnoremap <silent><buffer><expr> d    defx#do_action('remove_trash')
-  nnoremap <silent><buffer><expr> r    defx#do_action('rename')
-  nnoremap <silent><buffer><expr> x    defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> >    defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> .    defx#do_action('repeat')
-  nnoremap <silent><buffer><expr> yy   defx#do_action('yank_path')
-  nnoremap <silent><buffer><expr> h    defx#do_action('cd', ['..'])
-  nnoremap <silent><buffer><expr> ~    defx#do_action('cd')
-  nnoremap <silent><buffer><expr> \    defx#do_action('cd', getcwd())
-  nnoremap <silent><buffer><expr> q    defx#do_action('quit')
-  nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
-  xnoremap <silent><buffer><expr> <CR> defx#do_action('toggle_select_visual')
-  nnoremap <silent><buffer><expr> *    defx#do_action('toggle_select_all')
-  nnoremap <silent><buffer><expr> j    line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k    line('.') == 1 ? 'G' : 'k'
-  nnoremap <silent><buffer><expr> <C-l> defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
-  nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
-        \ ':<C-u>wincmd w<CR>' :
-        \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
-"}}} '''
-
-# --- Defx extensions
-# Git status implementation for Defx
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
-on_source = 'defx.nvim'
-
-# Filetype icons for Defx
-[[plugins]]
-repo = 'kristijanhusak/defx-icons'
-on_source = 'defx.nvim'
 
 # Perform the replacement in |quickfix|
 [[plugins]]
@@ -196,7 +128,7 @@ on_map = {n = '<Plug>Splitjoin'}
 [[plugins]]
 repo = 'liuchengxu/vim-which-key'
 on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
-hook_add = ''' "{{{
+hook_add = '''
   nnoremap <silent> <Space>  :<C-u>WhichKey       '<Space>'<CR>
   vnoremap <silent> <Space>  :<C-u>WhichKeyVisual '<Space>'<CR>
   nnoremap <silent> ;        :<C-u>WhichKey       ';'<CR>
@@ -207,7 +139,7 @@ hook_add = ''' "{{{
   vnoremap <silent> s        :<c-u>WhichKeyvisual 's'<cr>
   nnoremap <silent> m        :<C-u>WhichKey       'm'<CR>
   vnoremap <silent> m        :<C-u>WhichKeyVisual 'm'<CR>
-"}}} '''
+'''
 hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/which_key.vim'
 
 # [[plugins]]
@@ -236,9 +168,9 @@ hook_add = '''
   nnoremap <silent> sx  :<C-u>Bclose<CR>
 '''
 
-# --- }}}
-
-# --- Interfaces {{{
+#==============================================================================
+# Interfaces
+#==============================================================================
 
 # Show document in echo area / popup
 [[plugins]]
@@ -263,7 +195,7 @@ hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/eskk.vim'
 repo = 'tyru/caw.vim'
 depends = ['context_filetype.vim']
 on_map = {nv = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:caw_no_default_keymappings = 1
 
   nmap <Leader>cc  <Plug>(caw:hatpos:toggle)
@@ -276,7 +208,7 @@ hook_add = ''' "{{{
   xmap <Leader>cw  <Plug>(caw:wrap:toggle)
   nmap <Leader>c]  <Plug>(caw:jump:comment-next)
   nmap <Leader>c[  <Plug>(caw:jump:comment-prev)
-"}}} '''
+'''
 
 # Make blockwise visual mode more useful
 [[plugins]]
@@ -291,7 +223,7 @@ hook_add = '''
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
 on_map = {n = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   " Search and jump
   nmap sf <Plug>(easymotion-overwin-f)
   nmap ss <Plug>(easymotion-overwin-f2)
@@ -318,8 +250,8 @@ hook_add = ''' "{{{
   xmap t <Plug>(easymotion-tl)
   omap T <Plug>(easymotion-Tl)
   xmap T <Plug>(easymotion-Tl)
-"}}} '''
-hook_source = ''' "{{{
+'''
+hook_source = '''
   " Disable default mappings
   let g:EasyMotion_do_mapping = 0
   " Do not shade
@@ -342,18 +274,18 @@ hook_source = ''' "{{{
   let g:EasyMotion_space_jump_first = 1
   " Prompt
   let g:EasyMotion_prompt = 'Search for {n} chars> '
-"}}} '''
+'''
 
 # Move to the edge!
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
 on_map = {nv = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   map  gj  <Plug>(edgemotion-j)
   map  gk  <Plug>(edgemotion-k)
   xmap gj  <Plug>(edgemotion-j)
   xmap gk  <Plug>(edgemotion-k)
-"}}} '''
+'''
 
 # Accerlerate up-down moving!
 [[plugins]]
@@ -368,20 +300,20 @@ hook_add = '''
 [[plugins]]
 repo = 'osyo-manga/vim-jplus'
 on_map = {nx = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   nmap J  <Plug>(jplus)
   vmap J  <Plug>(jplus)
 
   " Insert one or more characters when join
   nmap <Leader>J  <Plug>(jplus-input)
   vmap <Leader>J  <Plug>(jplus-input)
-"}}} '''
+'''
 
 # Fast folding
 [[plugins]]
 repo = 'Konfekt/FastFold'
 on_event = 'BufEnter'
-hook_add = ''' "{{{
+hook_add = '''
   " Global variables
   let g:fastfold_savehook = 1
   let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
@@ -391,7 +323,7 @@ hook_add = ''' "{{{
   " Create a fold text object
   xnoremap iz  :<C-u>FastFoldUpdate<CR><ESC>:<C-u>normal! ]zv[z<CR>
   xnoremap az  :<C-u>FastFoldUpdate<CR><ESC>:<C-u>normal! ]zV[z<CR>
-"}}} '''
+'''
 
 # Calendar
 [[plugins]]
@@ -421,15 +353,15 @@ hook_add = '''
   let g:doge_mapping_comment_jump_backward = '<M-p>'
 '''
 
-# --- }}}
-
-# --- Textobj/Operator extensions {{{
+#==============================================================================
+# Textobj/Operator extensions
+#==============================================================================
 
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 #on_map = {nxo = '<Plug>'}
 on_path = '.*'
-hook_add = ''' "{{{
+hook_add = '''
 	let g:sandwich_no_default_key_mappings = 1
 
   silent! nmap <unique><silent> sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
@@ -456,8 +388,8 @@ hook_add = ''' "{{{
   silent! xmap <unique> is <Plug>(textobj-sandwich-query-i)
   silent! omap <unique> as <Plug>(textobj-sandwich-query-a)
   silent! xmap <unique> as <Plug>(textobj-sandwich-query-a)
-"}}} '''
-hook_source = ''' "{{{
+'''
+hook_source = '''
   let g:textobj#sandwich#stimeoutlen = 100
 
   " Custom recipes
@@ -472,7 +404,7 @@ hook_source = ''' "{{{
         \ {'buns' : ['\(', '\)'],  'filetype' : ['vim'], 'nesting' : 1},
         \ {'buns' : ['\%(', '\)'], 'filetype' : ['vim'], 'nesting' : 1},
         \ ]
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'kana/vim-operator-replace'
@@ -487,80 +419,80 @@ repo = 'kana/vim-textobj-entire'
 depends = ['vim-textobj-user']
 on_func = 'textobj#user#'
 on_map = {ox = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:textobj_entire_no_default_key_mappings = 1
   omap ae <Plug>(textobj-entire-a)
   omap ie <Plug>(textobj-entire-i)
   xmap ae <Plug>(textobj-entire-a)
   xmap ie <Plug>(textobj-entire-i)
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = ['vim-textobj-user']
 on_map = {ox = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:textobj_line_no_default_key_mappings = 1
   omap al <Plug>(textobj-line-a)
   omap il <Plug>(textobj-line-i)
   xmap al <Plug>(textobj-line-a)
   xmap il <Plug>(textobj-line-i)
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'thinca/vim-textobj-comment'
 depends = ['vim-textobj-user']
 on_map = {ox = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:textobj_comment_no_default_key_mappings = 1
   omap ac <Plug>(textobj-comment-a)
   omap ic <Plug>(textobj-comment-i)
   xmap ac <Plug>(textobj-comment-a)
   xmap ic <Plug>(textobj-comment-i)
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-fold'
 depends = ['vim-textobj-user']
 on_map = {ox = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:textobj_fold_no_default_key_mappings = 1
   omap az <Plug>(textobj-fold-a)
   omap iz <Plug>(textobj-fold-i)
   xmap az <Plug>(textobj-fold-a)
   xmap iz <Plug>(textobj-fold-i)
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'mattn/vim-textobj-url'
 depends = 'vim-textobj-user'
 on_map = {ox = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:textobj_url_no_default_key_mappings = 1
   omap au <Plug>(textobj-url-a)
   omap iu <Plug>(textobj-url-i)
   xmap au <Plug>(textobj-url-a)
   xmap iu <Plug>(textobj-url-i)
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'machakann/vim-textobj-delimited'
 on_map = {ox = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   let g:textobj_delimited_no_defautl_key_mappings = 1
 
   omap ad <Plug>(textobj-delimited-forward-a)
   omap id <Plug>(textobj-delimited-forward-i)
   xmap ad <Plug>(textobj-delimited-forward-a)
   xmap id <Plug>(textobj-delimited-forward-i)
-"}}} '''
+'''
 
 # --- Expand region
 [[plugins]]
 repo = 'terryma/vim-expand-region'
 depends = ['vim-sandwich', 'vim-textobj-delimited']
 on_map = {x = '<Plug>'}
-hook_add = ''' "{{{
+hook_add = '''
   "ad: textobj-delimeted"
   "ib: sandwich"
   let g:expand_region_text_objects = {
@@ -576,11 +508,11 @@ hook_add = ''' "{{{
 
   xmap v  <Plug>(expand_region_expand)
   xmap V  <Plug>(expand_region_shrink)
-"}}} '''
+'''
 
-# --- }}}
-
-# --- VCS (Git) {{{
+#==============================================================================
+# VCS (Git)
+#==============================================================================
 
 # Git wrapper
 [[plugins]]
@@ -597,7 +529,7 @@ repo = 'iberianpig/tig-explorer.vim'
 depends = ['bclose.vim']
 on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
           'TigGrepResume', 'TigBlame']
-hook_add = ''' "{{{
+hook_add = '''
   let g:tig_explorer_keymap_edit    = '<C-o>'
   let g:tig_explorer_keymap_tabedit = '<C-t>'
   let g:tig_explorer_keymap_split   = '<C-s>'
@@ -610,7 +542,7 @@ hook_add = ''' "{{{
   nnoremap <silent> <Space>t*  :<C-u>:TigGrep<Space><C-R><C-W><CR>
   vnoremap <silent> <Space>t*  y:TigGrep<Space><C-R>"<CR>
   nnoremap <silent> <Space>tr  :TigGrepResume<CR>
-"}}} '''
+'''
 
 # More pleasant editing on commit messages
 [[plugins]]
@@ -620,9 +552,9 @@ hook_source = '''
   let g:committia_min_window_width = 100
 '''
 
-# --- }}}
-
-# --- Filetypes, Syntax {{{
+#==============================================================================
+# Filetypes, Syntax
+#==============================================================================
 
 # LaTeX
 [[plugins]]
@@ -648,11 +580,11 @@ on_ft = 'csv'
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
 on_ft = 'markdown'
-hook_add = ''' "{{{
+hook_add = '''
   let g:vim_markdown_frontmatter = 1
   let g:vim_markdown_math = 1
   let g:vim_markdown_conceal = 0
-"}}} '''
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-gfm-syntax'
@@ -674,8 +606,3 @@ on_cmd = 'Vinarise'
 hook_add = '''
   let g:vinarise_enable_auto_detect = 1
 '''
-
-# --- }}}
-
-#-----------------------------------------------------------------------------
-# vim: foldmethod=marker

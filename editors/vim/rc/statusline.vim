@@ -113,7 +113,7 @@ endfunction
 
 function! LightlineFilename()
   let fname = expand('%:t')
-  return &filetype ==? 'denite' ? denite#get_status_sources() . denite#get_status_path() : '' .
+  return &filetype ==? 'denite' ? denite#get_status('sources') . denite#get_status('path') : '' .
         \ ('' !=? LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' !=? fname ? fname : '[No Name]') .
         \ ('' !=? LightlineModified() ? ' ' . LightlineModified() : '')
