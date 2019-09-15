@@ -1,0 +1,12 @@
+# --- Language server protocol (LSP) client
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+depends = ['deoplete.nvim', 'denite.nvim']
+rev = 'next'
+build = 'bash install.sh'
+on_event = 'VimEnter'
+
+hook_source = '''
+
+'''

@@ -1,0 +1,99 @@
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+
+hook_source = '''
+  " --- Key mappings
+  " <TAB>: completion.
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ deoplete#manual_complete()
+
+  " <S-TAB>: completion back.
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  inoremap <expr><C-g>          deoplete#refresh()
+  inoremap <expr><C-e>          deoplete#cancel_popup()
+  inoremap <silent><expr><C-l>  deoplete#complete_common_string()
+
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+
+  function! s:my_cr_function() abort
+    return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
+  endfunction
+
+
+  " Customize matchers
+  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
+  call deoplete#custom#source('denite', 'matchers', ['matcher_full_fuzzy', 'matcher_length'])
+  call deoplete#custom#source('eskk', 'matchers', [])
+  " call deoplete#custom#source('buffer', 'mark', '')
+  " call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+  " call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+  " call deoplete#custom#source('buffer', 'mark', '*')
+
+  call deoplete#custom#option('ignore_sources', {
+      \ '_': ['around', 'buffer'],
+      \ })
+
+  call deoplete#custom#source('tabnine', 'rank', 300)
+  call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
+  call deoplete#custom#var('tabnine', {
+      \ 'line_limit': 500,
+      \ 'max_num_results': 20,
+      \ })
+
+  call deoplete#custom#source('zsh', 'filetypes', ['zsh', 'sh'])
+
+  " Customize converters
+  call deoplete#custom#source('_', 'converters', [
+      \ 'converter_remove_paren',
+      \ 'converter_remove_overlap',
+      \ 'matcher_length',
+      \ 'converter_truncate_abbr',
+      \ 'converter_truncate_info',
+      \ 'converter_truncate_menu',
+      \ ])
+  call deoplete#custom#source('tabnine', 'converters', [
+      \ 'converter_remove_overlap',
+      \ 'converter_truncate_info',
+      \ ])
+  call deoplete#custom#source('eskk', 'converters', [])
+
+  " Customize options
+  call deoplete#custom#option('keyword_patterns', {
+      \ '_': '[a-zA-Z_]\k*\(?',
+      \ 'tex': '[^\w|\s][a-zA-Z_]\w*',
+      \ })
+
+  call deoplete#custom#option({
+      \ 'auto_refresh_delay': 10,
+      \ 'camel_case': v:true,
+      \ 'skip_multibyte': v:true,
+      \ 'prev_completion_mode': 'length',
+      \ 'auto_preview': v:true,
+      \ })
+
+  " LanguageClient-neovim
+  call deoplete#custom#source('LanguageClient',
+            \ 'min_pattern_length',
+            \ 2)
+'''
+
+# Completion preview window based on neovim's floating window
+[[plugins]]
+repo = 'ncm2/float-preview.nvim'
+on_source = 'deoplete.nvim'
+if = 'has("nvim")'
+hook_source = '''
+  let g:float_preview#docked = 0
+  let g:float_preview#max_width = 60
+  let g:float_preview#max_height = 20
+'''
+
