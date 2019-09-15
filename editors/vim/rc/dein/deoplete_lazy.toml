@@ -80,11 +80,6 @@ hook_source = '''
       \ 'auto_preview': v:true,
       \ })
 
-  " LanguageClient-neovim
-  call deoplete#custom#source('LanguageClient',
-            \ 'min_pattern_length',
-            \ 2)
-
   " Enable deoplete
   call deoplete#enable()
 '''

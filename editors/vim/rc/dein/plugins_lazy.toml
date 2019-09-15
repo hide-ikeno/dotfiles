@@ -4,6 +4,25 @@
 # Auto completion
 #==============================================================================
 
+# Snippet
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+hook_add = '''
+  imap <silent><C-l>   <Plug>(neosnippet_jump_or_expand)
+  smap <silent><C-l>   <Plug>(neosnippet_jump_or_expand)
+  xmap <silent><C-l>   <Plug>(neosnippet_expand_target)
+'''
+hook_source = '''
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_completed_snippet = 1
+  " let g:neosnippet#enable_complete_done = 1
+  let g:neosnippet#expand_word_boundary = 1
+  let g:neosnippet#snippets_directory = $VIM_CONFIG_HOME . '/snippets'
+'''
+
 # Tag/include sources for neocomlete/deoplete/ncm2
 [[plugins]]
 repo = 'Shougo/neoinclude.vim'

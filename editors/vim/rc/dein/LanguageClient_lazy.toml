@@ -22,4 +22,30 @@ hook_source = '''
   if executable('vim-language-server')
     let g:LanguageClient_serverCommand['vim'] = ['vim-language-server', '--stdio']
   endif
+
+  " --- Key mappings
+  function s:lsp_my_mappings() abort
+    nnoremap <silent><buffer> ma    :<C-u>call LanguageClient#workspace_applyEdit()<CR>
+    nnoremap <silent><buffer> mc    :<C-u>call LanguageClient#textDocument_completion()<CR>
+    nnoremap <silent><buffer> md    :<C-u>call LanguageClient#textDocument_definition()<CR>
+    nnoremap <silent><buffer> mD    :<C-u>call LanguageClient#textDocument_declaration()<CR>
+    nnoremap <silent><buffer> mf    :<C-u>call LanguageClient#textDocument_formatting()<CR>
+    vnoremap <silent><buffer> mf    :<C-u>call LanguageClient#textDocument_rangeocList
+    nnoremap <silent><buffer> mh    :<C-u>call LanguageClient#textDocument_hover()<CR>
+    nnoremap <silent><buffer> mi    :<C-u>call LanguageClient#textDocument_implementation()<CR>
+    nnoremap <silent><buffer> mR    :<C-u>call LanguageClient#textDocument_rename()<CR>
+    nnoremap <silent><buffer> mt    :<C-u>call LanguageClient#textDocument_typeDefinition()<CR>
+
+    " List using Denite UI
+    nnoremap <silent><buffer> mm    :<C-u>Denite contextMenu<CR>
+    nnoremap <silent><buffer> ms    :<C-u>Denite documentSymbol<CR>
+    nnoremap <silent><buffer> mS    :<C-u>Denite workspaceSymbol<CR>
+    nnoremap <silent><buffer> mx    :<C-u>Denite references<CR>
+  endfunction
+
+  " LanguageClient-neovim
+  call deoplete#custom#source('LanguageClient',
+            \ 'min_pattern_length',
+            \ 2)
+
 '''

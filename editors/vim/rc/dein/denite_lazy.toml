@@ -18,6 +18,8 @@ hook_add = '''
   nnoremap <silent> <Space>f  :<C-u>Denite file/point file/old -sorters=sorter/rank
         \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'` file file:new<CR>
   nnoremap <silent> <Space>h  :<C-u>Denite help<CR>
+  nnoremap <silent> <Space>l  :<C-u>Denite localtion_list<CR>
+  nnoremap <silent> <Space>q  :<C-u>Denite quickfix<CR>
   nnoremap <silent> <Space>r  :<C-u>Denite -resume -refresh -no-start-filter<CR>
 
   nnoremap <silent><expr> <Space>]  &filetype == 'help' ?  "g\<C-]>" :
@@ -159,3 +161,9 @@ on_source = ['denite.nvim']
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 on_source = ['denite.nvim']
+
+# quickfix, location_list
+[[plugins]]
+repo = 'chemzqm/unite-location'
+on_source = ['denite.nvim']
+
