@@ -42,13 +42,6 @@ hook_source = '''
       \ '_': ['around', 'buffer'],
       \ })
 
-  call deoplete#custom#source('tabnine', 'rank', 300)
-  call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
-  call deoplete#custom#var('tabnine', {
-      \ 'line_limit': 500,
-      \ 'max_num_results': 20,
-      \ })
-
   call deoplete#custom#source('zsh', 'filetypes', ['zsh', 'sh'])
 
   " Customize converters
@@ -59,10 +52,6 @@ hook_source = '''
       \ 'converter_truncate_abbr',
       \ 'converter_truncate_info',
       \ 'converter_truncate_menu',
-      \ ])
-  call deoplete#custom#source('tabnine', 'converters', [
-      \ 'converter_remove_overlap',
-      \ 'converter_truncate_info',
       \ ])
   call deoplete#custom#source('eskk', 'converters', [])
 
@@ -79,6 +68,21 @@ hook_source = '''
       \ 'prev_completion_mode': 'length',
       \ 'auto_preview': v:true,
       \ })
+
+  " Customize deoplete-tabnine
+  if dein#tap('deoplete-tabnine')
+    call deoplete#custom#source('tabnine', 'rank', 300)
+    call deoplete#custom#source('tabnine', 'min_pattern_length', 2)
+    call deoplete#custom#var('tabnine', {
+        \ 'line_limit': 500,
+        \ 'max_num_results': 20,
+        \ })
+
+    call deoplete#custom#source('tabnine', 'converters', [
+        \ 'converter_remove_overlap',
+        \ 'converter_truncate_info',
+        \ ])
+  endif
 
   " Enable deoplete
   call deoplete#enable()

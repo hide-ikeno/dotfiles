@@ -1,0 +1,115 @@
+
+[[plugins]]
+repo = 'prabirshrestha/async.vim'
+on_source = ['vim-lsp']
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+on_event = 'BufEnter'
+
+hook_source = '''
+  " key mappings
+  function! s:my_lsp_config() abort
+    nmap <buffer> md  <Plug>(lsp-definition)
+    nmap <buffer> mD  <Plug>(lsp-declaration)
+    nmap <buffer> mh  <Plug>(lsp-hover)
+    nmap <buffer> mf  <Plug>(lsp-document-format)
+    nmap <buffer> mi  <Plug>(lsp-implementation)
+    nmap <buffer> mr  <Plug>(lsp-references)
+    nmap <buffer> mR  <Plug>(lsp-rename)
+    " nmap <buffer> ms  <Plug>(lsp-document-symbol)
+    " nmap <buffer> mS  <Plug>(lsp-workspace-symbol)
+    nmap <buffer> ms  :<C-u>Denite -buffer-name=lsp lsp_document_symbol<CR>
+    nmap <buffer> mS  :<C-u>Denite -buffer-name=lsp lsp_workspace_symbol<CR>
+    nmap <buffer> mt  <Plug>(lsp-type-definition)
+    nmap <buffer> m?  <Plug>(lsp-document-diagnostics)
+    nmap <buffer> m]  <Plug>(lsp-next-error)
+    nmap <buffer> m[  <Plug>(lsp-previous-error)
+  endfunction
+
+  " Configure language servers
+  augroup lsp_setup
+    autocmd! *
+
+    " C/C++/Obj-C/Obj-C++
+    if executable('ccls')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'ccls',
+            \ 'cmd': { server_info -> ['ccls', '-mode', 'stdio'] },
+            \ 'root_uri': { server_info -> lsp#utils#path_to_uri(
+            \       lsp#utils#find_nearest_parent_file_directory(
+            \             lsp#utils#get_buffer_path(),
+            \             ['.ccls', 'compile_commands.json', '.git/']
+            \       ))},
+            \ 'initialization_options': {
+            \       'cache': { 'directory': $XDG_CACHE_HOME . '/ccls' }
+            \       },
+            \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+            \ })
+      autocmd FileType c,cpp,objc,objcpp,cc call s:my_lsp_config()
+    endif
+
+    " Go
+    if executable('gopls')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'gopls',
+            \ 'cmd': { server_info -> ['gopls', '-mode', 'stdio'] },
+            \ 'whitelist': ['go'],
+            \ })
+      autocmd FileType go call s:m
+    endif
+
+    " Python
+    if executable('pyls')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'pyls',
+            \ 'cmd': { server_info -> [ $PYENV_ROOT . '/versions/neovim3/bin/pyls'] },
+            \ 'whitelist': ['python'],
+            \ 'workspace_config': {
+            \   'pyls': {
+            \     'plugins': {
+            \       'jedi_definition': {
+            \         'follow_imports': v:true,
+            \         'follow_builtin_imports': v:true,
+            \       },
+            \     },
+            \   },
+            \ },
+            \ })
+      autocmd FileType python call s:my_lsp_config()
+    endif
+
+    " Rust
+    if executable('rustup')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'rls',
+            \ 'cmd': { server_info -> ['rustup', 'run', 'stable', 'rls'] },
+            \ 'whitelist': ['rust'],
+            \ 'workspace_config': { 'rust': { 'clippy_preference': 'on' } },
+            \ })
+      autocmd FileType rust call s:my_lsp_config()
+    endif
+
+    " VimL
+    if executable('vim-language-server')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'vim-language-server',
+            \ 'cmd': { server_info -> ['vim-language-server', '--stdio'] },
+            \ 'whitelist': ['vim'],
+            \ })
+      autocmd FileType vim call s:my_lsp_config()
+    endif
+  augroup END
+'''
+
+[[plugins]]
+repo = 'lighttiger2505/denite-vim-lsp'
+depends = ['denite.nvim', 'vim-lsp', 'async.vim']
+on_source = ['vim-lsp']
+
+[[plugins]]
+repo = 'lighttiger2505/deoplete-vim-lsp'
+depends = ['deoplete.nvim', 'vim-lsp', 'async.vim']
+on_source = ['vim-lsp']
+
+
