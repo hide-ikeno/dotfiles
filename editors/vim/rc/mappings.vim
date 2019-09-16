@@ -188,8 +188,9 @@ endfunction
 " }}}
 
 " Leader mappings {{{
-" ;; to :
-nnoremap <silent><Leader>;  :
+
+" ;; to : -> Use denite.nvim
+" nnoremap <silent><Leader>;  :
 
 " Quit
 nnoremap <silent><Leader>q  :quit<CR>
