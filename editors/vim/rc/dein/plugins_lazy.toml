@@ -524,6 +524,23 @@ on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
           'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff', 'Gmove',
           'Grename', 'Gblame', 'Gbrowse']
 
+# Show a git diff in the gutter (sign column)
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+on_event = 'BufEnter'
+hook_add = '''
+  nmap <silent> <Leader>hp  <Plug>(GitGutterPrevHunk)
+  nmap <silent> <Leader>hs  <Plug>(GitGutterStageHunk)
+  nmap <silent> <Leader>hu  <Plug>(GitGutterUndoHunk)
+
+  nmap ]h  <Plug>(GitGutterNextHunk)
+  nmap [h  <Plug>(GitGutterPrevHunk)
+  omap ih  <Plug>(GitGutterTextObjectInnerPending)
+  omap ah  <Plug>(GitGutterTextObjectOuterPending)
+  xmap ih  <Plug>(GitGutterTextObjectInnerVisual)
+  xmap ah  <Plug>(GitGutterTextObjectOuterVisual)
+'''
+
 # Use Tig as a git client on vim
 [[plugins]]
 repo = 'iberianpig/tig-explorer.vim'
