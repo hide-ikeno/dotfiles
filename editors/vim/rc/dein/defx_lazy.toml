@@ -65,12 +65,6 @@ defx = '''
         \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
 '''
 
-# --- Defx extensions
-# Git status implementation for Defx
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
-on_source = ['defx.nvim']
-
 # Filetype icons for Defx
 [[plugins]]
 repo = 'kristijanhusak/defx-icons'

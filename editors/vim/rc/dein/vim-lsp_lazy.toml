@@ -27,10 +27,10 @@ hook_source = '''
     nmap <buffer> mi  <Plug>(lsp-implementation)
     nmap <buffer> mr  <Plug>(lsp-references)
     nmap <buffer> mR  <Plug>(lsp-rename)
-    " nmap <buffer> ms  <Plug>(lsp-document-symbol)
-    " nmap <buffer> mS  <Plug>(lsp-workspace-symbol)
-    nmap <buffer> ms  :<C-u>Denite -buffer-name=lsp lsp_document_symbol<CR>
-    nmap <buffer> mS  :<C-u>Denite -buffer-name=lsp lsp_workspace_symbol<CR>
+    nmap <buffer> ms  <Plug>(lsp-document-symbol)
+    nmap <buffer> mS  <Plug>(lsp-workspace-symbol)
+    " nmap <buffer> ms  :<C-u>Denite -buffer-name=lsp lsp_document_symbol<CR>
+    " nmap <buffer> mS  :<C-u>Denite -buffer-name=lsp lsp_workspace_symbol<CR>
     nmap <buffer> mt  <Plug>(lsp-type-definition)
     nmap <buffer> m?  <Plug>(lsp-document-diagnostics)
     nmap <buffer> m]  <Plug>(lsp-next-error)
@@ -112,10 +112,10 @@ hook_source = '''
   augroup END
 '''
 
-[[plugins]]
-repo = 'lighttiger2505/denite-vim-lsp'
-depends = ['denite.nvim', 'vim-lsp', 'async.vim']
-on_source = ['vim-lsp']
+# [[plugins]]
+# repo = 'lighttiger2505/denite-vim-lsp'
+# depends = ['denite.nvim', 'vim-lsp', 'async.vim']
+# on_source = ['vim-lsp']
 
 [[plugins]]
 repo = 'lighttiger2505/deoplete-vim-lsp'
