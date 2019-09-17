@@ -189,7 +189,51 @@ hook_add = '''
   imap <C-j>  <Plug>(eskk:toggle)
   cmap <C-j>  <Plug>(eskk:toggle)
 '''
-hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/eskk.vim'
+hook_source = '''
+  let g:eskk#directory = expand('$VIM_CACHE_HOME/eskk')
+
+  let g:eskk#dictionary = {
+        \ 'path': expand('$VIM_CACHE_HOME/skk-jisyo'),
+        \ 'sorted': 1,
+        \ 'encoding': 'utf-8',
+        \ }
+
+  if IsMac()
+    let g:eskk#large_dictionary = {
+          \ 'path': '~/Library/Application\ Support/AquaSKK/SKK-JISYO.L',
+          \ 'sorted': 1,
+          \ 'encoding': 'euc-jp',
+          \ }
+  elseif IsWindows()
+    let g:eskk#large_dictionary = {
+          \ 'path': '~/SKK-JISYO.L',
+          \ 'sorted': 1,
+          \ 'encoding': 'euc-jp',
+          \ }
+  else
+    let g:eskk#large_dictionary = {
+          \ 'path': '/usr/local/share/skk/SKK-JISYO.L',
+          \ 'sorted': 1,
+          \ 'encoding': 'euc-jp',
+          \ }
+  endif
+
+  let g:eskk#server = { 'host': 'localhost', 'port': 1178 }
+
+  " --- Henkan, annotation
+  let g:eskk#show_annotation = 1
+
+  let g:eskk#keep_state = 0
+  let g:eskk#debug = 0
+  let g:eskk#show_annotation = 1
+  let g:eskk#egg_like_newline = 1
+  let g:eskk#egg_like_newline_completion = 1
+  let g:eskk#tab_select_completion = 1
+  let g:eskk#start_completion_length = 2
+
+  " --- easy escape with 'jj'
+  autocmd MyAutoCmd User eskk-initialize-post EskkMap -remap jj <ESC>
+'''
 
 # Smart commenter
 [[plugins]]
@@ -569,6 +613,12 @@ on_path = 'COMMIT_EDITMSG'
 hook_source = '''
   let g:committia_min_window_width = 100
 '''
+
+# Reveal the commit messages under the cursor
+[[plugins]]
+repo = 'rhysd/git-messenger.vim'
+on_cmd = ['GitMessenger']
+on_map = {n = '<Plug>(git-messenger'}
 
 #==============================================================================
 # Filetypes, Syntax
