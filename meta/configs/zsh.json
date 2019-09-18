@@ -22,6 +22,7 @@
             "~/.zshenv": "shells/zshenv",
             "~/.config/zsh/.zshenv": "shells/zsh/.zshenv",
             "~/.config/zsh/.zshrc": "shells/zsh/.zshrc",
+            "~/.config/zsh/.p10k.zsh": "shells/zsh/.p10k.zsh",
             "~/.config/zsh/completions": {
                 "path": "shells/zsh/completions/*",
                 "glob": true

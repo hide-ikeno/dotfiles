@@ -81,7 +81,8 @@ if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
         zgen load "$f"
     done
 
-    zgen load "denysdovhan/spaceship-prompt" "spaceship"
+    # zgen load "denysdovhan/spaceship-prompt" "spaceship"
+    zgen load "romkatv/powerlevel10k" "powerlevel10k"
 
     # generate $ZGEN_INIT file
     zgen save
@@ -114,3 +115,6 @@ fi
 
 # ----- End of zshrc -----
 # vim: foldmethod=marker
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
