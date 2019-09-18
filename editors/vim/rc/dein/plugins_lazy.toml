@@ -567,6 +567,7 @@ on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
           'Gedit', 'Gsplit', 'Gvsplit', 'Gpedit', 'Gtabedit', 'Gpedit',
           'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff', 'Gmove',
           'Grename', 'Gblame', 'Gbrowse']
+on_func = 'fugitive#'
 
 # Show a git diff in the gutter (sign column)
 [[plugins]]
