@@ -21,6 +21,7 @@ hook_source  = '''
   " Space mappings {{{
   " -----
   let g:which_key_space_map = {
+        \ "'":  'Deol zsh',
         \ '[':  'Denite tag',
         \ ']':  'Denite jump',
         \ 'b':  'Dentie buffers',
@@ -56,8 +57,7 @@ hook_source  = '''
         \ ']': 'lsp-next-error',
         \ 'A': 'lsp-codeaction',
         \ 'D': 'lsp-declaration',
-        \ 'F': 'fix-current',
-        \ 'R': 'rename',
+        \ 'R': 'lsp-rename',
         \ 'd': 'lsp-definition',
         \ 'f': 'lsp-document-format',
         \ 'h': 'lsp-hover',
