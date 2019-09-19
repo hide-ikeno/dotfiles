@@ -11,9 +11,9 @@ depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_add = '''
-  imap <silent><C-l>   <Plug>(neosnippet_jump_or_expand)
-  smap <silent><C-l>   <Plug>(neosnippet_jump_or_expand)
-  xmap <silent><C-l>   <Plug>(neosnippet_expand_target)
+  imap <silent><C-s>   <Plug>(neosnippet_jump_or_expand)
+  smap <silent><C-s>   <Plug>(neosnippet_jump_or_expand)
+  xmap <silent><C-s>   <Plug>(neosnippet_expand_target)
 '''
 hook_source = '''
   let g:neosnippet#enable_snipmate_compatibility = 1
@@ -178,8 +178,8 @@ hook_add = '''
 repo = 'Shougo/echodoc.vim'
 on_event = 'CompleteDone'
 hook_source = '''
+  let g:echodoc#enable_at_startup = 1
   let g:echodoc#type = 'virtual'
-  call echodoc#enable()
 '''
 # SKK imput method for Japanese
 [[plugins]]

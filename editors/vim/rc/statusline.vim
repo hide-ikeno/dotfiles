@@ -12,7 +12,7 @@ set background=dark
 " let g:nord_cursor_line_number_background = 1
 " colorscheme nord
 
-colorscheme iceberg
+colorscheme gruvbox
 
 function! s:transparent() abort
   highlight Normal                 ctermbg=NONE guibg=NONE
@@ -40,7 +40,7 @@ autocmd MyAutoCmd VimEnter *
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'iceberg',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [
       \     ['mode', 'paste'],

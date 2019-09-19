@@ -2,6 +2,8 @@
 repo = 'Shougo/deoplete.nvim'
 
 hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+
   " --- Key mappings
   " <TAB>: completion.
   inoremap <silent><expr> <TAB>
@@ -83,9 +85,6 @@ hook_source = '''
         \ 'converter_truncate_info',
         \ ])
   endif
-
-  " Enable deoplete
-  call deoplete#enable()
 '''
 
 # Completion sources

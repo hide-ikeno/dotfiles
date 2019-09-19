@@ -106,6 +106,19 @@ hook_source = '''
             \ 'name': 'vim-language-server',
             \ 'cmd': { server_info -> ['vim-language-server', '--stdio'] },
             \ 'whitelist': ['vim'],
+            \ 'workspace_config': {
+            \   'vim-language-server': {
+            \     'indexes': {
+            \       'runtimepath': v:true,
+            \       'gap': 100,
+            \       'count': 3,
+            \       },
+            \     'suggest': {
+            \       'fromVimruntime': v:true,
+            \       'fromRuntimepath': v:true,
+            \       }
+            \     }
+            \   }
             \ })
       autocmd FileType vim call s:my_lsp_config()
     endif
