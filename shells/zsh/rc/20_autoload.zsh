@@ -3,6 +3,7 @@
 ##======================================================================
 
 autoload -Uz compinit
+autoload -Uz bashcompinit
 autoload -Uz colors
 autoload -Uz cdr
 autoload -Uz chpwd_recent_dirs

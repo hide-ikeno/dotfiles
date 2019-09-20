@@ -136,6 +136,8 @@ path=(
     ${HOME}/bin(N-/)
     # $HOME/.local/bin(N-/) # for pip --user
     ${XDG_BIN_HOME}(N-/)
+    # Poetry bin dir
+    ${HOME}/.poetry/bin(N-/)
     # Yarn bin dir (set by `yarn config set prefix $HOME/.yarn`)
     ${HOME}/.yarn/bin
     # for OSX
@@ -293,6 +295,17 @@ path=(
 )
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+##
+## pip --user install location
+##
+export PYTHONUSERBASE="${HOME}/.local"
+
+##
+## pipx
+##
+export PIPX_BIN_DIR="${HOME}/.local/bin"
+export PIPX_HOME="${HOME}/.local/pipx"
 
 ##
 ## Pipenv
