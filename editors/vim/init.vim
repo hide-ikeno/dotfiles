@@ -81,6 +81,7 @@ endfunction
 " Set PATH and MANPATH
 call s:configure_path('$PATH', [
       \ '~/.local/bin',
+      \ '~/.poetry/bin',
       \ '~/.yarn/bin',
       \ '~/.cargo/bin',
       \ '~/.goenv/bin',

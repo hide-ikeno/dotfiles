@@ -59,6 +59,16 @@ hook_source = '''
       autocmd FileType c,cpp,objc,objcpp,cc call s:my_lsp_config()
     endif
 
+    " Fortran
+    if executable('fortls')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'fortls',
+            \ 'cmd': { server_info -> ['fortls'] },
+            \ 'whitelist': ['fortran'],
+            \ })
+      autocmd FileType fortran call s:m
+    endif
+
     " Go
     if executable('gopls')
       autocmd User lsp_setup call lsp#register_server({
@@ -70,7 +80,14 @@ hook_source = '''
     endif
 
     " Python
-    if executable('pyls')
+    if executable('Microsoft.Python.LanguageServer')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'mspyls',
+            \ 'cmd': { server_info -> ['Microsoft.Python.LanguageServer'] },
+            \ 'whitelist': ['python'],
+            \ })
+      autocmd FileType python call s:my_lsp_config()
+    elseif executable('pyls')
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'pyls',
             \ 'cmd': { server_info -> [ $PYENV_ROOT . '/versions/neovim3/bin/pyls'] },
@@ -103,25 +120,36 @@ hook_source = '''
     " VimL
     if executable('vim-language-server')
       autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'vim-language-server',
-            \ 'cmd': { server_info -> ['vim-language-server', '--stdio'] },
-            \ 'whitelist': ['vim'],
-            \ 'workspace_config': {
-            \   'vim-language-server': {
-            \     'indexes': {
-            \       'runtimepath': v:true,
-            \       'gap': 100,
-            \       'count': 3,
-            \       },
-            \     'suggest': {
-            \       'fromVimruntime': v:true,
-            \       'fromRuntimepath': v:true,
-            \       }
-            \     }
-            \   }
-            \ })
+           \ 'name': 'vim-language-server',
+           \ 'cmd': { server_info -> ['vim-language-server', '--stdio'] },
+           \ 'whitelist': ['vim'],
+           \ 'workspace_config': {
+           \   'vim-language-server': {
+           \     'indexes': {
+           \       'runtimepath': v:true,
+           \       'gap': 100,
+           \       'count': 3,
+           \       },
+           \     'suggest': {
+           \       'fromVimruntime': v:true,
+           \       'fromRuntimepath': v:true,
+           \       }
+           \     }
+           \   }
+           \ })
       autocmd FileType vim call s:my_lsp_config()
     endif
+
+    " efm-langserver
+    if executable('efm-langserver')
+      autocmd User lsp_setup call lsp#register_server({
+            \ 'name': 'efm-langserver',
+            \ 'cmd': {server_info->['efm-langserver', '-c='.$XDG_CONFIG_HOME.'/efm-langserver/config.yaml']},
+            \ 'whitelist': ['eruby', 'markdown', 'yaml'],
+            \ })
+      autocmd FileType eruby,markdown,yaml call s:my_lsp_config()
+    endif
+
   augroup END
 '''
 
