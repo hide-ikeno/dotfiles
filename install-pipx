@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+set -e
+[ -n "$PIPX_DEBUG" ] && set -x
+
+# Set variables
+if [ -z "$PIPX_BIN_DIR" ]; then
+    PIPX_BIN_DIR="$HOME/.local/bin"
+fi
+
+if [ -z "$PIPX_HOME" ]; then
+    PIPX_HOME="$HOME/.local/pipx"
+fi
+
+PIPX_CMD="$PIPX_BIN_DIR/pipx"
+
+# Utility functions
+is_installed() {
+    ${PIPX_CMD} list | grep "package $1" > /dev/null 2>&1
+}
+
+has_command() {
+    command -v "$1" > /dev/null 2>&1
+}
+
+# Install pipx if not installed
+if ! [ -x "$PIPX_CMD" ]; then
+    if has_command python3; then
+        python3 -m pip install --user pipx
+    elif has_command python; then
+        python  -m pip install --user pipx
+    else
+        echo "Cannot find python interpreter in exec path (abort)" >&2
+        exit 1
+    fi
+fi
+
+# Install CLI tools
+
+if ! is_installed "pylint"; then
+    ${PIPX_CMD} install pylint
+    ${PIPX_CMD} inject  pylint pylint-venv
+fi
+
+if ! is_installed "flake8"; then
+    ${PIPX_CMD} install flake8
+    ${PIPX_CMD} inject  flake8 flake8-docstrings flake8-isort flake8-mypy
+fi
+
+if ! is_installed "black"; then
+    ${PIPX_CMD} install black
+fi
+
+if ! is_installed "autopep8"; then
+    ${PIPX_CMD} install autopep8
+fi
+
+if ! is_installed "yapf"; then
+    ${PIPX_CMD} install yapf
+fi
+
+if ! is_installed "fortran-language-server"; then
+    ${PIPX_CMD} install fortran-language-server
+fi
+
+if ! is_installed "python-language-server"; then
+    ${PIPX_CMD} install python-language-server
+    ${PIPX_CMD} inject  python-language-server pyls-black pyls-isort pyls-mypy
+fi
+
+if ! is_installed "vim-vint"; then
+    ${PIPX_CMD} install vim-vint
+fi
+
+if ! is_installed "yamllint"; then
+    ${PIPX_CMD} install yamllint
+fi
+
+# Install jupyter
+if ! is_installed "jupyter"; then
+    ${PIPX_CMD} install --include-deps jupyter
+    ${PIPX_CMD} inject  --include-apps jupyter jupyterlab
+    ${PIPX_CMD} inject jupyter jupyterlab-code-formatter black yapf
+    ${PIPX_CMD} inject jupyter ipywidgets
+
+    # install extensions
+    ${PIPX_BIN_DIR}/jupyter-labextension install @lckr/jupyterlab_variableinspector
+    ${PIPX_BIN_DIR}/jupyter-labextension install @jupyterlab/toc
+    ${PIPX_BIN_DIR}/jupyter-serverextension enable --py jupyterlab_code_formatter
+    ${PIPX_BIN_DIR}/jupyter-labextension install @jupyter-widgets/jupyterlab-manager
+    ${PIPX_BIN_DIR}/jupyter-nbextension enable --py --sys-prefix widgetsnbextension
+fi
+
