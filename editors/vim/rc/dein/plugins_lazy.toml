@@ -4,24 +4,24 @@
 # Auto completion
 #==============================================================================
 
-# Snippet
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
-hook_add = '''
-  imap <silent><C-s>   <Plug>(neosnippet_jump_or_expand)
-  smap <silent><C-s>   <Plug>(neosnippet_jump_or_expand)
-  xmap <silent><C-s>   <Plug>(neosnippet_expand_target)
-'''
-hook_source = '''
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#enable_completed_snippet = 1
-  " let g:neosnippet#enable_complete_done = 1
-  let g:neosnippet#expand_word_boundary = 1
-  let g:neosnippet#snippets_directory = $VIM_CONFIG_HOME . '/snippets'
-'''
+# # Snippet
+# [[plugins]]
+# repo = 'Shougo/neosnippet.vim'
+# depends = ['neosnippet-snippets', 'context_filetype.vim']
+# on_event = 'InsertCharPre'
+# on_ft = 'snippet'
+# hook_add = '''
+#   imap <silent><C-s>   <Plug>(neosnippet_jump_or_expand)
+#   smap <silent><C-s>   <Plug>(neosnippet_jump_or_expand)
+#   xmap <silent><C-s>   <Plug>(neosnippet_expand_target)
+# '''
+# hook_source = '''
+#   let g:neosnippet#enable_snipmate_compatibility = 1
+#   let g:neosnippet#enable_completed_snippet = 1
+#   " let g:neosnippet#enable_complete_done = 1
+#   let g:neosnippet#expand_word_boundary = 1
+#   let g:neosnippet#snippets_directory = $VIM_CONFIG_HOME . '/snippets'
+# '''
 
 # Tag/include sources for neocomlete/deoplete/ncm2
 [[plugins]]
@@ -77,7 +77,7 @@ on_cmd = ['Dein']
 # View and search LSP symbols and tags in Vim/NeoVim
 [[plugins]]
 repo = 'liuchengxu/vista.vim'
-depends = ['vim-lsp', 'lightline.vim']
+depends = ['coc.nvim', 'lightline.vim']
 on_cmd = ['Vista', 'Vista!', 'Vista!!']
 hook_add = '''
   " toggle vista view window
@@ -85,21 +85,23 @@ hook_add = '''
 
   let g:vista_default_executive = 'ctags'
   let g:vista_executive_for = {
-       \ 'c':          'vim_lsp',
-       \ 'cpp':        'vim_lsp',
-       \ 'css':        'vim_lsp',
-       \ 'fortran':    'vim_lsp',
-       \ 'go':         'vim_lsp',
-       \ 'html':       'vim_lsp',
-       \ 'java':       'vim_lsp',
-       \ 'javascript': 'vim_lsp',
-       \ 'json':       'vim_lsp',
-       \ 'python':     'vim_lsp',
-       \ 'ruby':       'vim_lsp',
-       \ 'rust':       'vim_lsp',
-       \ 'tex':        'vim_lsp',
-       \ 'vim':        'vim_lsp',
-       \ 'yaml':       'vim_lsp',
+       \ 'c':          'coc',
+       \ 'cpp':        'coc',
+       \ 'css':        'coc',
+       \ 'fortran':    'coc',
+       \ 'go':         'coc',
+       \ 'html':       'coc',
+       \ 'java':       'coc',
+       \ 'javascript': 'coc',
+       \ 'json':       'coc',
+       \ 'objc':       'coc',
+       \ 'objcpp':     'coc',
+       \ 'python':     'coc',
+       \ 'ruby':       'coc',
+       \ 'rust':       'coc',
+       \ 'tex':        'coc',
+       \ 'vim':        'coc',
+       \ 'yaml':       'coc',
        \ }
 '''
 
@@ -130,10 +132,10 @@ on_cmd = ['Codi']
 repo = 'junegunn/vim-easy-align'
 on_cmd = ['EasyAlign', 'LiveEasyAlign']
 on_map = ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']
-hook_add = ''' "{{{
+hook_add = '''
   nmap <silent><Leader>a  <Plug>(EasyAlign)
   vmap <silent><Leader>a  <Plug>(EasyAlign)
-"}}} '''
+'''
 
 # --- Switch between single-line and multiline forms of code
 [[plugins]]
@@ -570,21 +572,21 @@ on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
 on_func = 'fugitive#'
 
 # Show a git diff in the gutter (sign column)
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-on_event = 'BufEnter'
-hook_add = '''
-  nmap <silent> <Leader>hp  <Plug>(GitGutterPrevHunk)
-  nmap <silent> <Leader>hs  <Plug>(GitGutterStageHunk)
-  nmap <silent> <Leader>hu  <Plug>(GitGutterUndoHunk)
-
-  nmap ]h  <Plug>(GitGutterNextHunk)
-  nmap [h  <Plug>(GitGutterPrevHunk)
-  omap ih  <Plug>(GitGutterTextObjectInnerPending)
-  omap ah  <Plug>(GitGutterTextObjectOuterPending)
-  xmap ih  <Plug>(GitGutterTextObjectInnerVisual)
-  xmap ah  <Plug>(GitGutterTextObjectOuterVisual)
-'''
+# [[plugins]]
+# repo = 'airblade/vim-gitgutter'
+# on_event = 'BufEnter'
+# hook_add = '''
+#   nmap <silent> <Leader>hp  <Plug>(GitGutterPrevHunk)
+#   nmap <silent> <Leader>hs  <Plug>(GitGutterStageHunk)
+#   nmap <silent> <Leader>hu  <Plug>(GitGutterUndoHunk)
+#
+#   nmap ]h  <Plug>(GitGutterNextHunk)
+#   nmap [h  <Plug>(GitGutterPrevHunk)
+#   omap ih  <Plug>(GitGutterTextObjectInnerPending)
+#   omap ah  <Plug>(GitGutterTextObjectOuterPending)
+#   xmap ih  <Plug>(GitGutterTextObjectInnerVisual)
+#   xmap ah  <Plug>(GitGutterTextObjectOuterVisual)
+# '''
 
 # Use Tig as a git client on vim
 [[plugins]]

@@ -13,9 +13,13 @@ rev = 'release'
 
 hook_add = '''
   " --- Insert mode key mapping for auto completion
-  " Use <TAB> for trigger completion with characters ahead and navigate.
-  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-        \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
+  " Make <TAB> for trigger completion, completion confirm, snippet expand and
+  " jump like VSCode
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? coc#_select_confirm() :
+        \ coc#expandableOrJumpable() ?
+        \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+        \ <SID>check_back_space() ? "\<TAB>" : coc#refresh()
   " Use <S-TAB> for completion back
   inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
   " Use <CR> for confirm completion.
@@ -34,9 +38,9 @@ hook_add = '''
   xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
   xmap <silent> <TAB>   <Plug>(coc-repl-sendtext)
 
-  " Use <C-l> to expand snippets
-  imap <silent> <C-l>  <Plug>(coc-snippets-expand-jump)
-  xmap <silent> <C-l>  <Plug>(coc-snippets-select)
+  " " Use <C-l> to expand snippets
+  " imap <silent> <C-l>  <Plug>(coc-snippets-expand-jump)
+  " xmap <silent> <C-l>  <Plug>(coc-snippets-select)
 
   " --- Key mappings for LSP features: use 'm' as the prefix key
   nmap <silent> m?  <Plug>(coc-diagnostic-info)

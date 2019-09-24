@@ -189,8 +189,8 @@ endfunction
 
 " Leader mappings {{{
 
-" ;; to : -> Use denite.nvim
-" nnoremap <silent><Leader>;  :
+" ;; to :
+nnoremap <silent><Leader>;  :
 
 " Quit
 nnoremap <silent><Leader>q  :quit<CR>

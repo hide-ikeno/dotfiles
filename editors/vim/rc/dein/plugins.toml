@@ -109,12 +109,8 @@ repo = 'tpope/vim-repeat'
 [[plugins]]
 repo = 'honza/vim-snippets'
 
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'ujihisa/neco-look'
-if = 'executable("look")'
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
