@@ -80,17 +80,10 @@ hook_source = '''
     endif
 
     " Python
-    if executable('Microsoft.Python.LanguageServer')
-      autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'mspyls',
-            \ 'cmd': { server_info -> ['Microsoft.Python.LanguageServer'] },
-            \ 'whitelist': ['python'],
-            \ })
-      autocmd FileType python call s:my_lsp_config()
-    elseif executable('pyls')
+    if executable('pyls')
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'pyls',
-            \ 'cmd': { server_info -> [ $PYENV_ROOT . '/versions/neovim3/bin/pyls'] },
+            \ 'cmd': { server_info -> [ 'pyls'] },
             \ 'whitelist': ['python'],
             \ 'workspace_config': {
             \   'pyls': {
