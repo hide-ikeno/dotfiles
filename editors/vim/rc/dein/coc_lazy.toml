@@ -19,7 +19,7 @@ hook_add = '''
         \ pumvisible() ? coc#_select_confirm() :
         \ coc#expandableOrJumpable() ?
         \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-        \ <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+        \ <SID>CheckBackspace() ? "\<TAB>" : coc#refresh()
   " Use <S-TAB> for completion back
   inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
   " Use <CR> for confirm completion.
@@ -156,8 +156,8 @@ hook_source = '''
         \ 'coc-rls',
         \ 'coc-solargraph',
         \ 'coc-tabnine',
+        \ 'coc-texlab',
         \ 'coc-vimlsp',
-        \ 'coc-vimtex',
         \ 'coc-yaml',
         \ ]
 
@@ -291,8 +291,9 @@ hook_post_source = '''
   " Fortran
   if executable('fortls')
     let s:languageservers['fortran'] = {
-          \   'command': $PYENV_ROOT . '/versions/neovim3/bin/fortls',
-          \   'filetypes': ['fortran']
+          \   'command': $XDG_BIN_HOME . '/fortls',
+          \   'filetypes': ['fortran'],
+          \   'rootPatterns': ['.fortls', '.git/'],
           \ }
   endif
 
@@ -364,6 +365,41 @@ hook_post_source = '''
         \ },
         \ 'venvPath': $PYENV_ROOT . '/versions',
         \ 'jediEnabled': v:false,
+        \ })
+
+  " coc-texlab
+  if IsWindows()
+    set isfname-={,}
+    let s:pdf_viewer_exec = 'SumatraPDF'
+    let s:pdf_viewer_args = ['-reuse-instance']
+  elseif IsMac()
+    let s:pdf_viewer_exec = 'skim'
+    let s:pdf_viewer_args = []
+  else " is linux
+    let s:pdf_viewer_exec = 'zathura'
+    let s:pdf_viewer_args = []
+  endif
+
+  call coc#config('latex', {
+        \ 'build': {
+        \   'executable': 'latexmk',
+        \   'args': [
+        \     '-pdf',
+        \     '-verbose',
+        \     '-file-line-error',
+        \     '-synctex',
+        \     '-interaction=nonstopmode',
+        \     ],
+        \   'onSave': v:false
+        \   },
+        \ 'forwardSearch': {
+        \   'executable': s:pdf_viewer_exec,
+        \   'args':       s:pdf_viewer_args,
+        \   },
+        \ 'lint': {
+        \   'onChange': v:false,
+        \   'onSave':   v:true,
+        \   }
         \ })
 
   " coc-vimlsp
