@@ -564,6 +564,7 @@ hook_add = '''
 # Git wrapper
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+on_source = ['coc.nvim']
 on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
           'Grebase', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog', 'Gllog',
           'Gedit', 'Gsplit', 'Gvsplit', 'Gpedit', 'Gtabedit', 'Gpedit',
