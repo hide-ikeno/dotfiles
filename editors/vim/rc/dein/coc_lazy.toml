@@ -169,9 +169,9 @@ hook_source = '''
   " --- Autocmd
   augroup MyAutoCmd
     autocmd CursorHold * silent! call CocActionAsync('highlight')
-    autocmd InsertEnter *            call CocActionAsync('showSignatureHelp')
-    autocmd User CocJumpPlaceholder  call CocActionAsync('showSignatureHelp')
-    autocmd User CocQuickfixChange   :CocList --normal quickfix
+    autocmd InsertEnter * call CocActionAsync('showSignatureHelp')
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    autocmd User CocQuickfixChange  :CocList --normal quickfix
     autocmd FileType c,cpp,objc,objcpp,go,typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:CocLspSettings()
   augroup END
@@ -349,22 +349,21 @@ hook_post_source = '''
   " coc-python
   call coc#config('python', {
         \ 'formatting': {
-        \   'provider': 'yapf',
-        \   'autopep8Path': $PYENV_ROOT.'/versions/neovim3/bin/autopep8',
-        \   'blackPath': $PYENV_ROOT.'/versions/neovim3/bin/black',
-        \   'yapfPath': $PYENV_ROOT.'/versions/neovim3/bin/yapf',
+        \   'provider':     'yapf',
+        \   'autopep8Path': $XDG_BIN_HOME . '/autopep8',
+        \   'blackPath':    $XDG_BIN_HOME . '/black',
+        \   'yapfPath':     $XDG_BIN_HOME . 'bin/yapf',
         \ },
         \ 'linting': {
-        \   'mypynEnabled': v:true,
-        \   'mypyPath': $PYENV_ROOT.'/versions/neovim3/bin/mypy',
-        \   'pylintPath': $PYENV_ROOT.'/versions/neovim3/bin/pylint',
+        \   'mypyEnabled': v:true,
+        \   'mypyPath':    $XDG_BIN_HOME . '/black',
+        \   'pylintPath':  $XDG_BIN_HOME . '/pylint',
         \ },
         \ 'sortImports': {
-        \   'path': $PYENV_ROOT.'/versions/neovim3/bin/isort',
+        \   'path': $XDG_BIN_HOME . '/isort',
         \ },
-        \ 'venvPath': $PYENV_ROOT.'/versions',
+        \ 'venvPath': $PYENV_ROOT . '/versions',
         \ 'jediEnabled': v:false,
-        \ 'jediPath': $PYENV_ROOT.'/versions/neovim3/bin/jedi',
         \ })
 
   " coc-vimlsp
