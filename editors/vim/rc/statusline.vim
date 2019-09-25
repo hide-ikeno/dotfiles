@@ -3,14 +3,16 @@
 " --- Colorscheme
 set background=dark
 "
-let g:one_allow_italics = 1
-colorscheme one
-call one#highlight('Visual', '', '3e4452', 'none')
+" let g:one_allow_italics = 1
+" colorscheme one
+" call one#highlight('Visual', '', '3e4452', 'none')
 
 " let g:nord_italic = 1
 " let g:nord_underline = 1
 " let g:nord_cursor_line_number_background = 1
 " colorscheme nord
+
+colorscheme iceberg
 
 function! s:transparent() abort
   highlight Normal                 ctermbg=NONE guibg=NONE
@@ -19,7 +21,7 @@ function! s:transparent() abort
   highlight Normal                 ctermbg=NONE guibg=NONE
   highlight NonText                ctermbg=NONE guibg=NONE
   highlight EndOfBuffer            ctermbg=NONE guibg=NONE
-  "highlight Folded                 ctermbg=NONE guibg=NONE
+  highlight Folded                 ctermbg=NONE guibg=NONE
   highlight LineNr                 ctermbg=NONE guibg=NONE
   highlight CursorLineNr           ctermbg=NONE guibg=NONE
   highlight SpecialKey             ctermbg=NONE guibg=NONE
@@ -38,7 +40,7 @@ autocmd MyAutoCmd VimEnter *
 
 " --- Customize status line with lightline
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'iceberg',
       \ 'active': {
       \   'left': [
       \     ['mode', 'paste'],
