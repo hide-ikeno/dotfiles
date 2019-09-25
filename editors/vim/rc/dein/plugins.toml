@@ -115,12 +115,12 @@ repo = 'honza/vim-snippets'
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 
-[[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-build = './install.sh'
-
-[[plugins]]
-repo = 'zchee/deoplete-zsh'
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# build = './install.sh'
+#
+# [[plugins]]
+# repo = 'zchee/deoplete-zsh'
 
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
@@ -144,6 +144,11 @@ hook_add = '''
   let g:webdevicons_enable_denite = 1
 '''
 
+# Challenger Deep
+[[plugins]]
+repo = 'challenger-deep-theme/vim'
+name = 'challenger-deep'
+
 # Dracula
 [[plugins]]
 repo = 'dracula/vim'
@@ -161,6 +166,10 @@ repo = 'cocopon/iceberg.vim'
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
 
+# PaperColor
+[[plugins]]
+repo = 'NLKNguyen/papercolor-theme'
+
 # Oceanic-Next
 [[plugins]]
 repo = 'mhartington/oceanic-next'
@@ -172,6 +181,10 @@ repo = 'joshdick/onedark.vim'
 # one
 [[plugins]]
 repo = 'rakr/vim-one'
+
+# tender
+[[plugins]]
+repo = 'jacoborus/tender.vim'
 
 #==============================================================================
 # Syntax, filetype (not necessary for lazy loading)
