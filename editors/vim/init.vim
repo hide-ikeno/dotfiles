@@ -12,6 +12,14 @@ if empty("$XDG_CACHE_HOME")
   let $XDG_CACHE_HOME = $HOME . '/.cache'
 endif
 
+if empty("$XDG_BIN_HOME")
+  let $XDG_BIN_HOME = $HOME . '/.local/bin'
+endif
+
+if empty("$XDG_LIB_HOME")
+  let $XDG_BIN_HOME = $HOME . '/.local/lib'
+endif
+
 if empty("$XDG_DATA_HOME")
   let $XDG_DATA_HOME = $HOME . '/.local/share'
 endif
