@@ -54,21 +54,21 @@ anyenv() {
     command anyenv "$command" "$@"
 }
 
-# goenv
-goenv() {
-    local command
-    command="$1"
-    if [ "$#" -gt 0 ]; then
-        shift
-    fi
-
-    case "$command" in
-        rehash|shell)
-            eval "$(goenv "sh-$command" "$@")";;
-        *)
-            command goenv "$command" "$@";;
-    esac
-}
+# # goenv
+# goenv() {
+#     local command
+#     command="$1"
+#     if [ "$#" -gt 0 ]; then
+#         shift
+#     fi
+#
+#     case "$command" in
+#         rehash|shell)
+#             eval "$(goenv "sh-$command" "$@")";;
+#         *)
+#             command goenv "$command" "$@";;
+#     esac
+# }
 
 # # ndenv
 # ndenv() {

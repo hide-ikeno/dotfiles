@@ -273,18 +273,18 @@ export VISUAL="${EDITOR}"
 #
 # Add variables if you want to enable other **env.
 export ANYENV_ROOT="${HOME}/.anyenv"
-export GOENV_ROOT="${ANYENV_ROOT}/envs/goenv"
+# export GOENV_ROOT="${ANYENV_ROOT}/envs/goenv"
 export NODENV_ROOT="${ANYENV_ROOT}/envs/nodenv"
 export PYENV_ROOT="${ANYENV_ROOT}/envs/pyenv"
 export RBENV_ROOT="${ANYENV_ROOT}/envs/rbenv"
-export GOENV_SHELL="${SHELL}"
+# export GOENV_SHELL="${SHELL}"
 export NODENV_SHELL="${SHELL}"
 export PYENV_SHELL="${SHELL}"
 export RBENV_SHELL="${SHELL}"
 path=(
     ${ANYENV_ROOT}/bin(N-/)
-    ${GOENV_ROOT}/bin(N-/)
-    ${GOENV_ROOT}/shims(N-/)
+    # ${GOENV_ROOT}/bin(N-/)
+    # ${GOENV_ROOT}/shims(N-/)
     ${NODENV_ROOT}/bin(N-/)
     ${NODENV_ROOT}/shims(N-/)
     ${PYENV_ROOT}/bin(N-/)

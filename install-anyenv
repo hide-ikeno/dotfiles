@@ -58,7 +58,7 @@ if [ ! -d ${ANYENV_DEFINITION_ROOT} ]; then
 fi
 
 # install **envs
-anyenv install goenv
+# anyenv install goenv
 anyenv install nodenv
 anyenv install pyenv
 anyenv install rbenv
