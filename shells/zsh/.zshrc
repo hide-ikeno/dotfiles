@@ -81,8 +81,8 @@ if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
         zgen load "$f"
     done
 
-    zgen load "denysdovhan/spaceship-prompt" "spaceship"
-    # zgen load "romkatv/powerlevel10k" "powerlevel10k"
+    # zgen load "denysdovhan/spaceship-prompt" "spaceship"
+    zgen load "romkatv/powerlevel10k" "powerlevel10k"
 
     # generate $ZGEN_INIT file
     zgen save
