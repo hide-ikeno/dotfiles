@@ -1,0 +1,16 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "link": {
+            "~/.config/starship.toml": "shells/starship.toml"
+        }
+    }
+]

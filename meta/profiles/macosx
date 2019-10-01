@@ -8,7 +8,7 @@ ipython
 latexmk
 uncrustify
 vim
-fish
 zsh
+starship
 alacritty
 tmux

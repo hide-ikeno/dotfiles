@@ -47,12 +47,13 @@ CARGO_INSTALL_TARGET=(
     du-dust
     # replacement for `ls`
     exa
+    lsd
     # replacement for `find`
     fd-find
     # fuzzy finder `rg`
     ripgrep
-    # powerline prompt
-    powerline-rs
+    # starship prompt
+    starship
 )
 
 CARGO_INSTALL_TARGET_NIGHTLY=(
