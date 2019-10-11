@@ -353,7 +353,7 @@ hook_post_source = '''
         \   'provider':     'yapf',
         \   'autopep8Path': $XDG_BIN_HOME . '/autopep8',
         \   'blackPath':    $XDG_BIN_HOME . '/black',
-        \   'yapfPath':     $XDG_BIN_HOME . 'bin/yapf',
+        \   'yapfPath':     $XDG_BIN_HOME . '/yapf',
         \ },
         \ 'linting': {
         \   'mypyEnabled': v:true,
