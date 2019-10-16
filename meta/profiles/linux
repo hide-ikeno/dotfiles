@@ -8,5 +8,4 @@ latexmk
 uncrustify
 vim
 zsh
-starship
 tmux
