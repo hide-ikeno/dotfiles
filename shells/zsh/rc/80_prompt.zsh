@@ -41,12 +41,12 @@
 # SPACESHIP_GIT_PREFIX="\uf1d2 "
 # SPACESHIP_HG_PREFIX="(hg) "
 
-#
-# Starship --- The cross-shell prompt for astronauts
-#
-if (( ${+commands[starship]} )); then
-    eval "$(starship init zsh)"
-fi
+# #
+# # Starship --- The cross-shell prompt for astronauts
+# #
+# if (( ${+commands[starship]} )); then
+#     eval "$(starship init zsh)"
+# fi
 
 # ----- End of zshrc -----
 # vim: foldmethod=marker
