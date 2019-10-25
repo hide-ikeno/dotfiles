@@ -314,6 +314,7 @@ if has('nvim')
   set wildmenu
   set wildmode=full
   set wildoptions=pum,tagfile
+  set pumblend=10
 else
   " Display candidates by list
   set nowildmenu
