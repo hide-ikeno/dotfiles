@@ -9,7 +9,7 @@ repo = 'neoclide/coc.nvim'
 merge = 0
 on_event = 'VimEnter'
 rev = 'release'
-#build = 'yarn install --frozen-lockfile'
+# build = 'yarn install --frozen-lockfile'
 
 hook_add = '''
   " --- Insert mode key mapping for auto completion
@@ -61,53 +61,58 @@ hook_add = '''
   nmap <silent> mF  <Plug>(coc-fix-current)
   nmap <silent> me  <Plug>(coc-refactor)
 
-  nnoremap <silent> mj  :<C-u>CocList location<CR>
-  nnoremap <silent> mq  :<C-u>CocList diagnostics<CR>
-  nnoremap <silent> mo  :<C-u>CocList outline<CR>
-  nnoremap <silent> ms  :<C-u>CocList symbols<CR>
-
   nnoremap <silent> mh  :<C-u>call CocAction('doHover')<CR>
   nnoremap <silent> K   :<C-u>call <SID>ShowDocumentation()<CR>
+
+  autocmd MyAutoCmd FileType python
+        \ nnoremap <silent><buffer> m'  :<C-u>CocCommand python.execInTerminal<CR>
+
+  " --- CocList mappings
+  if dein#tap('coc-denite')
+    nnoremap <silent> mj  :<C-u>Denite coc-jump-locations<CR>
+    nnoremap <silent> mq  :<C-u>Denite coc-diagnostic<CR>
+    nnoremap <silent> mo  :<C-u>Denite coc-symbols<CR>
+    nnoremap <silent> ms  :<C-u>Denite coc-workspace<CR>
+    nnoremap <silent> <Space>cc  :<C-u>Denite coc-commands<CR>
+    nnoremap <silent> <Space>ce  :<C-u>Denite coc-extension<CR>
+    nnoremap <silent> <Space>cj  :<C-u>Denite coc-jump-locations<CR>
+    nnoremap <silent> <Space>cl  :<C-u>Denite coc-link<CR>
+    nnoremap <silent> <Space>cs  :<C-u>Denite coc-service<CR>
+  else
+    nnoremap <silent> mj  :<C-u>CocList location<CR>
+    nnoremap <silent> mq  :<C-u>CocList diagnostics<CR>
+    nnoremap <silent> mo  :<C-u>CocList outline<CR>
+    nnoremap <silent> ms  :<C-u>CocList symbols<CR>
+    nnoremap <silent> <Space><Space> :<C-u>CocList<CR>
+    nnoremap <silent> <Space>;       :<C-u>CocList vimcommands<CR>
+    nnoremap <silent> <Space>:       :<C-u>CocList cmdhistory<CR>
+    nnoremap <silent> <Space>b       :<C-u>CocList buffers<CR>
+    nnoremap <silent> <Space>c       :<C-u>CocList commands<CR>
+    nnoremap <silent> <Space>e       :<C-u>CocList extensions<CR>
+    nnoremap <silent> <Space>f       :<C-u>CocList files<CR>
+    nnoremap <silent> <Space>F       :<C-u>CocList folders<CR>
+    nnoremap <silent> <Space>g       :<C-u>CocList --normal gstatus<CR>
+    nnoremap <silent> <Space>h       :<C-u>CocList helptags<CR>
+    nnoremap <silent> <Space>k       :<C-u>CocList maps<CR>
+    nnoremap <silent> <Space>l       :<C-u>CocList locationlist<CR>
+    nnoremap <silent> <Space>q       :<C-u>CocList quickfix<CR>
+    nnoremap <silent> <Space>r       :<C-u>CocList mru<CR>
+    nnoremap <silent> <Space>s       :<C-u>CocList snippets<CR>
+    nnoremap <silent> <Space>w       :exe 'CocList -A -I --normal --input='.expand('<cword>').' words -w'<CR>
+    nnoremap <silent> <Space>y       :<C-u>CocList --normal yank<CR>
+    nnoremap <silent> <Space>/       :<C-u>Rg<Space>
+    nnoremap <silent> <Space>*       :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+    vnoremap <silent> <Space>*       :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+    nnoremap <silent> <Space>p       :<C-u>CocListResume<CR>
+    nnoremap <silent> <Space>]       :<C-u>CocNext<CR>
+    nnoremap <silent> <Space>[       :<C-u>CocPrev<CR>
+  endif
 
   " --- Git extension
   nmap [g <Plug>(coc-git-prevchunk)
   nmap ]g <Plug>(coc-git-nextchunk)
   nmap gs <Plug>(coc-git-chunkinfo)
   nmap gb <Plug>(coc-git-commit)
-
-  " --- CocList mappings
-  "   options:
-  "    -A, --auto-preview
-  "    -I, --interactive
-  "    -N, --number-select
-
-  nnoremap <silent> <Space><Space> :<C-u>CocList<CR>
-  nnoremap <silent> <Space>;       :<C-u>CocList vimcommands<CR>
-  nnoremap <silent> <Space>:       :<C-u>CocList cmdhistory<CR>
-  nnoremap <silent> <Space>b       :<C-u>CocList buffers<CR>
-  nnoremap <silent> <Space>c       :<C-u>CocList commands<CR>
-  nnoremap <silent> <Space>e       :<C-u>CocList extensions<CR>
-  nnoremap <silent> <Space>f       :<C-u>CocList files<CR>
-  nnoremap <silent> <Space>F       :<C-u>CocList folders<CR>
-  nnoremap <silent> <Space>g       :<C-u>CocList --normal gstatus<CR>
-  nnoremap <silent> <Space>h       :<C-u>CocList helptags<CR>
-  nnoremap <silent> <Space>k       :<C-u>CocList maps<CR>
-  nnoremap <silent> <Space>l       :<C-u>CocList locationlist<CR>
-  nnoremap <silent> <Space>q       :<C-u>CocList quickfix<CR>
-  nnoremap <silent> <Space>r       :<C-u>CocList mru<CR>
-  nnoremap <silent> <Space>s       :<C-u>CocList snippets<CR>
-  nnoremap <silent> <Space>w       :exe 'CocList -A -I --normal --input='.expand('<cword>').' words -w'<CR>
-  nnoremap <silent> <Space>y       :<C-u>CocList --normal yank<CR>
-  nnoremap <silent> <Space>/       :<C-u>Rg<Space>
-  nnoremap <silent> <Space>*       :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
-  vnoremap <silent> <Space>*       :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-
-  nnoremap <silent> <Space>p       :<C-u>CocListResume<CR>
-  nnoremap <silent> <Space>]       :<C-u>CocNext<CR>
-  nnoremap <silent> <Space>[       :<C-u>CocPrev<CR>
-
-  autocmd MyAutoCmd FileType python
-        \ nnoremap <silent><buffer> m'  :<C-u>CocCommand python.execInTerminal<CR>
 
   " Utility funcitons for key mapping
   function! s:CheckBackspace() abort
@@ -142,8 +147,8 @@ hook_add = '''
 hook_source = '''
   " List of extensions
   " TODO: add coc-sh when bash-language-server is available for Node.js 12
-  let g:coc_global_extensions = [
-        \ 'coc-lists', 'coc-snippets', 'coc-yank',
+  let s:coc_extensions = [
+        \ 'coc-snippets',
         \ 'coc-emoji', 'coc-syntax', 'coc-tag', 'coc-word',
         \ 'coc-highlight',
         \ 'coc-css', 'coc-emmet', 'coc-html', 'coc-svg',
@@ -154,12 +159,18 @@ hook_source = '''
         \ 'coc-json',
         \ 'coc-python',
         \ 'coc-rls',
+        \ 'coc-sh',
         \ 'coc-solargraph',
         \ 'coc-tabnine',
         \ 'coc-texlab',
         \ 'coc-vimlsp',
         \ 'coc-yaml',
         \ ]
+  if dein#tap('coc-denite')
+    let g:coc_global_extensions = s:coc_extensions
+  else
+    let g:coc_global_extensions = s:coc_extensions + ['coc-lists', 'coc-yank']
+  endif
 
   function! s:CocLspSettings() abort
     " formatexpr from language server (gq{motion})
@@ -174,6 +185,7 @@ hook_source = '''
     autocmd User CocQuickfixChange  :CocList --normal quickfix
     autocmd FileType c,cpp,objc,objcpp,go,typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:CocLspSettings()
+    autocmd FileType denite,denite_filter  let b:coc_enabled = 0
   augroup END
 '''
 

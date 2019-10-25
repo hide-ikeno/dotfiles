@@ -125,6 +125,14 @@ repo = 'Shougo/neco-syntax'
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
 
+# Denite sources for quickfix, location_list
+[[plugins]]
+repo = 'chemzqm/unite-location'
+
+# Denite soruces for coc.nvim
+[[plugins]]
+repo = 'neoclide/coc-denite'
+
 #==============================================================================
 # Appearance
 #==============================================================================

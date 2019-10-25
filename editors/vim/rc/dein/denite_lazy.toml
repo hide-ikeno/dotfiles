@@ -22,6 +22,9 @@ hook_add = '''
   nnoremap <silent> <Space>q  :<C-u>Denite quickfix<CR>
   nnoremap <silent> <Space>r  :<C-u>Denite -resume -refresh -no-start-filter<CR>
 
+  nnoremap <silent> <Space>/  :<C-u>Denite -buffer-name=search -no-empty grep<CR>
+  nnoremap <silent> <Space>*  :<C-u>DeniteCursorWord -buffer-name=search -no-empty grep<CR>
+
   nnoremap <silent><expr> <Space>]  &filetype == 'help' ?  "g\<C-]>" :
         \ ":\<C-u>DeniteCursorWord -buffer-name=tag -immediately tag:include\<CR>"
   nnoremap <silent><expr> <Space>[  &filetype == 'help' ?
@@ -116,6 +119,7 @@ hook_source = '''
 
 [plugins.ftplugin]
 denite = '''
+  setlocal winblend=30
   setlocal signcolumn=no cursorline
 
   nnoremap <silent><buffer><expr>         <CR>    denite#do_map('do_action')
@@ -136,6 +140,7 @@ denite = '''
 '''
 
 denite_filter = '''
+  setlocal winblend=30
   setlocal signcolumn=yes nocursorline nonumber norelativenumber
 
   nmap <silent><buffer> <C-g> <Plug>(denite_filter_quit)
@@ -160,11 +165,6 @@ on_source = ['denite.nvim']
 # MRU
 [[plugins]]
 repo = 'Shougo/neomru.vim'
-on_source = ['denite.nvim']
-
-# quickfix, location_list
-[[plugins]]
-repo = 'chemzqm/unite-location'
 on_source = ['denite.nvim']
 
 # Dark powered shell interface for Neovim

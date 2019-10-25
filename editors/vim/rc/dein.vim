@@ -24,7 +24,8 @@ let s:toml_files = [
       \ { 'name': 'plugins.toml',        'lazy': 0 },
       \ { 'name': 'plugins_lazy.toml',   'lazy': 1 },
       \ { 'name': 'defx_lazy.toml',      'lazy': 1 },
-      \ { 'name': 'coc_lazy.toml',      'lazy': 1 },
+      \ { 'name': 'denite_lazy.toml',    'lazy': 1 },
+      \ { 'name': 'coc_lazy.toml',       'lazy': 1 },
       \ { 'name': 'which_key_lazy.toml', 'lazy': 1 },
       \ { 'name': 'ftplugin.toml',       'lazy': 0 },
       \ ]

@@ -190,7 +190,7 @@ endfunction
 " Leader mappings {{{
 
 " ;; to :
-nnoremap <silent><Leader>;  :
+" nnoremap <silent><Leader>;  :
 
 " Quit
 nnoremap <silent><Leader>q  :quit<CR>

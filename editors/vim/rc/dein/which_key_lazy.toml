@@ -20,31 +20,55 @@ hook_add = '''
 hook_source = '''
 " Space mappings {{{
 " -----
+" let g:which_key_space_map = {
+"      \ ' ':  ['CocList', 'available lists'],
+"      \ '[':  'previous item in list',
+"      \ ']':  'next item in list',
+"      \ ';':  'vim commands',
+"      \ ':':  'command history',
+"      \ '/':  'grep',
+"      \ '*':  'grep-from-selected',
+"      \ 'F':  'workspace folders',
+"      \ 'b':  'buffers',
+"      \ 'd':  'Defx',
+"      \ 'e':  'coc-extensions',
+"      \ 'f':  'files',
+"      \ 'g':  'git-status',
+"      \ 'h':  'help',
+"      \ 'k':  'key-mappings',
+"      \ 'l':  'locationlist',
+"      \ 'p':  'resume list',
+"      \ 'q':  'quickfix',
+"      \ 'r':  'mru',
+"      \ 's':  'snippets',
+"      \ 'v':  'Vista',
+"      \ 'w':  'words-in-buffer',
+"      \ 'y':  'yank list',
+"      \ }
+
 let g:which_key_space_map = {
-      \ ' ':  ['CocList', 'available lists'],
-      \ '[':  'previous item in list',
-      \ ']':  'next item in list',
-      \ ';':  'vim commands',
-      \ ':':  'command history',
-      \ '/':  'grep',
-      \ '*':  'grep-from-selected',
-      \ 'F':  'workspace folders',
-      \ 'b':  'buffers',
-      \ 'c':  'coc-commands',
-      \ 'd':  'Defx',
-      \ 'e':  'coc-extensions',
-      \ 'f':  'files',
-      \ 'g':  'git-status',
-      \ 'h':  'help',
-      \ 'k':  'key-mappings',
-      \ 'l':  'locationlist',
-      \ 'p':  'resume list',
-      \ 'q':  'quickfix',
-      \ 'r':  'mru',
-      \ 's':  'snippets',
-      \ 'v':  'Vista',
-      \ 'w':  'words-in-buffer',
-      \ 'y':  'yank list',
+     \ '[':  'previous item in list',
+     \ ']':  'next item in list',
+     \ '/':  'grep',
+     \ '*':  'grep-current-word',
+     \ 'b':  'buffers',
+     \ 'd':  'Defx',
+     \ 'f':  'files',
+     \ 'h':  'help',
+     \ 'l':  'locationlist',
+     \ 'q':  'quickfix',
+     \ 'v':  'Vista',
+     \ }
+
+" coc.nvim
+let g:which_key_space_map.c = {
+      \ 'name': '+coc',
+      \ 'c': 'coc-commands',
+      \ 'e': 'coc-extension',
+      \ 'j': 'coc-jump-locations',
+      \ 'l': 'coc-link',
+      \ 's': 'coc-service',
+      \ 'S': 'coc-source',
       \ }
 
 " tig
@@ -101,7 +125,7 @@ let g:which_key_leader_map = {
       \ 'q': 'quit',
       \ 'w': 'save',
       \ 'x': 'strip-whitespace',
-      \ ';': ':{command}',
+      \ ';': 'vim-command',
       \ }
 
 let g:which_key_leader_map.c = {
