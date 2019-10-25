@@ -185,7 +185,9 @@ hook_source = '''
     autocmd User CocQuickfixChange  :CocList --normal quickfix
     autocmd FileType c,cpp,objc,objcpp,go,typescript,json,python,ruby,rust,sh,vim,yaml
           \ call s:CocLspSettings()
-    autocmd FileType denite,denite_filter  let b:coc_enabled = 0
+    autocmd BufEnter \[denite\]-*  let b:coc_enabled = 0
+    autocmd BufEnter denite-filter let b:coc_enabled = 0
+    "autocmd FileType denite,denite_filter  let b:coc_enabled = 0
   augroup END
 '''
 

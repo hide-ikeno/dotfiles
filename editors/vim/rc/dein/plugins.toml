@@ -145,13 +145,6 @@ repo = 'itchyny/lightline.vim'
 [[plugins]]
 repo = 'guns/xterm-color-table.vim'
 
-# Add filetype glyphs (icons) to other plugins
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-hook_add = '''
-  let g:webdevicons_enable_denite = 1
-'''
-
 # Challenger Deep
 [[plugins]]
 repo = 'challenger-deep-theme/vim'

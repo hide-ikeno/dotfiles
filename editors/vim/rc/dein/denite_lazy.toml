@@ -1,6 +1,7 @@
 # Dark powered asynchronous unite all interfaces for Neovim/Vim8
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+depends = ['fruzzy', 'vim-devicons']
 on_cmd = ['Denite', 'DeniteBufferDir', 'DeniteCursorWord', 'DeniteProjectDir']
 on_func = ['denite#']
 
@@ -92,14 +93,18 @@ hook_source = '''
   call denite#custom#source('file/rec', 'matchers', ['matcher/fruzzy'])
   call denite#custom#source('tag', 'matchers', ['matcher/substring'])
   call denite#custom#source('file/old,ghq', 'converters',
-        \ ['converter/relative_word', 'converter/relative_abbr'])
+        \ ['devicons_denite_converter', 'converter/relative_word', 'converter/relative_abbr'])
+  call denite#custom#source('file,file/rec,file_mru,buffer,directory/rec,directory_mru',
+        \ 'converters', ['devicons_denite_converter'])
 
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
   call denite#custom#var('file/rec/git', 'command',
         \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
+
   call denite#custom#option('default', {
         \ 'highlight_filter_background': 'CursorLine',
+        \ 'prompt': '> ',
         \ 'source_names': 'short',
         \ 'split': 'floating',
         \ })
@@ -119,7 +124,7 @@ hook_source = '''
 
 [plugins.ftplugin]
 denite = '''
-  setlocal winblend=30
+  setlocal winblend=20
   setlocal signcolumn=no cursorline
 
   nnoremap <silent><buffer><expr>         <CR>    denite#do_map('do_action')
@@ -140,7 +145,7 @@ denite = '''
 '''
 
 denite_filter = '''
-  setlocal winblend=30
+  setlocal winblend=20
   setlocal signcolumn=yes nocursorline nonumber norelativenumber
 
   nmap <silent><buffer> <C-g> <Plug>(denite_filter_quit)
