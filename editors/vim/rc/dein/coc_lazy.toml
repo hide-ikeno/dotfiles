@@ -73,7 +73,7 @@ hook_add = '''
     nnoremap <silent> mq  :<C-u>Denite coc-diagnostic<CR>
     nnoremap <silent> mo  :<C-u>Denite coc-symbols<CR>
     nnoremap <silent> ms  :<C-u>Denite coc-workspace<CR>
-    nnoremap <silent> <Space>cc  :<C-u>Denite coc-commands<CR>
+    nnoremap <silent> <Space>cc  :<C-u>Denite coc-command<CR>
     nnoremap <silent> <Space>ce  :<C-u>Denite coc-extension<CR>
     nnoremap <silent> <Space>cj  :<C-u>Denite coc-jump-locations<CR>
     nnoremap <silent> <Space>cl  :<C-u>Denite coc-link<CR>
@@ -373,9 +373,6 @@ hook_post_source = '''
         \   'mypyEnabled': v:true,
         \   'mypyPath':    $XDG_BIN_HOME . '/black',
         \   'pylintPath':  $XDG_BIN_HOME . '/pylint',
-        \ },
-        \ 'sortImports': {
-        \   'path': $XDG_BIN_HOME . '/isort',
         \ },
         \ 'venvPath': $PYENV_ROOT . '/versions',
         \ 'jediEnabled': v:false,
