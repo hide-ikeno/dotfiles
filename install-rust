@@ -52,8 +52,6 @@ CARGO_INSTALL_TARGET=(
     fd-find
     # fuzzy finder `rg`
     ripgrep
-    # starship prompt
-    starship
 )
 
 CARGO_INSTALL_TARGET_NIGHTLY=(
