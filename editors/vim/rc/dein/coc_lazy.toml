@@ -364,15 +364,13 @@ hook_post_source = '''
   " coc-python
   call coc#config('python', {
         \ 'formatting': {
-        \   'provider':     'yapf',
-        \   'autopep8Path': $XDG_BIN_HOME . '/autopep8',
-        \   'blackPath':    $XDG_BIN_HOME . '/black',
-        \   'yapfPath':     $XDG_BIN_HOME . '/yapf',
+        \   'provider': 'black',
         \ },
         \ 'linting': {
+        \   'flake8Enabled': v:true,
+        \   'flake8Args': ['--max-line-length=88'],
         \   'mypyEnabled': v:true,
-        \   'mypyPath':    $XDG_BIN_HOME . '/black',
-        \   'pylintPath':  $XDG_BIN_HOME . '/pylint',
+        \   'pylintEnabled': v:false,
         \ },
         \ 'venvPath': $PYENV_ROOT . '/versions',
         \ 'jediEnabled': v:false,
