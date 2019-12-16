@@ -77,32 +77,33 @@ on_cmd = ['Dein']
 # View and search LSP symbols and tags in Vim/NeoVim
 [[plugins]]
 repo = 'liuchengxu/vista.vim'
-depends = ['coc.nvim', 'lightline.vim']
+depends = ['lightline.vim']
 on_cmd = ['Vista', 'Vista!', 'Vista!!']
 hook_add = '''
   " toggle vista view window
   nnoremap <silent> <Space>v  :<C-u>Vista!!<CR>
 
   let g:vista_default_executive = 'ctags'
-  let g:vista_executive_for = {
-       \ 'c':          'coc',
-       \ 'cpp':        'coc',
-       \ 'css':        'coc',
-       \ 'fortran':    'coc',
-       \ 'go':         'coc',
-       \ 'html':       'coc',
-       \ 'java':       'coc',
-       \ 'javascript': 'coc',
-       \ 'json':       'coc',
-       \ 'objc':       'coc',
-       \ 'objcpp':     'coc',
-       \ 'python':     'coc',
-       \ 'ruby':       'coc',
-       \ 'rust':       'coc',
-       \ 'tex':        'coc',
-       \ 'vim':        'coc',
-       \ 'yaml':       'coc',
-       \ }
+  if has('nvim-0.5.0')
+    let g:vista_executive_for = {
+         \ 'c':          'nvim_lsp',
+         \ 'cpp':        'nvim_lsp',
+         \ 'css':        'nvim_lsp',
+         \ 'fortran':    'nvim_lsp',
+         \ 'go':         'nvim_lsp',
+         \ 'html':       'nvim_lsp',
+         \ 'java':       'nvim_lsp',
+         \ 'javascript': 'nvim_lsp',
+         \ 'json':       'nvim_lsp',
+         \ 'objc':       'nvim_lsp',
+         \ 'objcpp':     'nvim_lsp',
+         \ 'python':     'nvim_lsp',
+         \ 'ruby':       'nvim_lsp',
+         \ 'rust':       'nvim_lsp',
+         \ 'tex':        'nvim_lsp',
+         \ 'vim':        'nvim_lsp',
+         \ }
+    endif
 '''
 
 # Perform the replacement in |quickfix|
@@ -579,52 +580,72 @@ hook_add = '''
 #==============================================================================
 
 # Git wrapper
+# [[plugins]]
+# repo = 'tpope/vim-fugitive'
+# on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
+#           'Grebase', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog', 'Gllog',
+#           'Gedit', 'Gsplit', 'Gvsplit', 'Gpedit', 'Gtabedit', 'Gpedit',
+#           'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff', 'Gmove',
+#           'Grename', 'Gblame', 'Gbrowse']
+# on_func = 'fugitive#'
+
 [[plugins]]
-repo = 'tpope/vim-fugitive'
-on_source = ['coc.nvim']
-on_cmd = ['Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge', 'Gpull',
-          'Grebase', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog', 'Gllog',
-          'Gedit', 'Gsplit', 'Gvsplit', 'Gpedit', 'Gtabedit', 'Gpedit',
-          'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff', 'Gmove',
-          'Grename', 'Gblame', 'Gbrowse']
-on_func = 'fugitive#'
+repo = 'lambdalisue/gina.vim'
+on_cmd = ['Gina']
+on_func = ['gina#']
+hook_add = '''
+  nnoremap <silent> <Leader>gs :<C-u>Gina status<CR>
+  nnoremap <silent> <Leader>gA :<C-u>Gina changes HEAD<CR>
+  nnoremap <silent> <Leader>gc :<C-u>Gina commit<CR>
+  nnoremap <silent> <Leader>gC :<C-u>Gina commit --amend<CR>
+  nnoremap <silent> <Leader>gb :<C-u>Gina branch -av<CR>
+  nnoremap <silent> <Leader>gt :<C-u>Gina tag<CR>
+  nnoremap <silent> <Leader>gg :<C-u>Gina grep<CR>
+  nnoremap <silent> <Leader>gq :<C-u>Gina qrep<CR>
+  nnoremap <silent> <Leader>gd :<C-u>Gina changes origin/HEAD...<CR>
+  nnoremap <silent> <Leader>gl :<C-u>Gina log<CR>
+  nnoremap <silent> <Leader>gL :<C-u>Gina log :%<CR>
+  nnoremap <silent> <Leader>gf :<C-u>Gina ls<CR>
+  nnoremap <silent> <Leader>grs :<C-u>Gina show <C-r><C-w><CR>
+  nnoremap <silent> <Leader>grc :<C-u>Gina changes <C-r><C-w><CR>
+'''
+hook_post_source = '''
+  call gina#custom#command#option('commit', '-v|--verbose')
+  call gina#custom#command#option('/\%(status\|commit\)', '-u|--untracked-files')
+  call gina#custom#command#option('status', '-b|--branch')
+  call gina#custom#command#option('status', '-s|--short')
+  call gina#custom#command#option('/\%(commit\|tag\)', '--restore')
+  call gina#custom#command#option('show', '--show-signature')
+
+  call gina#custom#action#alias('branch', 'track',  'checkout:track')
+  call gina#custom#action#alias('branch', 'merge',  'commit:merge')
+  call gina#custom#action#alias('branch', 'rebase', 'commit:rebase')
+  call gina#custom#action#alias('/\%(blame\|log\|reflog\)', 'preview', 'topleft show:commit:preview')
+  call gina#custom#action#alias('/\%(blame\|log\|reflog\)', 'changes', 'topleft changes:of:preview')
+
+  call gina#custom#mapping#nmap('branch', 'g<CR>', '<Plug>(gina-commit-checkout-track)')
+  call gina#custom#mapping#nmap('status', '<C-^>', ':<C-u>Gina commit<CR>', {'noremap': 1, 'silent': 1})
+  call gina#custom#mapping#nmap('commit', '<C-^>', ':<C-u>Gina status<CR>', {'noremap': 1, 'silent': 1})
+  call gina#custom#mapping#nmap('status', '<C-6>', ':<C-u>Gina commit<CR>', {'noremap': 1, 'silent': 1})
+  call gina#custom#mapping#nmap('commit', '<C-6>', ':<C-u>Gina status<CR>', {'noremap': 1, 'silent': 1})
+  call gina#custom#mapping#nmap(
+        \ '/\%(blame\|log\|reflog\)',
+        \ 'p', ':<C-u>call gina#action#call(''preview'')<CR>', {'noremap': 1, 'silent': 1})
+  call gina#custom#mapping#nmap('/\%(blame\|log\|reflog\)',
+        \ 'c', ':<C-u>call gina#action#call(''changes'')<CR>', {'noremap': 1, 'silent': 1})
+
+  call gina#custom#execute('/\%(ls\|log\|reflog\|grep\)', 'setlocal noautoread')
+  call gina#custom#execute('/\%(status\|branch\|ls\|log\|reflog\|grep\)', 'setlocal cursorline')
+'''
 
 # Show a git diff in the gutter (sign column)
-# [[plugins]]
-# repo = 'airblade/vim-gitgutter'
-# on_event = 'BufEnter'
-# hook_add = '''
-#   nmap <silent> <Leader>hp  <Plug>(GitGutterPrevHunk)
-#   nmap <silent> <Leader>hs  <Plug>(GitGutterStageHunk)
-#   nmap <silent> <Leader>hu  <Plug>(GitGutterUndoHunk)
-#
-#   nmap ]h  <Plug>(GitGutterNextHunk)
-#   nmap [h  <Plug>(GitGutterPrevHunk)
-#   omap ih  <Plug>(GitGutterTextObjectInnerPending)
-#   omap ah  <Plug>(GitGutterTextObjectOuterPending)
-#   xmap ih  <Plug>(GitGutterTextObjectInnerVisual)
-#   xmap ah  <Plug>(GitGutterTextObjectOuterVisual)
-# '''
-
-# Use Tig as a git client on vim
 [[plugins]]
-repo = 'iberianpig/tig-explorer.vim'
-depends = ['bclose.vim']
-on_cmd = ['TigOpenCurrentFile', 'TigOpenProjectRootDir', 'TigGrep', 'TigGrep',
-          'TigGrepResume', 'TigBlame']
+repo = 'airblade/vim-gitgutter'
+on_event = 'BufEnter'
 hook_add = '''
-  let g:tig_explorer_keymap_edit    = '<C-o>'
-  let g:tig_explorer_keymap_tabedit = '<C-t>'
-  let g:tig_explorer_keymap_split   = '<C-s>'
-  let g:tig_explorer_keymap_vsplit  = '<C-v>'
-
-  nnoremap <silent> <Space>tb  :TigBlame<CR>
-  nnoremap <silent> <Space>tt  :TigOpenCurrentFile<CR>
-  nnoremap <silent> <Space>tp  :TigOpenProjectRootDir<CR>
-  nnoremap <silent> <Space>t/  :TigGrep<CR>
-  nnoremap <silent> <Space>t*  :<C-u>:TigGrep<Space><C-R><C-W><CR>
-  vnoremap <silent> <Space>t*  y:TigGrep<Space><C-R>"<CR>
-  nnoremap <silent> <Space>tr  :TigGrepResume<CR>
+  nmap ]g  <Plug>(GitGutterNextHunk)
+  nmap [g  <Plug>(GitGutterPrevHunk)
+  nmap gs  <Plug>(GitGutterPreviewHunk)
 '''
 
 # More pleasant editing on commit messages
@@ -640,6 +661,10 @@ hook_source = '''
 repo = 'rhysd/git-messenger.vim'
 on_cmd = ['GitMessenger']
 on_map = {n = '<Plug>(git-messenger'}
+hook_add = '''
+  let g:git_messenger_no_default_mappings = v:true
+  nmap gm  <Plug>(git-messenger)
+'''
 
 #==============================================================================
 # Filetypes, Syntax

@@ -66,7 +66,7 @@ hook_source = '''
             \ 'cmd': { server_info -> ['fortls'] },
             \ 'whitelist': ['fortran'],
             \ })
-      autocmd FileType fortran call s:m
+      autocmd FileType fortran call s:my_lsp_config()
     endif
 
     " Go
@@ -76,25 +76,28 @@ hook_source = '''
             \ 'cmd': { server_info -> ['gopls', '-mode', 'stdio'] },
             \ 'whitelist': ['go'],
             \ })
-      autocmd FileType go call s:m
+      autocmd FileType go call s:my_lsp_config()
     endif
 
     " Python
     if executable('pyls')
+      let s:pyls_config = {
+            \ 'pyls': {
+            \   'plugins': {
+            \     'pycodestyle': {'enabled': v:true},
+            \     'pydocstyle': {'enabled': v:false},
+            \     'pylint': {'enabled': v:false},
+            \     'flake8': {'enabled': v:true},
+            \     'jedi_definition': {
+            \       'follow_imports': v:true,
+            \       'follow_builtin_imports': v:true,
+            \     },
+            \ }}}
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'pyls',
-            \ 'cmd': { server_info -> [ 'pyls'] },
+            \ 'cmd': { server_info -> ['pyls'] },
             \ 'whitelist': ['python'],
-            \ 'workspace_config': {
-            \   'pyls': {
-            \     'plugins': {
-            \       'jedi_definition': {
-            \         'follow_imports': v:true,
-            \         'follow_builtin_imports': v:true,
-            \       },
-            \     },
-            \   },
-            \ },
+            \ 'workspace_config': s:pyls_config
             \ })
       autocmd FileType python call s:my_lsp_config()
     endif
@@ -155,5 +158,17 @@ hook_source = '''
 repo = 'lighttiger2505/deoplete-vim-lsp'
 depends = ['deoplete.nvim', 'vim-lsp', 'async.vim']
 on_source = ['vim-lsp']
+hook_source = '''
+  let s:use_lsp_sources = ['lsp', 'dictionary', 'file']
+  call deoplete#custom#option('sources', {
+        \ 'c': s:use_lsp_sources,
+        \ 'cpp': s:use_lsp_sources,
+        \ 'go': s:use_lsp_sources,
+        \ 'fortran': s:use_lsp_sources,
+        \ 'python': s:use_lsp_sources,
+        \ 'rust': s:use_lsp_sources,
+        \ 'vim': ['vim', 'buffer', 'dictionary', 'file'],
+        \})
+'''
 
 
