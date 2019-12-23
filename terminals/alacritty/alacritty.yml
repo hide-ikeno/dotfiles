@@ -158,34 +158,34 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
 
-# Colors (Iceberg)
+# Colors (Nord)
 colors:
-  # Default colors
-  primary:
-    background: '0x161821'
-    foreground: '0xd2d4de'
+   # Default colors
+   primary:
+     background: '0x2E3440'
+     foreground: '0xD8DEE9'
 
-  # Normal colors
-  normal:
-    black:   '0x161821'
-    red:     '0xe27878'
-    green:   '0xb4be82'
-    yellow:  '0xe2a478'
-    blue:    '0x84a0c6'
-    magenta: '0xa093c7'
-    cyan:    '0x89b8c2'
-    white:   '0xc6c8d1'
+   # Normal colors
+   normal:
+     black:   '0x3B4252'
+     red:     '0xBF616A'
+     green:   '0xA3BE8C'
+     yellow:  '0xEBCB8B'
+     blue:    '0x81A1C1'
+     magenta: '0xB48EAD'
+     cyan:    '0x88C0D0'
+     white:   '0xE5E9F0'
 
-  # Bright colors
-  bright:
-    black:   '0x6b7089'
-    red:     '0xe98989'
-    green:   '0xc0ca8e'
-    yellow:  '0xe9b189'
-    blue:    '0x91acd1'
-    magenta: '0xada0d3'
-    cyan:    '0x95c4ce'
-    white:   '0xd2d4de'
+   # Bright colors
+   bright:
+     black:   '0x4C566A'
+     red:     '0xBF616A'
+     green:   '0xA3BE8C'
+     yellow:  '0xEBCB8B'
+     blue:    '0x81A1C1'
+     magenta: '0xB48EAD'
+     cyan:    '0x8FBCBB'
+     white:   '0xECEFF4'
 
   # Dim colors
   #
@@ -209,7 +209,7 @@ colors:
   # Example:
   #   `- { index: 16, color: '0xff00ff' }`
   #
-  indexed_colors: []
+  # indexed_colors: []
 
 # Visual Bell
 #

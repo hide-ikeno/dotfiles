@@ -25,7 +25,6 @@ let s:toml_files = [
       \ { 'name': 'defx_lazy.toml',     'lazy': 1 },
       \ { 'name': 'denite_lazy.toml',   'lazy': 1 },
       \ { 'name': 'deoplete_lazy.toml', 'lazy': 1 },
-      \ { 'name': 'vim-lsp_lazy.toml',  'lazy': 1 },
       \ { 'name': 'plugins_lazy.toml',  'lazy': 1 },
       \ { 'name': 'ftplugin.toml',      'lazy': 0 },
       \ ]
