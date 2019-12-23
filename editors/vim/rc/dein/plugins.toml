@@ -109,18 +109,18 @@ repo = 'tpope/vim-repeat'
 [[plugins]]
 repo = 'honza/vim-snippets'
 
-# [[plugins]]
-# repo = 'Shougo/neosnippet-snippets'
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 
-# [[plugins]]
-# repo = 'tbodt/deoplete-tabnine'
-# build = './install.sh'
-#
-# [[plugins]]
-# repo = 'zchee/deoplete-zsh'
+[[plugins]]
+repo = 'tbodt/deoplete-tabnine'
+build = './install.sh'
+
+[[plugins]]
+repo = 'zchee/deoplete-zsh'
 
 [[plugins]]
 repo = 'kristijanhusak/defx-git'

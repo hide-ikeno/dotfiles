@@ -105,9 +105,3 @@ hook_source = '''
   let g:float_preview#max_height = 20
 '''
 
-# Sources for NeoVim builtin LSP
-[[plugins]]
-repo = 'Shougo/deoplete-lsp'
-on_event = 'InsertEnter'
-if = 'has("nvim-0.5.0")'
-
