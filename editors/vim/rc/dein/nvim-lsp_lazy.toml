@@ -1,0 +1,75 @@
+[[plugins]]
+repo = 'neovim/nvim-lsp'
+if = 'has("nvim-0.5")'
+on_cmd = ['LspInstall', 'LspInstallInfo']
+on_func = ['nvim_lsp#setup']
+on_ft = ['c', 'cpp', 'dockerfile', 'fortran', 'go', 'lua', 'python',
+         'ruby', 'rust', 'sh', 'tex', 'typescript']
+hook_source = '''
+  function! s:MyLspConfig() abort
+    " Key mappings
+    nnoremap <buffer><silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <buffer><silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+    nnoremap <buffer><silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <buffer><silent> gy    <cmd>lua vim.lsp.buf.type_definition()<CR>
+    nnoremap <buffer><silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+    nnoremap <buffer><silent> gR    <cmd>lua vim.lsp.buf.rename()<CR>
+    nnoremap <buffer><silent> gq    <cmd>lua vim.lsp.buf.formatting()<CR>
+    vnoremap <buffer><silent> gq    <cmd>lua vim.lsp.buf.range_formatting()<CR>
+    nnoremap <buffer><silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    nnoremap <buffer><silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+    " Omni completion source
+    setlocal omnifunc=v:lua.vim.lsp.omnifunc
+  endfunction
+
+  autocmd MyAutoCmd FileType c,cpp,dockerfile,fotran,go,lua,python,ruby,rust,tex,sh
+        \ call <SID>MyLspConfig()
+'''
+[plugins.ftplugin]
+c = '''
+  lua require'nvim_lsp'.ccls.setup{}
+'''
+cpp = '''
+  lua require'nvim_lsp'.ccls.setup{}
+'''
+fortran = '''
+  lua require'nvim_lsp'.fortls.setup{}
+'''
+go = '''
+  lua require'nvim_lsp'.gopls.setup{}
+'''
+python = '''
+lua << EOF
+  local nvim_lsp = require'nvim_lsp'
+  nvim_lsp.pyls.setup{
+    settings = {
+      pyls = {
+        plugins = {
+          flake8 = { enabled = true };
+          pycodestyle = { enabled = true };
+          pydocstyle = { enabled = false };
+          pylint = { enabled = false };
+          yapf = { enabled = false };
+          jedi_definition = {
+            follow_imports = true;
+            follow_builtin_imports = true;
+          }
+        }
+      }
+    }
+  }
+EOF
+'''
+ruby = '''
+  lua require'nvim_lsp'.solargraph.setup{}
+'''
+rust = '''
+  lua require'nvim_lsp'.rls.setup{}
+'''
+sh = '''
+  lua require'nvim_lsp'.bashls.setup{}
+'''
+tex = '''
+  lua require'nvim_lsp'.texlab.setup{}
+'''
+

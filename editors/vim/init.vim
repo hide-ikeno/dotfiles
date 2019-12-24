@@ -106,7 +106,6 @@ call s:configure_path('$PATH', [
       \ '~/.anyenv/envs/nodenv/shims',
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/pyenv/shims',
-      \ '~/.zplug/bin',
       \ '~/bin',
       \ '/Library/Tex/texbin',
       \ '/usr/local/bin',

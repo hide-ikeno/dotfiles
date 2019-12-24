@@ -13,38 +13,13 @@ hook_add = '''
   vnoremap <silent> ,        :<C-u>WhichKeyVisual ','<CR>
   nnoremap <silent> s        :<c-u>WhichKey       's'<cr>
   vnoremap <silent> s        :<c-u>WhichKeyvisual 's'<cr>
-  nnoremap <silent> m        :<C-u>WhichKey       'm'<CR>
-  vnoremap <silent> m        :<C-u>WhichKeyVisual 'm'<CR>
+  " nnoremap <silent> m        :<C-u>WhichKey       'm'<CR>
+  " vnoremap <silent> m        :<C-u>WhichKeyVisual 'm'<CR>
 '''
 
 hook_source = '''
 " Space mappings {{{
 " -----
-" let g:which_key_space_map = {
-"      \ ' ':  ['CocList', 'available lists'],
-"      \ '[':  'previous item in list',
-"      \ ']':  'next item in list',
-"      \ ';':  'vim commands',
-"      \ ':':  'command history',
-"      \ '/':  'grep',
-"      \ '*':  'grep-from-selected',
-"      \ 'F':  'workspace folders',
-"      \ 'b':  'buffers',
-"      \ 'd':  'Defx',
-"      \ 'e':  'coc-extensions',
-"      \ 'f':  'files',
-"      \ 'g':  'git-status',
-"      \ 'h':  'help',
-"      \ 'k':  'key-mappings',
-"      \ 'l':  'locationlist',
-"      \ 'p':  'resume list',
-"      \ 'q':  'quickfix',
-"      \ 'r':  'mru',
-"      \ 's':  'snippets',
-"      \ 'v':  'Vista',
-"      \ 'w':  'words-in-buffer',
-"      \ 'y':  'yank list',
-"      \ }
 
 let g:which_key_space_map = {
      \ '[':  'previous item in list',
@@ -60,59 +35,56 @@ let g:which_key_space_map = {
      \ 'v':  'Vista',
      \ }
 
-" coc.nvim
-let g:which_key_space_map.c = {
-      \ 'name': '+coc',
-      \ 'c': 'coc-commands',
-      \ 'e': 'coc-extension',
-      \ 'j': 'coc-jump-locations',
-      \ 'l': 'coc-link',
-      \ 's': 'coc-service',
-      \ 'S': 'coc-source',
-      \ }
-
-" tig
-let g:which_key_space_map.t = {
-     \ 'name': '+tig',
-     \ 'b': 'tig blame',
-     \ 't': 'tig (current file)',
-     \ 'p': 'tig (project)',
-     \ 'r': 'tig grep resume',
-     \ '/': 'tig grep',
-     \ '*': 'tig grep <cword>',
+" gina
+let g:which_key_space_map.g = {
+     \ 'name': '+git',
+     \ 's': 'Gina status',
+     \ 'A': 'Gina changes HEAD',
+     \ 'c': 'Gina commit',
+     \ 'C': 'Gina commit --amend',
+     \ 'b': 'Gina branch',
+     \ 'f': 'Gina ls',
+     \ 't': 'Gina tag',
+     \ 'g': 'Gina grep',
+     \ 'q': 'Gina qrep',
+     \ 'd': 'Gina changes origin/HEAD...',
+     \ 'l': 'Gina log',
+     \ 'L': 'Gina log :%',
+     \ 'rc': 'Gina changes <C-r><C-w>',
+     \ 'rs': 'Gina show <C-r><C-w>',
      \ }
 
 call which_key#register('<Space>', 'g:which_key_space_map')
 " }}}
 
-" 'm' mappings {{{
-" -----
-" Key mapping for LSP features
-let g:which_key_m_map = {
-      \ '?': 'diagnostic-info',
-      \ '[': 'diagnostic-prev',
-      \ ']': 'diagnostic-next',
-      \ 'A': 'codeaction',
-      \ 'D': 'declaration',
-      \ 'F': 'fix-current',
-      \ 'R': 'rename',
-      \ 'a': 'codeaction-selected',
-      \ 'd': 'definition',
-      \ 'e': 'refactor',
-      \ 'f': 'format',
-      \ 'h': 'document-hover',
-      \ 'i': 'implementation',
-      \ 'j': 'list-location',
-      \ 'L': 'codelens',
-      \ 'o': 'document-symbols',
-      \ 'q': 'list-diagnostics',
-      \ 'r': 'reference',
-      \ 's': 'workspace-symbols',
-      \ 't': 'type-definition',
-      \ }
-
-call which_key#register('m', 'g:which_key_m_map')
-" }}}
+" " 'm' mappings {{{
+" " -----
+" " Key mapping for LSP features
+" let g:which_key_m_map = {
+"      \ '?': 'diagnostic-info',
+"      \ '[': 'diagnostic-prev',
+"      \ ']': 'diagnostic-next',
+"      \ 'A': 'codeaction',
+"      \ 'D': 'declaration',
+"      \ 'F': 'fix-current',
+"      \ 'R': 'rename',
+"      \ 'a': 'codeaction-selected',
+"      \ 'd': 'definition',
+"      \ 'e': 'refactor',
+"      \ 'f': 'format',
+"      \ 'h': 'document-hover',
+"      \ 'i': 'implementation',
+"      \ 'j': 'list-location',
+"      \ 'L': 'codelens',
+"      \ 'o': 'document-symbols',
+"      \ 'q': 'list-diagnostics',
+"      \ 'r': 'reference',
+"      \ 's': 'workspace-symbols',
+"      \ 't': 'type-definition',
+"      \ }
+"
+" call which_key#register('m', 'g:which_key_m_map')
+" " }}}
 
 " leader mappings {{{
 " -----
@@ -123,6 +95,7 @@ let g:which_key_leader_map = {
       \ 'a': 'easy-align',
       \ 'd': 'doge-generate',
       \ 'q': 'quit',
+      \ 'r': 'register/yank',
       \ 'w': 'save',
       \ 'x': 'strip-whitespace',
       \ ';': 'vim-command',

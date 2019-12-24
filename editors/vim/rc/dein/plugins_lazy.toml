@@ -84,26 +84,23 @@ hook_add = '''
   nnoremap <silent> <Space>v  :<C-u>Vista!!<CR>
 
   let g:vista_default_executive = 'ctags'
-  if has('nvim-0.5.0')
+  if has('nvim-0.5')
     let g:vista_executive_for = {
-         \ 'c':          'nvim_lsp',
-         \ 'cpp':        'nvim_lsp',
-         \ 'css':        'nvim_lsp',
-         \ 'fortran':    'nvim_lsp',
-         \ 'go':         'nvim_lsp',
-         \ 'html':       'nvim_lsp',
-         \ 'java':       'nvim_lsp',
-         \ 'javascript': 'nvim_lsp',
-         \ 'json':       'nvim_lsp',
-         \ 'objc':       'nvim_lsp',
-         \ 'objcpp':     'nvim_lsp',
-         \ 'python':     'nvim_lsp',
-         \ 'ruby':       'nvim_lsp',
-         \ 'rust':       'nvim_lsp',
-         \ 'tex':        'nvim_lsp',
-         \ 'vim':        'nvim_lsp',
-         \ }
-    endif
+          \ 'c':          'nvim_lsp',
+          \ 'cpp':        'nvim_lsp',
+          \ 'css':        'nvim_lsp',
+          \ 'dockerfile': 'nvim_lsp',
+          \ 'fortran':    'nvim_lsp',
+          \ 'go':         'nvim_lsp',
+          \ 'javascript': 'nvim_lsp',
+          \ 'python':     'nvim_lsp',
+          \ 'ruby':       'nvim_lsp',
+          \ 'rust':       'nvim_lsp',
+          \ 'tex':        'nvim_lsp',
+          \ 'typescript': 'nvim_lsp',
+          \ 'vim':        'nvim_lsp',
+          \ }
+  endif
 '''
 
 # Perform the replacement in |quickfix|
@@ -176,14 +173,15 @@ hook_add = '''
 # Interfaces
 #==============================================================================
 
-# Show document in echo area / popup
-[[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_event = 'CompleteDone'
-hook_source = '''
-  let g:echodoc#enable_at_startup = 1
-  let g:echodoc#type = 'virtual'
-'''
+# # Show document in echo area / popup
+# [[plugins]]
+# repo = 'Shougo/echodoc.vim'
+# on_event = 'CompleteDone'
+# hook_source = '''
+#   let g:echodoc#enable_at_startup = 1
+#   let g:echodoc#type = 'virtual'
+# '''
+
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'
@@ -594,20 +592,20 @@ repo = 'lambdalisue/gina.vim'
 on_cmd = ['Gina']
 on_func = ['gina#']
 hook_add = '''
-  nnoremap <silent> <Leader>gs :<C-u>Gina status<CR>
-  nnoremap <silent> <Leader>gA :<C-u>Gina changes HEAD<CR>
-  nnoremap <silent> <Leader>gc :<C-u>Gina commit<CR>
-  nnoremap <silent> <Leader>gC :<C-u>Gina commit --amend<CR>
-  nnoremap <silent> <Leader>gb :<C-u>Gina branch -av<CR>
-  nnoremap <silent> <Leader>gt :<C-u>Gina tag<CR>
-  nnoremap <silent> <Leader>gg :<C-u>Gina grep<CR>
-  nnoremap <silent> <Leader>gq :<C-u>Gina qrep<CR>
-  nnoremap <silent> <Leader>gd :<C-u>Gina changes origin/HEAD...<CR>
-  nnoremap <silent> <Leader>gl :<C-u>Gina log<CR>
-  nnoremap <silent> <Leader>gL :<C-u>Gina log :%<CR>
-  nnoremap <silent> <Leader>gf :<C-u>Gina ls<CR>
-  nnoremap <silent> <Leader>grs :<C-u>Gina show <C-r><C-w><CR>
-  nnoremap <silent> <Leader>grc :<C-u>Gina changes <C-r><C-w><CR>
+  nnoremap <silent> <Space>gs  :<C-u>Gina status<CR>
+  nnoremap <silent> <Space>gA  :<C-u>Gina changes HEAD<CR>
+  nnoremap <silent> <Space>gc  :<C-u>Gina commit<CR>
+  nnoremap <silent> <Space>gC  :<C-u>Gina commit --amend<CR>
+  nnoremap <silent> <Space>gb  :<C-u>Gina branch -av<CR>
+  nnoremap <silent> <Space>gt  :<C-u>Gina tag<CR>
+  nnoremap <silent> <Space>gg  :<C-u>Gina grep<CR>
+  nnoremap <silent> <Space>gq  :<C-u>Gina qrep<CR>
+  nnoremap <silent> <Space>gd  :<C-u>Gina changes origin/HEAD...<CR>
+  nnoremap <silent> <Space>gl  :<C-u>Gina log<CR>
+  nnoremap <silent> <Space>gL  :<C-u>Gina log :%<CR>
+  nnoremap <silent> <Space>gf  :<C-u>Gina ls<CR>
+  nnoremap <silent> <Space>grs :<C-u>Gina show <C-r><C-w><CR>
+  nnoremap <silent> <Space>grc :<C-u>Gina changes <C-r><C-w><CR>
 '''
 hook_post_source = '''
   call gina#custom#command#option('commit', '-v|--verbose')
