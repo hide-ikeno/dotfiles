@@ -6,6 +6,7 @@ git
 tig
 ipython
 latexmk
+python
 uncrustify
 vim
 zsh

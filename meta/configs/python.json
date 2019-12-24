@@ -1,0 +1,17 @@
+[
+    {
+        "defaults": {
+            "link": {
+                "create": true,
+                "relink": true,
+                "force": true
+            }
+        }
+    },
+    {
+        "link": {
+            "~/.config/flake8": "development/flake8",
+            "~/.config/pycodestyle": "development/pycodestyle"
+        }
+    }
+]
