@@ -110,9 +110,6 @@ repo = 'tpope/vim-repeat'
 repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
-repo = 'Shougo/neco-syntax'
-
-[[plugins]]
 repo = 'Shougo/deoplete-lsp'
 if = 'has("nvim-0.5")'
 

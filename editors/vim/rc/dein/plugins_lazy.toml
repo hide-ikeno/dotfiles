@@ -77,7 +77,6 @@ on_cmd = ['Dein']
 # View and search LSP symbols and tags in Vim/NeoVim
 [[plugins]]
 repo = 'liuchengxu/vista.vim'
-depends = ['lightline.vim']
 on_cmd = ['Vista', 'Vista!', 'Vista!!']
 hook_add = '''
   " toggle vista view window
@@ -143,24 +142,7 @@ hook_add = '''
 repo = 'AndrewRadev/splitjoin.vim'
 on_map = {n = '<Plug>Splitjoin'}
 
-# [[plugins]]
-# repo = 'paroxayte/vkmap.vim'
-# depends = ['vwm.vim']
-# on_event = 'VimEnter'
-# hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vkmap.vim'
-#
-# [plugins.ftplugin]
-# vkmap = '''
-#   setlocal nolist
-#   setlocal listchars=
-#   setlocal colorcolumn=""
-# '''
-#
-# [[plugins]]
-# repo = 'paroxayte/vwm.vim'
-# on_source = 'vkmap.vim'
-
-# Delete buffer without closing window (tig-explorer dependency)
+# Delete buffer without closing window
 [[plugins]]
 repo = 'rbgrouleff/bclose.vim'
 on_cmd = ['Bclose']
@@ -185,7 +167,7 @@ hook_add = '''
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'
-on_map = {ic = '<Plug>'}
+on_map = {ic = '<Plug>(eskk:toggle)'}
 hook_add = '''
   imap <C-j>  <Plug>(eskk:toggle)
   cmap <C-j>  <Plug>(eskk:toggle)
@@ -374,7 +356,7 @@ hook_add = '''
 # Calendar
 [[plugins]]
 repo = 'itchyny/calendar.vim'
-on_cmd = 'Calendar'
+on_cmd = ['Calendar']
 hook_source = '''
   let g:calendar_google_calendar = 1
   let g:calendar_google_task = 1
@@ -414,6 +396,8 @@ hook_add = '''
   let g:webdevicons_enable_airline_tabline = 0
   let g:webdevicons_enable_airline_statusline = 0
   let g:webdevicons_enable_startify = 0
+  "   U+E287
+  let g:WebDevIconsUnicodeByteOrderMarkerDefaultSymbol = "\ue287"
 '''
 
 #==============================================================================
@@ -471,6 +455,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'kana/vim-operator-replace'
+on_map = {nx = '<Plug>'}
 depends = ['vim-operator-user']
 hook_add = '''
   nmap R <Plug>(operator-replace)
@@ -514,17 +499,17 @@ hook_add = '''
   xmap ic <Plug>(textobj-comment-i)
 '''
 
-[[plugins]]
-repo = 'kana/vim-textobj-fold'
-depends = ['vim-textobj-user']
-on_map = {ox = '<Plug>'}
-hook_add = '''
-  let g:textobj_fold_no_default_key_mappings = 1
-  omap az <Plug>(textobj-fold-a)
-  omap iz <Plug>(textobj-fold-i)
-  xmap az <Plug>(textobj-fold-a)
-  xmap iz <Plug>(textobj-fold-i)
-'''
+# [[plugins]]
+# repo = 'kana/vim-textobj-fold'
+# depends = ['vim-textobj-user']
+# on_map = {ox = '<Plug>'}
+# hook_add = '''
+#   let g:textobj_fold_no_default_key_mappings = 1
+#   omap az <Plug>(textobj-fold-a)
+#   omap iz <Plug>(textobj-fold-i)
+#   xmap az <Plug>(textobj-fold-a)
+#   xmap iz <Plug>(textobj-fold-i)
+# '''
 
 [[plugins]]
 repo = 'mattn/vim-textobj-url'
@@ -669,10 +654,10 @@ hook_add = '''
 #==============================================================================
 
 # LaTeX
-[[plugins]]
-repo = 'lervag/vimtex'
-on_ft = 'tex'
-hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vimtex.vim'
+# [[plugins]]
+# repo = 'lervag/vimtex'
+# on_ft = 'tex'
+# hook_source = 'source $VIM_CONFIG_HOME/rc/plugins/vimtex.vim'
 
 # Python
 [[plugins]]
