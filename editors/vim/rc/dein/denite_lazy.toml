@@ -158,7 +158,10 @@ denite_filter = '''
 [[plugins]]
 repo = 'raghur/fruzzy'
 on_source = ['denite.nvim']
-hook_source = 'let g:fruzzy#sortonempty = 0'
+hook_source = '''
+  let g:fruzzy#usenative   = 1
+  let g:fruzzy#sortonempty = 0
+'''
 hook_post_update = 'call fruzzy#install()'
 
 # register/yank for denite
