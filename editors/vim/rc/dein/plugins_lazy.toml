@@ -64,6 +64,28 @@ hook_add = '''
         \ ]
 '''
 
+# VSCode(LSP)'s snippet feature in vim.
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+on_event = 'InsertCharPre'
+hook_add = '''
+  if dein#tap('neosnippet.vim')
+    imap <expr> <C-s>  vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' :
+          \ neosnippet#expandable_or_jumpable() ? : '<Plug>(neosnippet_jump_or_expand)' ? '<C-n>'
+    smap <expr> <C-s>  vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' :
+          \ neosnippet#expandable_or_jumpable() ? : '<Plug>(neosnippet_jump_or_expand)' ? '<C-n>'
+  else
+    imap <expr> <C-s>  vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-n>'
+    smap <expr> <C-s>  vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-n>'
+  endif
+'''
+
+
+# vim-snip integrations to LSP clients and deoplete/asyncomplete
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip-integ'
+on_source = ['vim-vsnip']
+
 #==============================================================================
 # Commands
 #==============================================================================
@@ -91,10 +113,12 @@ hook_add = '''
           \ 'dockerfile': 'nvim_lsp',
           \ 'fortran':    'nvim_lsp',
           \ 'go':         'nvim_lsp',
+          \ 'lua':        'nvim_lsp',
           \ 'javascript': 'nvim_lsp',
           \ 'python':     'nvim_lsp',
           \ 'ruby':       'nvim_lsp',
           \ 'rust':       'nvim_lsp',
+          \ 'sh':         'nvim_lsp',
           \ 'tex':        'nvim_lsp',
           \ 'typescript': 'nvim_lsp',
           \ 'vim':        'nvim_lsp',
@@ -118,11 +142,6 @@ on_map = {n = '<Plug>'}
 hook_add = '''
   nmap -  <Plug>(choosewin)
 '''
-
-# The interactive scratchpad for hackers
-[[plugins]]
-repo = 'metakirby5/codi.vim'
-on_cmd = ['Codi']
 
 # --- Smart Align
 [[plugins]]
@@ -167,7 +186,7 @@ hook_add = '''
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'
-on_map = {ic = '<Plug>(eskk:toggle)'}
+on_map = {ic = '<Plug>(eskk'}
 hook_add = '''
   imap <C-j>  <Plug>(eskk:toggle)
   cmap <C-j>  <Plug>(eskk:toggle)
@@ -250,7 +269,7 @@ hook_add = '''
 # Vim motions on speed!
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
-on_map = {n = '<Plug>'}
+on_map = {n = '<Plug>(easymotion'}
 hook_add = '''
   " Search and jump
   nmap sf <Plug>(easymotion-overwin-f)
@@ -307,7 +326,7 @@ hook_source = '''
 # Move to the edge!
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
-on_map = {nv = '<Plug>'}
+on_map = {nv = '<Plug>(edgemotion'}
 hook_add = '''
   map  gj  <Plug>(edgemotion-j)
   map  gk  <Plug>(edgemotion-k)
@@ -384,7 +403,6 @@ hook_add = '''
 # Add filetype glyphs (icons) to other plugins
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
-#on_func = 'WebDevIcons'
 on_func = ['WebDevIconsGetFileTypeSymbol', 'WebDevIconsGetFileFormatSymbol']
 on_source = ['denite.nvim']
 hook_add = '''

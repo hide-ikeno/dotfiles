@@ -96,7 +96,24 @@ endif
 let g:my_go_lsp_loaded = 1
 
 call MyLspConfig()
-lua require'nvim_lsp'.gopls.setup{}
+lua << EOF
+  local nvim_lsp = require'nvim_lsp'
+  nvim_lsp.gopls.setup{
+    capabilities = {
+      textDocument = {
+        completion = {
+          completionItem = {
+            snippetSupport = true
+          }
+        }
+      }
+    },
+    init_options = {
+      usePlaceholders = true,
+      completeUnimported = true
+    }
+  }
+EOF
 '''
 
 javascript = '''
@@ -165,8 +182,23 @@ endif
 let g:my_rust_lsp_loaded = 1
 
 call MyLspConfig()
+
+if executable('ra_lsp_server')
 lua << EOF
-  -- https://github.com/neovim/nvim-lsp#rls
+  require'nvim_lsp'.rust_analyzer.setup{
+    capabilities = {
+      textDocument = {
+        completion = {
+          completionItem = {
+            snippetSupport = true
+          }
+        }
+      }
+    },
+  }
+EOF
+else
+lua << EOF
   require'nvim_lsp'.rls.setup{
     cmd = {"rustup", "run", "nightly", "rls"};
     settings = {
