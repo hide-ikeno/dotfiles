@@ -1,0 +1,195 @@
+# === Plugins (loaded on startup) ===
+
+#==============================================================================
+# Fundamentals
+#==============================================================================
+
+# Dark powered Vim/Neovim plugin manager
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+# Enable configuration file in each directory
+[[plugins]]
+repo = 'thinca/vim-localrc'
+
+# EditorConfig
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+if = 'executable("editorconfig")'
+hook_add = '''
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+'''
+
+# Remote plugin frameworks
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+
+#==============================================================================
+# Interfaces
+#==============================================================================
+
+# Provides the branch name of the current git repository
+[[plugins]]
+repo = 'itchyny/vim-gitbranch'
+
+# Faster than the built-in 'matchparen' plugin
+[[plugins]]
+repo = 'itchyny/vim-parenmatch'
+#if = 'has("gui_running")'
+
+# Visually displaying indent levels with thin vertical lines
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+  let g:indentLine_enable = 1
+  let g:indentLine_char = '¦'
+  " Keep my conceal setting
+  let g:indentLine_setConceal = 0
+'''
+
+# Better whitespace highlighting for Vim
+[[plugins]]
+repo = 'ntpeters/vim-better-whitespace'
+hook_add = '''
+  let g:better_whitespace_enabled = 1
+  let g:strip_whitespace_on_save  = 1
+  let g:show_spaces_that_precede_tabs = 1
+  let g:better_whitespace_filetypes_blacklist = [
+      \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help',
+      \ 'markdown', 'which_key'
+      \ ]
+
+  nnoremap <silent><Leader>x  :<C-u>StripWhitespace<CR>
+'''
+
+# Seemless navitation between Tmux and Vim
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+hook_add = '''
+  let g:tmux_navigator_no_mappings = 1
+  nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+  nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+  nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+  nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
+  if has('terminal')
+    tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+    tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+    tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+    tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  endif
+'''
+
+#==============================================================================
+# Plugin dependencies (non-lazy loading)
+#==============================================================================
+
+# Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+# Operator extension
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+# Textobj extension
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+# Powerful repeat '.'
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+#==============================================================================
+# Appearance
+#==============================================================================
+
+# Custom status line
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+# iceberg
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+hook_add = '''
+  let g:nord_italic = 1
+  let g:nord_italic_comments = 1
+  let g:nord_underline = 1
+  let g:nord_uniform_diff_background = 1
+  let g:nord_uniform_status_lines = 1
+  let g:nord_cursor_line_number_background = 1
+  " Override or add more highlights (borrowed from deiphinus(@delphi)'s dotfiles)
+  augroup nord-overrides
+    autocmd!
+    autocmd ColorScheme nord hi Comment guifg=#CDD0BB
+    autocmd ColorScheme nord hi Delimiter guifg=#81A1C1
+    autocmd ColorScheme nord hi DeniteFilter guifg=#D8DEE9 guibg=#183203 ctermfg=NONE ctermbg=0 gui=NONE
+    autocmd ColorScheme nord hi FloatPreview guifg=#D8DEE9 guibg=#183203 ctermfg=NONE ctermbg=0 gui=NONE
+    autocmd ColorScheme nord hi FloatPreviewTransparent guifg=#183203 guibg=#183203 ctermfg=NONE ctermbg=0 gui=NONE
+    autocmd ColorScheme nord hi Folded guifg=#D08770 gui=NONE
+    autocmd ColorScheme nord hi Identifier guifg=#8FBCBB
+    autocmd ColorScheme nord hi NormalFloat guifg=#D8DEE9 guibg=#0B1900 ctermfg=NONE ctermbg=0 gui=NONE
+    autocmd ColorScheme nord hi Special guifg=#D08770
+    autocmd ColorScheme nord hi Title gui=bold cterm=bold
+    " for gitgutter
+    autocmd ColorScheme nord hi SignifyLineAdd ctermbg=233 guibg=#122b0c
+    autocmd ColorScheme nord hi SignifyLineChange ctermbg=236 guibg=#342e0e
+    autocmd ColorScheme nord hi SignifyLineDelete ctermbg=235 guibg=#4e2728
+    if has('nvim')
+      autocmd ColorScheme nord hi GitGutterAddLineNr guifg=#a3be8c guibg=#163601 gui=bold
+      autocmd ColorScheme nord hi GitGutterChangeDeleteLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
+      autocmd ColorScheme nord hi GitGutterChangeLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
+      autocmd ColorScheme nord hi GitGutterDeleteLineNr guifg=#bf616a guibg=#52050c gui=bold
+      " for ALE
+      autocmd ColorScheme nord hi ALEErrorSignLineNr guifg=#bf616a guibg=#52050c gui=bold
+      autocmd ColorScheme nord hi ALEInfoSignLineNr guifg=#a3be8c guibg=#163601 gui=bold
+      autocmd ColorScheme nord hi ALEStyleErrorSignLineNr guifg=#bf616a guibg=#52050c gui=bold
+      autocmd ColorScheme nord hi ALEStyleWarningSignLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
+      autocmd ColorScheme nord hi ALEWarningSignLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
+      " LSP diagnostics
+      autocmd ColorScheme nord hi LSPDiagnosticsError guifg=#bf616a guibg=#52050c gui=bold
+      autocmd ColorScheme nord hi LSPDiagnosticsWarning guifg=#d08770 guibg=#5d1c08
+      autocmd ColorScheme nord hi LSPDiagnosticsInformation guifg=#5e81ac guibg=#153b68
+      autocmd ColorScheme nord hi LSPDiagnosticsHint guifg=#a3be8c guibg=#456c26
+    endif
+  augroup END
+'''
+
+#==============================================================================
+# Syntax, filetype (not necessary for lazy loading)
+#==============================================================================
+
+# A collection of language packs for Vim
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+hook_add = '''
+  let g:polyglot_disable = ['json', 'markdown']
+'''
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+# D language
+[[plugins]]
+repo = 'JesseKPhillips/d.vim'
+
+# Python
+[[plugins]]
+# extend % and g% for python
+repo = 'vim-scripts/python_match.vim'
+
+# JSON
+[[plugins]]
+repo = 'neoclide/jsonc.vim'
+
+# zsh
+[[plugins]]
+repo = 'chrisbra/vim-zsh'
+
+# GNU As
+[[plugins]]
+repo = 'Shirk/vim-gas'
+
