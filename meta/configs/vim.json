@@ -10,7 +10,7 @@
     },
     {
         "link": {
-            "~/.vim": "editors/vim"
+            "~/.config/vim": "editors/vim"
         }
     }
 ]
