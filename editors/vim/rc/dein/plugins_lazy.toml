@@ -212,6 +212,28 @@ hook_add = '''
 # repo = 'hrsh7th/vim-vsnip-integ'
 # on_source = ['vim-vsnip']
 
+
+#==============================================================================
+# Fuzzy finder
+#==============================================================================
+[[plugins]]
+repo = 'liuchengxu/vim-clap'
+depends = ['vista.vim']
+on_cmd = ['Clap']
+hook_post_update = ':Clap install-binary'
+
+hook_add = '''
+  nnoremap <silent> <Space>/   :<C-u>Clap blines<CR>
+  nnoremap <silent> <Space>b   :<C-u>Clap buffers<CR>
+  nnoremap <silent> <Space>;   :<C-u>Clap command<CR>
+  nnoremap <silent> <Space>:   :<C-u>Clap command_history<CR>
+  nnoremap <silent> <Space>ff  :<C-u>Clap files<CR>
+  nnoremap <silent> <Space>ft  :<C-u>Clap filetypes<CR>
+  nnoremap <silent> <Space>G   :<C-u>Clap grep<CR>
+  nnoremap <silent> <Space>y   :<C-u>Clap yanks<CR>
+'''
+
+
 #==============================================================================
 # Commands
 #==============================================================================
