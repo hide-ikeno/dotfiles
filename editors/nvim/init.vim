@@ -2,64 +2,21 @@
 
 " Environment Variables {{{
 " -----
-" Makes Vim to support XDG Base Directory Specification.
-" NeoVim fully supports this.
-if empty("$XDG_CONFIG_HOME")
-  let $XDG_CONFIG_HOME = $HOME . '/.config'
-endif
-
-if empty("$XDG_CACHE_HOME")
-  let $XDG_CACHE_HOME = $HOME . '/.cache'
-endif
-
-if empty("$XDG_BIN_HOME")
-  let $XDG_BIN_HOME = $HOME . '/.local/bin'
-endif
-
-if empty("$XDG_LIB_HOME")
-  let $XDG_BIN_HOME = $HOME . '/.local/lib'
-endif
-
-if empty("$XDG_DATA_HOME")
-  let $XDG_DATA_HOME = $HOME . '/.local/share'
-endif
-
-if has('nvim')
-  let $VIM_CONFIG_HOME = $XDG_CONFIG_HOME . '/nvim'
-  let $VIM_DATA_HOME   = $XDG_DATA_HOME   . '/nvim'
-  let $VIM_CACHE_HOME  = $XDG_CACHE_HOME  . '/nvim'
-else
-  let $VIM_CONFIG_HOME = $XDG_CONFIG_HOME . '/vim'
-  let $VIM_DATA_HOME   = $XDG_DATA_HOME   . '/vim'
-  let $VIM_CACHE_HOME  = $XDG_CACHE_HOME  . '/vim'
-  " Enforce Vim to follow XDG Base Directory Specifications
-  let $MYVIMRC  = $VIM_CONFIG_HOME . '/vimrc'
-  if has('gui_running')
-    let $MYGVIMRC = $VIM_CONFIG_HOME . '/gvimrc'
-  endif
-  " update runtime path
-  set runtimepath=$VIM_CONFIG_HOME,$VIMRUNTIME,$VIM_CONFIG_HOME/after
-endif
+let $VIM_CONFIG_HOME = empty($XDG_CONFIG_HOME) ?
+      \ $HOME .'/.config/nvim' : $XDG_CONFIG_HOME . '/nvim'
+let $VIM_DATA_HOME = empty($XDG_DATA_HOME) ?
+      \ $HOME . '/.local/share/nvim' : $XDG_DATA_HOME . '/nvim'
+let $VIM_CACHE_HOME  = empty($XDG_CACHE_HOME) ?
+      \ $HOME . '/.cache/nvim' : $XDG_CACHE_HOME  . '/nvim'
 
 " Set python2/python3 interpretor (required to setup plugins using neovim
 " python API)
 let $PYENV_ROOT = expand('~/.anyenv/envs/pyenv')
-if has('nvim')
-  " Create virtualenvs for and only for neovim (+ development tools) and set
-  " python3_host_prog and python_host_prog to point the corresponding python
-  " interpreters.
-  let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
-  let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
-else
-  if has('pythonx')
-    " Prefer python3 to python2
-    if has('python3')
-      set pyxversion=3
-    else
-      set pyxversion=2
-    endif
-  endif
-endif
+" Create virtualenvs for and only for neovim (+ development tools) and set
+" python3_host_prog and python_host_prog to point the corresponding python
+" interpreters.
+let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
+let g:python_host_prog  = $PYENV_ROOT . '/versions/neovim2/bin/python'
 
 " Utility functions to inquiry OS type
 let s:is_windows = has('win32') || has('win64')
@@ -177,8 +134,6 @@ endif
 if !has('vim_starting')
   call dein#call_hook('source')
   call dein#call_hook('post_source')
-  filetype plugin indent on
-  syntax enable
 endif
 
 " Other configurations

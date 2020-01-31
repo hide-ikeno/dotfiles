@@ -3,7 +3,7 @@
 
 " Set variables for controling dein.vim
 let g:dein#install_max_processes = 16
-let g:dein#install_progress_type = 'echo'
+let g:dein#install_progress_type = 'title'
 let g:dein#enable_notification = 0
 let g:dein#install_log_filename = $VIM_CACHE_HOME . '/dein/dein.log'
 
@@ -19,17 +19,16 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 
-let s:base       = $VIM_CONFIG_HOME . '/rc/dein/'
-let s:toml_files = [
-      \ { 'name': 'plugins.toml',        'lazy': 0 },
-      \ { 'name': 'nvim-lsp_lazy.toml',  'lazy': 1 },
-      \ { 'name': 'defx_lazy.toml',      'lazy': 1 },
-      \ { 'name': 'denite_lazy.toml',    'lazy': 1 },
-      \ { 'name': 'deoplete_lazy.toml',  'lazy': 1 },
-      \ { 'name': 'plugins_lazy.toml',   'lazy': 1 },
-      \ { 'name': 'which_key_lazy.toml', 'lazy': 1 },
-      \ { 'name': 'ftplugin.toml',       'lazy': 0 },
-      \ ]
+let s:base = $VIM_CONFIG_HOME . '/rc/dein/'
+
+let s:plugins_toml   = s:base . 'plugins.toml'
+let s:lazy_toml      = s:base . 'plugins_lazy.toml'
+let s:ftplugin_toml  = s:base . 'ftplugin.toml'
+let s:nvim_lsp_toml  = s:base . 'nvim-lsp_lazy.toml'
+let s:defx_toml      = s:base . 'defx_lazy.toml'
+let s:denite_toml    = s:base . 'denite_lazy.toml'
+let s:deoplete_toml  = s:base . 'deoplete_lazy.toml'
+let s:which_key_toml = s:base . 'which_key_lazy.toml'
 
 " Load dein's state from the chache script
 "   REMARK: It overwrites 'runtimepath' completely.
@@ -39,10 +38,16 @@ endif
 
 " Reaches here if the cache script is old, invalid, or not found.
 " Now initialize dein.vim and start plugin configuration block.
-call dein#begin(s:dein_dir, expand('<sfile>'))
-for t in s:toml_files
-  call dein#load_toml(s:base . t['name'], {'lazy': t['lazy']})
-endfor
+call dein#begin(s:dein_dir, [expand('<sfile>'), s:plugins_toml, s:ftplugin_toml, s:lazy_toml, s:nvim_lsp_toml, s:defx_toml, s:denite_toml, s:deoplete_toml, s:which_key_toml])
+
+call dein#load_toml(s:plugins_toml, {'lazy': 0})
+call dein#load_toml(s:lazy_toml, {'lazy': 1})
+call dein#load_toml(s:nvim_lsp_toml, {'lazy': 1})
+call dein#load_toml(s:defx_toml, {'lazy': 1})
+call dein#load_toml(s:denite_toml, {'lazy': 1})
+call dein#load_toml(s:deoplete_toml, {'lazy': 1})
+call dein#load_toml(s:which_key_toml, {'lazy': 1})
+call dein#load_toml(s:ftplugin_toml, {'lazy': 0})
 
 " End dein configuration block
 "   REMARK: 'runtimepath' is changed after dein#end()

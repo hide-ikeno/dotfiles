@@ -8,11 +8,11 @@ on_func = ['denite#']
 hook_add = '''
   " Replace default search mappings
   nnoremap <expr> / line('$') > 10000 ? '/' :
-        \ ":\<C-u>Denite -buffer-name=search -start-filter -auto-action=preview line\<CR>"
+        \ ":\<C-u>Denite -buffer-name=search -start-filter line\<CR>"
   nnoremap <expr> n line('$') > 10000 ? 'n' :
         \ ":\<C-u>Denite -buffer-name=search -resume -refresh -no-start-filter\<CR>"
   nnoremap <expr> * line('$') > 10000 ? '*' :
-        \ ":\<C-u>DeniteCursorWord -buffer-name=search -auto-action=preview line\<CR>"
+        \ ":\<C-u>DeniteCursorWord -buffer-name=search line\<CR>"
 
   " <Space> mappings
   nnoremap <silent> <Space>b  :<C-u>Denite buffer file_mru -default-action=switch<CR>

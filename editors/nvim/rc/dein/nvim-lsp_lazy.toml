@@ -5,7 +5,7 @@ on_cmd = ['LspInstall', 'LspInstallInfo']
 on_func = ['nvim_lsp#setup']
 on_ft = [
   'c', 'cpp', 'dockerfile', 'fortran', 'go', 'javascript', 'lua', 'python',
-  'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim'
+  'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
 ]
 hook_add = '''
 " from https://github.com/h-michael/dotfiles/blob/master/.vim/rc/plugins/lazy.rc.toml
