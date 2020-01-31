@@ -5,6 +5,8 @@ scriptencoding utf-8
 
 lua << EOF
   require('init')
+  require('options')
+  require('mappings')
 EOF
 
 " " Environment Variables {{{
