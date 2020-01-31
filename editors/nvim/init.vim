@@ -5,6 +5,8 @@ scriptencoding utf-8
 
 lua << EOF
   require('init')
+  require('options')
+  require('mappings')
 EOF
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by
