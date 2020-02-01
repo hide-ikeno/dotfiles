@@ -79,7 +79,8 @@ api.nvim_set_keymap("x", "<", "<gv", {noremap = true})
 -- Easy escape
 api.nvim_set_keymap("i", "jj", "<ESC>", {noremap = true})
 api.nvim_set_keymap("i", "j ", "j",     {noremap = true})
-api.nvim_set_keymap("c", "j", [[getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j']], {noremap = true, expr = true})
+api.nvim_set_keymap("c", "j", [[getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j']],
+                    {noremap = true, expr = true})
 
 -- Start new line from any cursor position
 api.nvim_set_keymap("i", "<S-Return>", "<C-o>o", {noremap = true})
@@ -145,17 +146,12 @@ api.nvim_set_keymap("n", "st", ":tabnew<CR>", {noremap = true, silent = true})
 api.nvim_set_keymap("n", "sc", ":close<CR>",  {noremap = true, silent = true})
 -- only current window
 api.nvim_set_keymap("n", "so", ":<C-u>only<CR>",  {noremap = true, silent = true})
--- empty current buffer
--- " nnoremap <silent> sx  :<C-u>call <SID>BufferEmpty()<CR>
 -- split window horizontally
 api.nvim_set_keymap("n", "s-", ":<C-u>split<CR>", {noremap = true, silent = true})
 -- split window virtically
 api.nvim_set_keymap("n", "s|", ":<C-u>vsplit<CR>", {noremap = true, silent = true})
 -- equal size window
 api.nvim_set_keymap("n", "s=", "<C-w>=<CR>", {noremap = true, silent = true})
--- " Zoom window temporary
--- nnoremap <silent> <Plug>(my-zoom-window) :<C-u>call <SID>ToggleWindowZoom()<CR>
--- nmap     <silent> sz   <Plug>(my-zoom-window)
 
 -- Move windown with TAB
 api.nvim_set_keymap("n", "<Tab>",   "<C-w>w", {noremap = true, silent = true})
@@ -166,30 +162,6 @@ api.nvim_set_keymap("n", "<S-Left>",  "<C-w><", {noremap = true})
 api.nvim_set_keymap("n", "<S-Right>", "<C-w>>", {noremap = true})
 api.nvim_set_keymap("n", "<S-Up>",    "<C-w>+", {noremap = true})
 api.nvim_set_keymap("n", "<S-Down>",  "<C-w>-", {noremap = true})
-
--- Empty buffer contents
--- " function! s:BufferEmpty()
--- "   let l:current = bufnr('%')
--- "   if ! getbufvar(l:current, '&modified')
--- "     enew
--- "     silent! execute 'bdelete '.l:current
--- "   endif
--- " endfunction
--- 
--- " Toggle window zoom
--- "  <C-w>z      : maximize current window
--- "  <C-w>z again: restore the previous windows
--- function! s:ToggleWindowZoom() abort
---   if exists('t:zoom_winrestcmd')
---     execute t:zoom_winrestcmd
---     unlet t:zoom_winrestcmd
---   else
---     let t:zoom_winrestcmd = winrestcmd()
---     resize
---     vertical resize
---   endif
--- endfunction
-
 ---  }}}
 
 --- Leader mappings {{{
