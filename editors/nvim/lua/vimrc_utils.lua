@@ -25,3 +25,4 @@ function is_directory(path)
   -- "/" works both Unix and Windows
   return exists(path.."/")
 end
+
