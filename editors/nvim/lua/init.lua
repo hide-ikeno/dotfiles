@@ -31,7 +31,7 @@ local function configure_path(new_paths, path_var)
     for _, x in ipairs(list) do
       if not is_empty(x) then
         y = vim.fn.expand(x)
-        if vim.fn.isdirectory(y) and not vim.tbl_contains(paths, y) then
+        if vim.fn.isdirectory(y) ~= 0 and not vim.tbl_contains(paths, y) then
           paths[#paths+1] = y
         end
       end

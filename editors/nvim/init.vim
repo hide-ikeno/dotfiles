@@ -5,6 +5,7 @@ scriptencoding utf-8
 
 lua << EOF
   require('init')
+  require('dein')
   require('options')
   require('mappings')
 EOF
