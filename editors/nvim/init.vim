@@ -65,6 +65,8 @@ call s:configure_path('$PATH', [
       \ '~/.anyenv/envs/pyenv/shims',
       \ '~/bin',
       \ '/Library/Tex/texbin',
+      \ '/usr/local/opt/llvm/bin',
+      \ '/usr/local/opt/sqlite/bin',
       \ '/usr/local/bin',
       \ '/usr/bin',
       \ '/bin',
@@ -73,9 +75,10 @@ call s:configure_path('$PATH', [
       \ '/sbin',
       \])
 call s:configure_path('$MANPATH', [
-      \ '/usr/local/share/man/',
-      \ '/usr/share/man/',
-      \ '/opt/intel/man/',
+      \ '~/.local/share/man',
+      \ '/usr/local/share/man',
+      \ '/usr/share/man',
+      \ '/opt/intel/man',
       \ '/Applications/Xcode.app/Contents/Developer/usr/share/man',
       \ '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man',
       \])
@@ -119,14 +122,24 @@ endfunction
 
 " Configuration on startup
 if has('vim_starting')
-  call s:source_rc('init.vim')
+  call s:source_rc('init.rc.vim')
   if !has('gui_running')
-    call s:source_rc('terminal.vim')
+    " Enable true color if supported
+    "
+    " TODO: We should check if the terminal emulater has truecolor supports,
+    " but there is no reliable ways to do that. Some terminal emulater provides
+    " $COLORTERM environment variable set to 'truecolor' or '24bit' so we also
+    " checkt this variable.
+    "
+    let s:has_colorterm = ($COLORTERM ==# 'truecolor' || $COLORTERM ==# '24bit')
+    if has('termguicolors') && s:has_colorterm
+      set termguicolors
+    endif
   endif
 endif
 
 " Confiugre dein.vim plugin manager and load plugins
-call s:source_rc('dein.vim')
+call s:source_rc('dein.rc.vim')
 if has('vim_starting') && !empty(argv())
   call s:on_filetype()
 endif
@@ -137,10 +150,10 @@ if !has('vim_starting')
 endif
 
 " Other configurations
-call s:source_rc('encoding.vim')
-call s:source_rc('options.vim')
-call s:source_rc('mappings.vim')
-call s:source_rc('statusline.vim')
+call s:source_rc('encoding.rc.vim')
+call s:source_rc('options.rc.vim')
+call s:source_rc('mappings.rc.vim')
+call s:source_rc('statusline.rc.vim')
 " }}}
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by

@@ -60,41 +60,21 @@ endfunction
 
 [plugins.ftplugin]
 c = '''
-if exists('g:my_c_lsp_loaded')
-  finish
-endif
-let g:my_c_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.ccls.setup{}
 '''
 
 cpp = '''
-if exists('g:my_cpp_lsp_loaded')
-  finish
-endif
-let g:my_cpp_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.ccls.setup{}
 '''
 
 fortran = '''
-if exists('g:my_fortran_lsp_loaded')
-  finish
-endif
-let g:my_fortran_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.fortls.setup{}
 '''
 
 go = '''
-if exists('g:my_go_lsp_loaded')
-  finish
-endif
-let g:my_go_lsp_loaded = 1
-
 call MyLspConfig()
 lua << EOF
   local nvim_lsp = require'nvim_lsp'
@@ -117,31 +97,16 @@ EOF
 '''
 
 javascript = '''
-if exists('g:my_javascript_lsp_loaded')
-  finish
-endif
-let g:my_javascript_lsp_loaded = 1
-
 call SetMyLspConfig()
 lua require'nvim_lsp'.flow.setup{}
 '''
 
 lua = '''
-if exists('g:my_lua_lsp_loaded')
-  finish
-endif
-let g:my_lua_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.sumneko_lua.setup{}
 '''
 
 python = '''
-if exists('g:my_python_lsp_loaded')
-  finish
-endif
-let g:my_python_lsp_loaded = 1
-
 call MyLspConfig()
 lua << EOF
   local nvim_lsp = require'nvim_lsp'
@@ -166,21 +131,11 @@ EOF
 '''
 
 ruby = '''
-if exists('g:my_ruby_lsp_loaded')
-  finish
-endif
-let g:my_ruby_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.solargraph.setup{}
 '''
 
 rust = '''
-if exists('g:my_rust_lsp_loaded')
-  finish
-endif
-let g:my_rust_lsp_loaded = 1
-
 call MyLspConfig()
 
 if executable('ra_lsp_server')
@@ -218,41 +173,21 @@ endif
 '''
 
 sh = '''
-if exists('g:my_sh_lsp_loaded')
-  finish
-endif
-let g:my_sh_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.bashls.setup{}
 '''
 
 tex = '''
-if exists('g:my_tex_lsp_loaded')
-  finish
-endif
-let g:my_tex_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.texlab.setup{}
 '''
 
 typescript = '''
-if exists('g:my_typescript_lsp_loaded')
-  finish
-endif
-let g:my_typescript_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.tsserver.setup{}
 '''
 
 vim = '''
-if exists('g:my_vim_lsp_loaded')
-  finish
-endif
-let g:my_vim_lsp_loaded = 1
-
 call MyLspConfig()
 lua require'nvim_lsp'.vimls.setup{}
 '''
