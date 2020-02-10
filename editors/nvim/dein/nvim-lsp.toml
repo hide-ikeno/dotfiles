@@ -8,12 +8,12 @@ on_ft = [
   'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
 ]
 hook_add = '''
-" from https://github.com/h-michael/dotfiles/blob/master/.vim/rc/plugins/lazy.rc.toml
+" from https://github.com/h-michael/dotfiles/blob/master/.vim/rc/plugins/nvim_lsp.rc.toml
 lua << EOF
   vim.lsp.set_log_level("debug")
-  vim.api.nvim_set_var("enable_nvim_lsp_diagnostics", true)
+  vim.g.enable_nvim_lsp_diagnostics = true
   vim.lsp.callbacks['textDocument/publishDiagnostics'] = function(_, _, result)
-    if vim.api.nvim_get_var('enable_nvim_lsp_diagnostics') then
+    if vim.g.enable_nvim_lsp_diagnostics then
       local util = vim.lsp.util
       if not result then return end
       local uri = result.uri
@@ -24,12 +24,16 @@ lua << EOF
       end
       util.buf_clear_diagnostics(bufnr)
       util.buf_diagnostics_save_positions(bufnr, result.diagnostics)
-      util.buf_diagnostics_underline(bufnr, result.diagnostics)
-      -- util.buf_diagnostics_virtual_text(bufnr, result.diagnostics)
+      -- util.buf_diagnostics_underline(bufnr, result.diagnostics)
+      util.buf_diagnostics_virtual_text(bufnr, result.diagnostics)
       -- util.set_loclist(result.diagnostics)
     end
   end
 EOF
+
+function! LanguageClientStatus() abort
+  echo luaeval("vim.inspect(vim.lsp.get_client_by_id(1))")
+endfunction
 
 function! ToggleDiagnosics() abort
 lua << EOF
