@@ -7,10 +7,11 @@ vim.o.undofile    = true
 vim.o.swapfile    = true
 
 -- Directories to store backup, swap, view, and shada files
-vim.o.backupdir = table.concat({VIM_CACHE_HOME .. "/backup", "~/tmp", "/tmp"}, ",")
-vim.o.directory = table.concat({VIM_CACHE_HOME .. "/swap",   "~/tmp", "/tmp"}, ",")
-vim.o.undodir   = table.concat({VIM_CACHE_HOME .. "/undo",   "~/tmp", "/tmp"}, ",")
-vim.o.viewdir   = table.concat({VIM_CACHE_HOME .. "/view",   "~/tmp", "/tmp"}, ",")
+local cache = vim.env.VIM_CACHE_HOME
+vim.o.backupdir = table.concat({cache .. "/backup", "~/tmp", "/tmp"}, ",")
+vim.o.directory = table.concat({cache .. "/swap",   "~/tmp", "/tmp"}, ",")
+vim.o.undodir   = table.concat({cache .. "/undo",   "~/tmp", "/tmp"}, ",")
+vim.o.viewdir   = table.concat({cache .. "/view",   "~/tmp", "/tmp"}, ",")
 
 -- Customize shada files entries.
 -- Shada files are stored to $XDG_DATA_HOME/nvim/shada/main.shada by default
@@ -24,7 +25,7 @@ vim.o.helplang  = "en,ja"
 vim.o.spell     = false
 vim.o.spelllang = "en_us,cjk"
 -- The words list file where words are added by `zw` and `zg` command
-vim.o.spellfile = VIM_DATA_HOME .. "/spell/en.utf-8.add"
+vim.o.spellfile = vim.env.VIM_DATA_HOME .. "/spell/en.utf-8.add"
 
 -- -- Use double in unicode emoji characters
 -- vim.o.emoji

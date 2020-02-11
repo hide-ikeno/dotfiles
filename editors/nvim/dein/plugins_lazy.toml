@@ -1,6 +1,22 @@
 # === Plugins (lazy loading) ===
 
 #==============================================================================
+# LSP
+#==============================================================================
+
+[[plugins]]
+repo = 'neovim/nvim-lsp'
+if = 'has("nvim-0.5")'
+on_cmd = ['LspInstall', 'LspInstallInfo']
+on_func = ['nvim_lsp#setup']
+on_ft = [
+  'c', 'cpp', 'dockerfile', 'fortran', 'go', 'javascript', 'lua', 'python',
+  'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
+]
+hook_post_source = '''
+   lua require 'lsp-config'.setup()
+'''
+#==============================================================================
 # Auto completion
 #==============================================================================
 

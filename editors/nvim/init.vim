@@ -1,11 +1,16 @@
 " ~/.config/nvim/init.vim -- configuration file for NeoVim
 
+if &compatible
+  set nocompatible
+endif
+
 set encoding=utf-8
 scriptencoding utf-8
 
 lua << EOF
   require('init')
-  require('dein')
+  -- require('minpac')
+  vim.api.nvim_command [[ execute 'source' $VIM_CONFIG_HOME . '/dein.vim' ]]
   require('options')
   require('mappings')
 EOF
