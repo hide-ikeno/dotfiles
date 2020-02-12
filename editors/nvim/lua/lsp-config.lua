@@ -1,6 +1,6 @@
 local M = {}
 
-local function on_attach_callback(cliend, bufnr)
+local function on_attach_callback(client, bufnr)
   vim.api.nvim_buf_set_var(bufnr, "lsp_client_id", client.id)
   -- Key mappings
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>",       {silent = true;})
@@ -68,7 +68,7 @@ function M.setup()
   nvim_lsp.flow.setup{
     on_attach = on_attach_callback
   }
-  
+
   nvim_lsp.sumneko_lua.setup{
     on_attach = on_attach_callback
   }
