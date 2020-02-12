@@ -14,7 +14,7 @@ local function on_attach_callback(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "K",     "<cmd>lua vim.lsp.buf.hover()<CR>",            {silent = true;})
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>",   {silent = true;})
   -- Omni completion source
-  vim.bo.omnifunc = vim.lsp.omnifunc
+  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
 function M.setup()
