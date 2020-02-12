@@ -26,3 +26,28 @@ function is_directory(path)
   return exists(path.."/")
 end
 
+
+--- Set options
+function setOptions(options)
+  for k, v in pairs(options) do
+    vim.api.nvim_set_option(k, v)
+  end
+end
+
+--- create augroups
+function createAugrops(definitions)
+  for group_name, definition in pairs(definitions) do
+    vim.api.nvim_command("augroup " .. group_name)
+    vim.api.nvim_command("autocmd!")
+    for _, def in ipairs(definition) do
+      local command = table.concat(vim.tbl_flatten{"autocmd", def}, " ")
+      vim.api.nvim_command(command)
+    end
+    vim.api.nvim_command('augroup END')
+  end
+end
+
+--- Get git branch name
+function gitBranch()
+
+end
