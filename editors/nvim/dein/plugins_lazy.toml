@@ -216,13 +216,13 @@ hook_source = '''
         \ 'encoding': 'utf-8',
         \ }
 
-  if IsMac()
+  if has('mac')
     let g:eskk#large_dictionary = {
           \ 'path': '~/Library/Application\ Support/AquaSKK/SKK-JISYO.L',
           \ 'sorted': 1,
           \ 'encoding': 'euc-jp',
           \ }
-  elseif IsWindows()
+  elseif has('win32') || has('win64')
     let g:eskk#large_dictionary = {
           \ 'path': '~/SKK-JISYO.L',
           \ 'sorted': 1,
@@ -432,6 +432,14 @@ hook_add = '''
   let g:webdevicons_enable_startify = 0
   "   U+E287
   let g:WebDevIconsUnicodeByteOrderMarkerDefaultSymbol = "\ue287"
+'''
+
+# A high-performance color highligher for Neovim
+[[plugins]]
+repo = 'norcalli/nvim-colorizer.lua'
+on_event = 'VimEnter'
+hook_post_source = '''
+  lua require'colorizer'.setup()
 '''
 
 #==============================================================================

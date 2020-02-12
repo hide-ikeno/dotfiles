@@ -124,7 +124,7 @@ repo = 'chemzqm/unite-location'
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 
-# iceberg
+# Nord colorscheme
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
 hook_add = '''

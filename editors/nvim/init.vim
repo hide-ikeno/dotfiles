@@ -12,6 +12,7 @@ lua << EOF
   vim.api.nvim_command [[ execute 'source' $VIM_CONFIG_HOME . '/dein.vim' ]]
   require('options')
   require('mappings')
+  vim.api.nvim_command [[ execute 'source' $VIM_CONFIG_HOME . '/ui.vim' ]]
 EOF
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by
