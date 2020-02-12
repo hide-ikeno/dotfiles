@@ -148,6 +148,8 @@ path=(
     /usr/local/opt/gnu-sed/libexec/gnubin(N-/)
     /usr/local/opt/gnu-tar/libexec/gnubin(N-/)
     /usr/local/opt/grep/libexec/gnubin(N-/)
+    /usr/local/opt/llvm/bin(N-/)
+    /usr/local/opt/sqlite/bin(N-/)
     # *nix local, Homebrew
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)

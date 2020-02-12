@@ -20,15 +20,6 @@ hook_add = '''
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 '''
 
-# Remote plugin frameworks
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-if = '!has("nvim")'
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-if = '!has("nvim")'
-
 #==============================================================================
 # Interfaces
 #==============================================================================
@@ -40,7 +31,6 @@ repo = 'itchyny/vim-gitbranch'
 # Faster than the built-in 'matchparen' plugin
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
-#if = 'has("gui_running")'
 
 # Visually displaying indent levels with thin vertical lines
 [[plugins]]
@@ -77,12 +67,11 @@ hook_add = '''
   nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
   nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
   nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
-  if has('nvim') || has('terminal')
-    tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
-    tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
-    tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
-    tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
-  endif
+
+  tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+  tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+  tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+  tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
 '''
 
 #==============================================================================

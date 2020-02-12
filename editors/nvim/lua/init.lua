@@ -8,9 +8,9 @@ local config_home = os.getenv("XDG_CONFIG_HOME") or home .. "/.config"
 local cache_home  = os.getenv("XDG_CACHE_HOME")  or home .. "/.cache"
 local data_home   = os.getenv("XDG_DATA_HOME")   or home .. "/.local/share"
 
-VIM_CONFIG_HOME = config_home .. "/nvim"
-VIM_CACHE_HOME  = cache_home  .. "/nvim"
-VIM_DATA_HOME   = data_home   .. "/nvim"
+vim.env.VIM_CONFIG_HOME = config_home .. "/nvim"
+vim.env.VIM_CACHE_HOME  = cache_home  .. "/nvim"
+vim.env.VIM_DATA_HOME   = data_home   .. "/nvim"
 
 --- Python interpreter
 --[[ Set python2/python3 interpretor (required to setup plugins using neovim python API)
@@ -31,7 +31,7 @@ local function configure_path(new_paths, path_var)
     for _, x in ipairs(list) do
       if not is_empty(x) then
         y = vim.fn.expand(x)
-        if vim.fn.isdirectory(y) and not vim.tbl_contains(paths, y) then
+        if vim.fn.isdirectory(y) ~= 0 and not vim.tbl_contains(paths, y) then
           paths[#paths+1] = y
         end
       end
@@ -90,12 +90,12 @@ vim.env.MANPATH = configure_path(manpath, os.getenv("MANPATH"))
 
 --- Ensure cache and data directories exist
 local function create_backup_dirs()
-  vim.fn.mkdir(VIM_CACHE_HOME .. "/backup",  "p")
-  vim.fn.mkdir(VIM_CACHE_HOME .. "/swap",    "p")
-  vim.fn.mkdir(VIM_CACHE_HOME .. "/undo",    "p")
-  vim.fn.mkdir(VIM_CACHE_HOME .. "/view",    "p")
-  vim.fn.mkdir(VIM_CACHE_HOME .. "/session", "p")
-  vim.fn.mkdir(VIM_DATA_HOME  .. "/spell",   "p")
+  vim.fn.mkdir(vim.env.VIM_CACHE_HOME .. "/backup",  "p")
+  vim.fn.mkdir(vim.env.VIM_CACHE_HOME .. "/swap",    "p")
+  vim.fn.mkdir(vim.env.VIM_CACHE_HOME .. "/undo",    "p")
+  vim.fn.mkdir(vim.env.VIM_CACHE_HOME .. "/view",    "p")
+  vim.fn.mkdir(vim.env.VIM_CACHE_HOME .. "/session", "p")
+  vim.fn.mkdir(vim.env.VIM_DATA_HOME  .. "/spell",   "p")
 end
 
 local function set_options_on_vim_starting()
@@ -142,10 +142,16 @@ local function set_options_on_vim_starting()
   vim.g.loaded_zipPlugin         = 1
   -- Disable ruby support in neovim
   vim.g.loaded_ruby_provider     = 1
-  -- Disable
+  -- Disable built-in package manager
   vim.o.packpath = ""
   --- }}}
 end
+
+
+--- Create augroup for VimEnter
+vim.api.nvim_command[[ augroup MyAutoCmd ]]
+vim.api.nvim_command[[ autocmd! ]]
+vim.api.nvim_command[[ augroup END ]]
 
 if vim.fn.has("vim_starting") then
   create_backup_dirs()

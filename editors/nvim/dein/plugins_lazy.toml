@@ -1,6 +1,22 @@
 # === Plugins (lazy loading) ===
 
 #==============================================================================
+# LSP
+#==============================================================================
+
+[[plugins]]
+repo = 'neovim/nvim-lsp'
+if = 'has("nvim-0.5")'
+on_cmd = ['LspInstall', 'LspInstallInfo']
+on_func = ['nvim_lsp#setup']
+on_ft = [
+  'c', 'cpp', 'dockerfile', 'fortran', 'go', 'javascript', 'lua', 'python',
+  'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
+]
+hook_post_source = '''
+   lua require 'lsp-config'.setup()
+'''
+#==============================================================================
 # Auto completion
 #==============================================================================
 
@@ -33,18 +49,18 @@ on_if = 1
 repo = 'Shougo/neco-vim'
 on_ft = 'vim'
 
-# Auto close parentheses
-[[plugins]]
-repo = 'cohama/lexima.vim'
-on_event = 'InsertCharPre'
-hook_source = '''
-  let g:lexima_ctrlh_as_backspace = 1
-'''
-hook_post_source = '''
-  call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
-  call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
-  call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
-'''
+# # Auto close parentheses
+# [[plugins]]
+# repo = 'cohama/lexima.vim'
+# on_event = 'InsertCharPre'
+# hook_source = '''
+#   let g:lexima_ctrlh_as_backspace = 1
+# '''
+# hook_post_source = '''
+#   call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+#   call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+#   call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+# '''
 
 # Auto create TAG files
 [[plugins]]
