@@ -26,12 +26,13 @@ let s:base = $VIM_CONFIG_HOME . '/dein/'
 "   REMARK: It overwrites 'runtimepath' completely.
 if dein#load_state(s:dein_dir)
   let s:toml = [
-        \ { 'name': 'plugins.toml', 'lazy': 0 },
-        \ { 'name': 'ftplugin.toml', 'lazy': 0 },
+        \ { 'name': 'plugins.toml',      'lazy': 0 },
+        \ { 'name': 'ftplugin.toml',     'lazy': 0 },
         \ { 'name': 'plugins_lazy.toml', 'lazy': 1 },
-        \ { 'name': 'defx.toml', 'lazy': 1 },
-        \ { 'name': 'denite.toml', 'lazy': 1 },
-        \ { 'name': 'deoplete.toml', 'lazy': 1 },
+        \ { 'name': 'defx.toml',         'lazy': 1 },
+        \ { 'name': 'denite.toml',       'lazy': 1 },
+        \ { 'name': 'deoplete.toml',     'lazy': 1 },
+        \ { 'name': 'which_key.toml',    'lazy': 1 },
         \ ]
   " Reaches here if the cache script is old, invalid, or not found.
   " Now initialize dein.vim and start plugin configuration block.

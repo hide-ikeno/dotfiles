@@ -137,7 +137,6 @@ hook_add = '''
           \ 'sh':         'nvim_lsp',
           \ 'tex':        'nvim_lsp',
           \ 'typescript': 'nvim_lsp',
-          \ 'vim':        'nvim_lsp',
           \ }
   endif
 '''

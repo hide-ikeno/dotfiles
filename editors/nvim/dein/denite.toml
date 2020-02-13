@@ -13,6 +13,8 @@ hook_add = '''
         \ ":\<C-u>Denite -buffer-name=search -resume -refresh -no-start-filter\<CR>"
   nnoremap <expr> * line('$') > 10000 ? '*' :
         \ ":\<C-u>DeniteCursorWord -buffer-name=search line\<CR>"
+  xnoremap <silent> *
+        \ "qy:Denite -input=`@q` -buffer-name=search -search line<CR>
 
   " <Space> mappings
   nnoremap <silent> <Space>b  :<C-u>Denite buffer file_mru -default-action=switch<CR>

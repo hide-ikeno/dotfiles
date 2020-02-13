@@ -14,8 +14,8 @@ vim.env.VIM_DATA_HOME   = data_home   .. "/nvim"
 
 --- Python interpreter
 --[[ Set python2/python3 interpretor (required to setup plugins using neovim python API)
-     Create virtualenvs for and only for neovim (+ development tools) and set 
-     python3_host_prog and python_host_prog to point the corresponding python 
+     Create virtualenvs for and only for neovim (+ development tools) and set
+     python3_host_prog and python_host_prog to point the corresponding python
      interpreters. --]]
 vim.env.PYENV_ROOT = vim.fn.expand('~/.anyenv/envs/pyenv')
 vim.g.python3_host_prog = vim.env.PYENV_ROOT .. "/versions/neovim3/bin/python"
@@ -24,7 +24,7 @@ vim.g.python_host_prog  = vim.env.PYENV_ROOT .. "/versions/neovim2/bin/python"
 --- Set PATH and MANPATH (for GUI)
 
 local function configure_path(new_paths, path_var)
-  local path_separator = is_windows and ";" or ":" 
+  local path_separator = is_windows and ";" or ":"
   local paths = {}
 
   local function add_paths(list)
@@ -101,7 +101,7 @@ end
 local function set_options_on_vim_starting()
   -- List of character encodings considered when starting to edit an existing file
   vim.o.fileencodings = "ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le,cp1250"
-  
+
   if vim.fn.has("multi_byte_ime") then
     vim.o.iminsert = 0
     vim.o.imsearch = 0

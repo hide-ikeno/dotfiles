@@ -20,24 +20,18 @@ vim.o.shada = [['1000,<50,@100,s10,h]]
 
 --- Language {{{
 -- prefer english help
-vim.o.helplang  = "en,ja"
--- spell check (ignore on check on Asian characters (China, Japan, Korea))
-vim.o.spell     = false
-vim.o.spelllang = "en_us,cjk"
+vim.o.helplang  = "en,ja";
 -- The words list file where words are added by `zw` and `zg` command
-vim.o.spellfile = vim.env.VIM_DATA_HOME .. "/spell/en.utf-8.add"
+vim.o.spellfile = vim.env.VIM_DATA_HOME .. "/spell/en.utf-8.add";
+-- spell check (ignore on check on Asian characters (China, Japan, Korea))
+vim.o.spelllang = "en_us,cjk";
+vim.o.spell     = false;
 
 -- -- Use double in unicode emoji characters
 -- vim.o.emoji
 -- -- Use single in ambiguous characters
 -- vim.o.ambiwidth = "single"
 
--- Prevent that the langmap option applies to characters that result from a
--- mapping. If set (default), this may break plugins (but it's backward
--- compatible).
-if vim.fn.has("langmap") and vim.fn.exists("+langremap") then
-  vim.o.langremap = false
-end
 --- }}}
 
 --- Editting {{{
@@ -184,4 +178,3 @@ local wildignore_list = {
 }
 vim.o.wildignore = table.concat(wildignore_list, ",")
 --- }}}
-
