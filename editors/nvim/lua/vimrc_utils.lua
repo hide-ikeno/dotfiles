@@ -23,7 +23,7 @@ function is_directory(path)
 end
 
 --- create augroups
-function createAugrops(definitions)
+function createAugroups(definitions)
   for group_name, definition in pairs(definitions) do
     vim.api.nvim_command("augroup " .. group_name)
     vim.api.nvim_command("autocmd!")
