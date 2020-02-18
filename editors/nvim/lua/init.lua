@@ -120,6 +120,10 @@ local function set_options_on_vim_starting()
   end
   --- }}}
 
+  --- Directories to find packages {{{
+  vim.o.packpath = vim.env.VIM_CACHE_HOME
+  -- }}}
+
   --- Disable unnecessary default plugins {{{
   vim.g.loaded_2html_plugin      = 1
   vim.g.loaded_getscript         = 1
@@ -142,8 +146,6 @@ local function set_options_on_vim_starting()
   vim.g.loaded_zipPlugin         = 1
   -- Disable ruby support in neovim
   vim.g.loaded_ruby_provider     = 1
-  -- Disable built-in package manager
-  vim.o.packpath = ""
   --- }}}
 end
 
