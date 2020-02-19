@@ -9,14 +9,17 @@ scriptencoding utf-8
 
 lua << EOF
   require('init')
-  -- vim.api.nvim_command [[ execute 'source' $VIM_CONFIG_HOME . '/dein.vim' ]]
   require('options')
   require('mappings')
+  require('filetype')
+  -- Load plugin configurations
+  local plugin_config_dir = vim.env.VIM_CONFIG_HOME .. "/lua/plugins"
+  local list = vim.split(vim.fn.globpath(plugin_config_dir, "*.lua"), "\n")
+  for _, f in ipairs(list) do
+    local name = f:gsub("(.*[/\\])(.*)", "%2"):match("(.+)%..+")
+    require('plugins.' .. name).setup()
+  end
   -- vim.api.nvim_command [[ execute 'source' $VIM_CONFIG_HOME . '/ui.vim' ]]
-  vim.api.nvim_command [[command! PackagerInstall call packages#PackagerInit() | call packager#install()]]
-  vim.api.nvim_command [[command! -bang PackagerUpdate call packages#PackagerInit() | call packager#update({ 'force_hooks': '<bang>'  })]]
-  vim.api.nvim_command [[command! PackagerClean call packages#PackagerInit() | call packager#clean()]]
-  vim.api.nvim_command [[command! PackagerStatus call packages#PackagerInit() | call packager#status()]]
 EOF
 
 " Do not allow run some commands from vimrc or exrc when they are not owned by
