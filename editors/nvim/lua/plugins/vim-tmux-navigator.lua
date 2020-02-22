@@ -1,5 +1,5 @@
 -- vim-tmux-navigator
-local function setup()
+local function hook_add()
   vim.g.tmux_navigator_no_mappings = 1
   vim.api.nvim_set_keymap("n", "<M-h>",  "<cmd>TmuxNavigateLeft<CR>",     {noremap = true, silent = true})
   vim.api.nvim_set_keymap("n", "<M-j>",  "<cmd>TmuxNavigateDown<CR>",     {noremap = true, silent = true})
@@ -13,4 +13,4 @@ local function setup()
   vim.api.nvim_set_keymap("t", "<M-\\>", "<cmd>TmuxNavigatePrevious<CR>", {noremap = true, silent = true})
 end
 
-return { setup = setup }
+return { hook_add = hook_add }

@@ -121,7 +121,8 @@ local function set_options_on_vim_starting()
   --- }}}
 
   --- Directories to find packages {{{
-  vim.o.packpath = vim.env.VIM_CACHE_HOME
+  --vim.o.packpath = vim.env.VIM_CACHE_HOME
+  vim.o.packpath = ""
   -- }}}
 
   --- Disable unnecessary default plugins {{{
