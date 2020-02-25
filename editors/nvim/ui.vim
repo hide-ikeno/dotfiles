@@ -1,18 +1,18 @@
 " colorscheme.vim --- setup colorscheme on vim/nvim and costomize lightline
-
-" --- Colorscheme
-set background=dark
 "
-" let g:one_allow_italics = 1
-" colorscheme one
-" call one#highlight('Visual', '', '3e4452', 'none')
-
-" let g:nord_italic = 1
-" let g:nord_underline = 1
-" let g:nord_cursor_line_number_background = 1
+" " --- Colorscheme
+" set background=dark
+" "
+" " let g:one_allow_italics = 1
+" " colorscheme one
+" " call one#highlight('Visual', '', '3e4452', 'none')
+"
+" " let g:nord_italic = 1
+" " let g:nord_underline = 1
+" " let g:nord_cursor_line_number_background = 1
+" " colorscheme nord
+"
 " colorscheme nord
-
-colorscheme nord
 
 function! s:transparent() abort
   highlight Normal                 ctermbg=NONE guibg=NONE
@@ -38,131 +38,7 @@ autocmd MyAutoCmd VimEnter *
      \   call s:transparent() |
      \ endif
 
-" --- Customize status line with lightline
-let g:lightline = {
-      \ 'colorscheme': 'nord',
-      \ 'active': {
-      \   'left': [
-      \     ['mode', 'paste'],
-      \     ['gitbranch', 'readonly', 'filename', 'modified'],
-      \   ],
-      \   'right': [
-      \      ['lineinfo'],
-      \      ['percent'],
-      \      ['fileformat', 'fileencoding', 'filetype'],
-      \      ['pyenv'],
-      \   ],
-      \ },
-      \ 'inactive': {
-      \   'left':  [ ['filepath', 'filename_inactive'] ],
-      \   'right': [ ['lineinfo'], ['filetype'], ['fileinfo'] ]
-      \ },
-      \ 'component' : {
-      \   'lineinfo': "\ue0a1 %3l:%-2v"
-      \ },
-      \ 'component_function': {
-      \   'modified':     'LightlineModified',
-      \   'readonly':     'LightlineReadonly',
-      \   'gitbranch':    'LightlineGitBranch',
-      \   'filename':     'LightlineFilename',
-      \   'fileformat':   'LightlineFileformat',
-      \   'filetype':     'LightlineFiletype',
-      \   'fileencoding': 'LightlineFileencoding',
-      \   'mode':         'LightlineMode',
-      \ },
-      \ 'separator':    { 'left': "\ue0b0", 'right': "\ue0b2" },
-      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-      \ }
+" Change statusline automatically
+autocmd MyAutoCmd FocusGained,VimEnter,WinEnter,BufEnter * lua SetStatusLineActive()
+autocmd MyAutoCmd FocusLost,WinLeave,BufLeave            * lua SetStatusLineInactive()
 
-function! LightlineModified()
-  return &filetype =~? 'help\|defx\|gundo' ? '' :
-        \ &modified ? "\uf040" : &modifiable ? '' : '-'
-endfunction
-
-function! LightlineReadonly()
-  if &filetype !~? 'help\|defx\|gundo'
-    return ''
-  elseif &readonly
-    return "\ue0a2"
-  else
-    return ''
-  endif
-endfunction
-
-function! LightlineFilename()
-  let fname = expand('%:t')
-  return &filetype ==? 'denite' ? denite#get_status('sources') . denite#get_status('path') : '' .
-        \ ('' !=? fname ? fname : '[No Name]')
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ?
-        \ (&filetype ==? 'help'   ? "help \uf29c"   :
-        \  &filetype ==? 'defx'   ? "defx \uf115"   :
-        \  &filetype ==? 'denite' ? "denite"        :
-        \  &filetype ==? 'vista'  ? "vista \uf02c"  :
-        \  &filetype ==? 'tagbar' ? "tagbar \uf02c" :
-        \  &filetype ==? 'magit'  ? "magit \ue702"  :
-        \  &filetype !=? '' ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft')
-        \ : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fileencoding !=? '' ? &fileencoding : &encoding) : ''
-endfunction
-
-function! LightlineMode()
-  return  &filetype ==? 'denite' ? 'denite' :
-        \ &filetype ==? 'defx' ? 'defx' :
-        \ &filetype ==? 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! LightlineGitBranch()
-  let branch = gitbranch#name()
-  " let branch = gina#component#repo#branch()
-  return branch ==# '' ? '' : " \ue725 " . branch
-endfunction
-
-" https://github.com/Lokaltog/vim-powerline/blob/develop/autoload/Powerline/Functions.vim
-function! LightlineCharCode()
-  if winwidth('.') <= 70
-    return ''
-  endif
-
-  " Get the output of :ascii
-  redir => ascii
-  silent! ascii
-  redir END
-
-  if match(ascii, 'NUL') != -1
-    return 'NUL'
-  endif
-
-  " Zero pad hex values
-  let nrformat = '0x%02x'
-
-  let encoding = (&fenc == '' ? &enc : &fenc)
-
-  if encoding == 'utf-8'
-    " Zero pad with 4 zeroes in unicode files
-    let nrformat = '0x%04x'
-  endif
-
-  " Get the character and the numeric value from the return value of :ascii
-  " This matches the two first pieces of the return value, e.g.
-  " "<F>  70" => char: 'F', nr: '70'
-  let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
-
-  " Format the numeric value
-  let nr = printf(nrformat, nr)
-
-  return "'". char ."' ". nr
-endfunction
-
-"----------------------------------------------------------------------------
-" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

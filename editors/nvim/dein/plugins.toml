@@ -50,33 +50,33 @@ hook_add = '''
 [[plugins]]
 repo = 'ntpeters/vim-better-whitespace'
 hook_add = '''
-lua require("plugins/vim-better-whitespace").hook_add()
-  " let g:better_whitespace_enabled = 1
-  " let g:strip_whitespace_on_save  = 1
-  " let g:show_spaces_that_precede_tabs = 1
-  " let g:better_whitespace_filetypes_blacklist = [
-  "     \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help',
-  "     \ 'markdown', 'which_key'
-  "     \ ]
-  " nnoremap <silent><Leader>x  :<C-u>StripWhitespace<CR>
+  " lua require("plugins/vim-better-whitespace").hook_add()
+  let g:better_whitespace_enabled = 1
+  let g:strip_whitespace_on_save  = 1
+  let g:show_spaces_that_precede_tabs = 1
+  let g:better_whitespace_filetypes_blacklist = [
+      \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help',
+      \ 'markdown', 'which_key'
+      \ ]
+  nnoremap <silent><Leader>x  :<C-u>StripWhitespace<CR>
 '''
 
 # Seemless navitation between Tmux and Vim
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
-lua require("plugins/vim-tmux-navigator").hook_add()
-  " let g:tmux_navigator_no_mappings = 1
-  " nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
-  " nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
-  " nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
-  " nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
-  " nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
-  "
-  " tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
-  " tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
-  " tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
-  " tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  " lua require("plugins/vim-tmux-navigator").hook_add()
+  let g:tmux_navigator_no_mappings = 1
+  nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+  nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+  nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+  nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
+  nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
+
+  tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
+  tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
+  tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
+  tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
 '''
 
 #==============================================================================
