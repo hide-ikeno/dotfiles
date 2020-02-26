@@ -39,6 +39,11 @@ autocmd MyAutoCmd VimEnter *
      \ endif
 
 " Change statusline automatically
-autocmd MyAutoCmd FocusGained,VimEnter,WinEnter,BufEnter * lua SetStatusLineActive()
-autocmd MyAutoCmd FocusLost,WinLeave,BufLeave            * lua SetStatusLineInactive()
+" autocmd MyAutoCmd FocusGained,VimEnter,WinEnter,BufEnter * lua SetStatusLineActive()
+" autocmd MyAutoCmd FocusLost,WinLeave,BufLeave            * lua SetStatusLineInactive()
+" autocmd MyAutoCmd FocusGained,VimEnter,WinEnter,BufEnter * let &l:statusline=v:lua.StatuslineActive()
+" autocmd MyAutoCmd FocusLost,WinLeave,BufLeave            * let &l:statusline=v:lua.StatuslineInactive()
+autocmd MyAutoCmd FocusGained,VimEnter,WinEnter,BufEnter * setlocal statusline=%!v:lua.StatuslineActive()
+autocmd MyAutoCmd FocusLost,WinLeave,BufLeave            * setlocal statusline=%!v:lua.StatuslineInactive()
+autocmd MyAutoCmd FileType defx                            setlocal statusline=%!v:lua.StatuslineDefx()
 
