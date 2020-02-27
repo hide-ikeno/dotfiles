@@ -104,7 +104,7 @@ hook_source = '''
         \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 
-  let s:denite_win_width_percent = 0.85
+  let s:denite_win_width_percent = 0.8
   let s:denite_win_height_percent = 0.7
   call denite#custom#option('default', {
         \ 'highlight_filter_background': 'CursorLine',
@@ -112,7 +112,7 @@ hook_source = '''
         \ 'source_names': 'short',
         \ 'split': 'floating',
         \ 'filter_split_direction': 'floating',
-        \ 'virtical_preview': v:true,
+        \ 'vertical_preview': v:true,
         \ 'floating_preview': v:true,
         \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
         \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
@@ -120,10 +120,23 @@ hook_source = '''
         \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
         \ })
 
+  call denite#custom#option('search', {
+        \ 'highlight_filter_background': 'CursorLine',
+        \ 'source_names': 'short',
+        \ 'split': 'floating',
+        \ 'filter_split_direction': 'floating',
+        \ 'vertical_preview': v:true,
+        \ 'floating_preview': v:true,
+        \ })
+
   let s:menus = {}
   let s:menus.vim = {
        \ 'description': 'Vim',
        \ }
+        \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+        \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+        \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+        \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
   let s:menus.vim.file_candidates = [
        \ ['    > Edit configuation file (init.vim)', $VIM_CONFIG_HOME . '/init.vim']
        \ ]
