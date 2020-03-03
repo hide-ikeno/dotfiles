@@ -157,7 +157,7 @@ vim.o.fillchars     = ""
 
 -- Enable folding
 vim.o.foldenable    = true
-vim.o.foldcolumn    = 0
+vim.o.foldcolumn    = "0"
 
 --- }}}
 
