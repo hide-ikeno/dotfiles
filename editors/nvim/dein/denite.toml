@@ -104,8 +104,17 @@ hook_source = '''
         \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 
-  let s:denite_win_width_percent = 0.8
-  let s:denite_win_height_percent = 0.7
+  let s:denite_winheight = 20
+  let s:denite_winrow = &lines > s:denite_winheight ? (&lines - s:denite_winheight) / 2 : 0
+  let s:denite_winwidth = &columns > 240 ? &columns / 2 : 120
+  let s:denite_wincol = &columns > s:denite_winwidth ? (&columns - s:denite_winwidth) / 2 : 0
+  call denite#custom#option('_', {
+        \ 'wincol':    s:denite_wincol,
+        \ 'winheight': s:denite_winheight,
+        \ 'winrow':    s:denite_winrow,
+        \ 'winwidth':  s:denite_winwidth,
+        \ })
+
   call denite#custom#option('default', {
         \ 'highlight_filter_background': 'CursorLine',
         \ 'prompt': '> ',
@@ -114,10 +123,6 @@ hook_source = '''
         \ 'filter_split_direction': 'floating',
         \ 'vertical_preview': v:true,
         \ 'floating_preview': v:true,
-        \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-        \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-        \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-        \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
         \ })
 
   call denite#custom#option('search', {
@@ -133,10 +138,6 @@ hook_source = '''
   let s:menus.vim = {
        \ 'description': 'Vim',
        \ }
-        \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-        \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-        \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-        \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
   let s:menus.vim.file_candidates = [
        \ ['    > Edit configuation file (init.vim)', $VIM_CONFIG_HOME . '/init.vim']
        \ ]
