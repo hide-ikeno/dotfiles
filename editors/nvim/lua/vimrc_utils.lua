@@ -1,29 +1,75 @@
-local api = vim.api
+local vim = vim or {}
+
+local M = {}
 
 --- OS specific settings
-is_windows = vim.loop.os_uname().version:match("Windows")
-is_mac     = vim.loop.os_uname().version:match("Darwin")
+M.os = (function()
+  local is_windows = vim.loop.os_uname().version:match("Windows")
+  local is_mac     = vim.loop.os_uname().version:match("Darwin")
 
-local file_separator = is_windows and '\\' or '/'
+  return {
+    is_windows = is_windows;
+    is_mac     = is_mac;
+  }
+end)()
 
---- Check if a string is nil or empty
-function is_empty(str)
-  return str == nil or str == ''
-end
+-- Path utilities (picked from nvim_lsp/utils.lua)
+M.path = (function()
+  local function exists(filename)
+    stat = vim.loop.fs_stat(filename)
+    return stat and stat.type or false
+  end
 
---- Check if a file or directory exists in this path
-function exists(file)
-  local stat = vim.loop.fs_stat(file)
-  return stat and stat.type or false
-end
+  local function is_dir(filename)
+    return exists(filename) == "directory"
+  end
 
-function is_directory(path)
-  -- "/" works both Unix and Windows
-  return exists(path.."/")
+  local function is_file(filename)
+    return exists(filename) == "file"
+  end
+
+  local path_sep = M.os.is_windows and "\\" or "/"
+
+  local dirname
+  do
+    local strip_dir_pat = path_sep.."([^"..path_sep.."]+)$"
+    local strip_sep_pat = path_sep.."$"
+    dirname = function(path)
+      if not path then return end
+      local result = path:gsub(strip_sep_pat, ""):gsub(strip_dir_pat, "")
+      if #result == 0 then
+        return "/"
+      end
+      return result
+    end
+  end
+
+  local function path_join(...)
+    local result =
+      table.concat(
+        vim.tbl_flatten {...}, path_sep):gsub(path_sep.."+", path_sep)
+    return result
+  end
+
+  return {
+    dirname = dirname;
+    exists  = exists;
+    is_dir  = is_dir;
+    is_file = is_file;
+    join    = path_join;
+    sep     = path_sep;
+  }
+end)()
+
+--- set global options
+function M.set_global_options(options)
+  for k, v in pairs(options) do
+    vim.api.nvim_set_option(k, v)
+  end
 end
 
 --- create augroups
-function createAugroups(definitions)
+function M.create_augroups(definitions)
   for group_name, definition in pairs(definitions) do
     vim.api.nvim_command("augroup " .. group_name)
     vim.api.nvim_command("autocmd!")
@@ -35,7 +81,4 @@ function createAugroups(definitions)
   end
 end
 
---- Get git branch name
-function gitBranch()
-
-end
+return M
