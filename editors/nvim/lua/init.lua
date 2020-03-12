@@ -144,6 +144,13 @@ local function set_global_vars_on_startup()
   --[[ Leader/Localleader keys ]]
   vim.g.mapleader      = ";"
   vim.g.maplocalleader = ","
+  -- release keymappings for plugins
+  vim.api.nvim_set_keymap("n", "<Space>", "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("x", "<Space>", "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("n", ";",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("x", ";",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("n", ",",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("x", ",",       "<Nop>", {noremap = true})
 
   --[[ Disable unnecessary default plugins ]]
   vim.g.loaded_2html_plugin      = 1

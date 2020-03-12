@@ -1,4 +1,6 @@
-require("colors/iceberg")
+-- require("colors/iceberg")
+-- vim.api.nvim_command("colorscheme iceberg")
+vim.g.colors_name = "iceberg"
 require("statusline")
 
 function TransparetOnTerminal()

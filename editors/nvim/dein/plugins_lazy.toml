@@ -14,7 +14,7 @@ on_ft = [
   'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
 ]
 hook_post_source = '''
-lua require 'lsp-config'.setup()
+lua require("lsp-config").setup()
 '''
 #==============================================================================
 # Auto completion

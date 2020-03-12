@@ -19,7 +19,13 @@ end
 
 function M.setup()
   vim.lsp.set_log_level("debug")
-  vim.g.enable_nvim_lsp_diagnostics = true
+
+  vim.g.enable_nvim_lsp_diagnostics   = true
+  vim.g.LspDiagnosticsErrorSign       = ""
+  vim.g.LspDiagnosticsWarningSign     = ""
+  vim.g.LspDiagnosticsInformationSign = ""
+  vim.g.LspDiagnosticsHintSign        = ""
+
   vim.lsp.callbacks['textDocument/publishDiagnostics'] = function(_, _, result)
     if vim.g.enable_nvim_lsp_diagnostics then
       local util = vim.lsp.util
@@ -32,8 +38,8 @@ function M.setup()
       end
       util.buf_clear_diagnostics(bufnr)
       util.buf_diagnostics_save_positions(bufnr, result.diagnostics)
-      -- util.buf_diagnostics_underline(bufnr, result.diagnostics)
       util.buf_diagnostics_virtual_text(bufnr, result.diagnostics)
+      util.buf_diagnostics_signs(bufnr, result.diagnostics)
       -- util.set_loclist(result.diagnostics)
     end
   end
@@ -125,6 +131,10 @@ function M.setup()
    }
 
    nvim_lsp.vimls.setup{
+     on_attach = on_attach_callback
+   }
+
+   nvim_lsp.yamlls.setup{
      on_attach = on_attach_callback
    }
 end
