@@ -124,8 +124,8 @@ local function set_global_options_on_startup()
   end
 
   --- Directories to find packages
-  vim.o.packpath = vim.env.VIM_CACHE_HOME
-  -- vim.o.packpath = ""
+  -- vim.o.packpath = vim.env.VIM_CACHE_HOME
+  vim.o.packpath = ""
 end
 
 --- Set nvim default global vars on startup {{{1
@@ -335,7 +335,7 @@ set_global_options()
 create_autocmds()
 
 -- Plugins
--- require("dein")
-vim.api.nvim_command("command! PackUpdate  lua require('minpac').pack_update()")
-vim.api.nvim_command("command! PackClean   lua require('minpac').pack_clean()")
-vim.api.nvim_command("command! PackStatus  lua require('minpac').pack_status()")
+require("dein")
+-- vim.api.nvim_command("command! PackUpdate  lua require('minpac').pack_update()")
+-- vim.api.nvim_command("command! PackClean   lua require('minpac').pack_clean()")
+-- vim.api.nvim_command("command! PackStatus  lua require('minpac').pack_status()")
