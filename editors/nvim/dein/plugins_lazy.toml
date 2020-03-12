@@ -693,7 +693,7 @@ hook_add = '''
 '''
 
 #==============================================================================
-# Filetypes, Syntax
+# Filetype
 #==============================================================================
 
 # LaTeX
@@ -710,25 +710,6 @@ on_ft = 'python'
 [[plugins]]
 repo = 'tmhedberg/SimpylFold'
 on_ft = 'python'
-
-[[plugins]]
-repo = 'raimon49/requirements.txt.vim'
-on_ft = 'requirements'
-
-# CSV
-[[plugins]]
-repo = 'chrisbra/csv.vim'
-on_ft = 'csv'
-
-# Markdown
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = 'markdown'
-hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
-  let g:vim_markdown_conceal = 0
-'''
 
 [[plugins]]
 repo = 'rhysd/vim-gfm-syntax'

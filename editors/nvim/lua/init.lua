@@ -312,7 +312,7 @@ local function set_global_options()
   end
 end
 
---- Create autocmds {{{1
+--- Create autocmds for plugins {{{1
 local function create_autocmds()
   local autocmds = {
     MyAutoCmd = {};
@@ -336,6 +336,7 @@ create_autocmds()
 
 -- Plugins
 require("dein")
--- vim.api.nvim_command("command! PackUpdate  lua require('minpac').pack_update()")
--- vim.api.nvim_command("command! PackClean   lua require('minpac').pack_clean()")
--- vim.api.nvim_command("command! PackStatus  lua require('minpac').pack_status()")
+
+-- Key mappings
+require("mappings")
+

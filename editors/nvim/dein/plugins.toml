@@ -125,57 +125,6 @@ repo = 'chemzqm/unite-location'
 # Appearance
 #==============================================================================
 
-# # Custom status line
-# [[plugins]]
-# repo = 'itchyny/lightline.vim'
-#
-# # Nord colorscheme
-# [[plugins]]
-# repo = 'arcticicestudio/nord-vim'
-# hook_add = '''
-#   let g:nord_italic = 1
-#   let g:nord_italic_comments = 1
-#   let g:nord_underline = 1
-#   let g:nord_uniform_diff_background = 1
-#   let g:nord_uniform_status_lines = 1
-#   let g:nord_cursor_line_number_background = 1
-#   " Override or add more highlights (borrowed from deiphinus(@delphi)'s dotfiles)
-#   augroup nord-overrides
-#     autocmd!
-#     autocmd ColorScheme nord hi Comment guifg=#CDD0BB
-#     autocmd ColorScheme nord hi Delimiter guifg=#81A1C1
-#     autocmd ColorScheme nord hi DeniteFilter guifg=#D8DEE9 guibg=#183203 ctermfg=NONE ctermbg=0 gui=NONE
-#     autocmd ColorScheme nord hi FloatPreview guifg=#D8DEE9 guibg=#183203 ctermfg=NONE ctermbg=0 gui=NONE
-#     autocmd ColorScheme nord hi FloatPreviewTransparent guifg=#183203 guibg=#183203 ctermfg=NONE ctermbg=0 gui=NONE
-#     autocmd ColorScheme nord hi Folded guifg=#D08770 gui=NONE
-#     autocmd ColorScheme nord hi Identifier guifg=#8FBCBB
-#     autocmd ColorScheme nord hi NormalFloat guifg=#D8DEE9 guibg=#0B1900 ctermfg=NONE ctermbg=0 gui=NONE
-#     autocmd ColorScheme nord hi Special guifg=#D08770
-#     autocmd ColorScheme nord hi Title gui=bold cterm=bold
-#     " for gitgutter
-#     autocmd ColorScheme nord hi SignifyLineAdd ctermbg=233 guibg=#122b0c
-#     autocmd ColorScheme nord hi SignifyLineChange ctermbg=236 guibg=#342e0e
-#     autocmd ColorScheme nord hi SignifyLineDelete ctermbg=235 guibg=#4e2728
-#     if has('nvim')
-#       autocmd ColorScheme nord hi GitGutterAddLineNr guifg=#a3be8c guibg=#163601 gui=bold
-#       autocmd ColorScheme nord hi GitGutterChangeDeleteLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
-#       autocmd ColorScheme nord hi GitGutterChangeLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
-#       autocmd ColorScheme nord hi GitGutterDeleteLineNr guifg=#bf616a guibg=#52050c gui=bold
-#       " for ALE
-#       autocmd ColorScheme nord hi ALEErrorSignLineNr guifg=#bf616a guibg=#52050c gui=bold
-#       autocmd ColorScheme nord hi ALEInfoSignLineNr guifg=#a3be8c guibg=#163601 gui=bold
-#       autocmd ColorScheme nord hi ALEStyleErrorSignLineNr guifg=#bf616a guibg=#52050c gui=bold
-#       autocmd ColorScheme nord hi ALEStyleWarningSignLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
-#       autocmd ColorScheme nord hi ALEWarningSignLineNr guifg=#ebcb8b guibg=#432d00 gui=bold
-#       " LSP diagnostics
-#       autocmd ColorScheme nord hi LSPDiagnosticsError guifg=#bf616a guibg=#52050c gui=bold
-#       autocmd ColorScheme nord hi LSPDiagnosticsWarning guifg=#d08770 guibg=#5d1c08
-#       autocmd ColorScheme nord hi LSPDiagnosticsInformation guifg=#5e81ac guibg=#153b68
-#       autocmd ColorScheme nord hi LSPDiagnosticsHint guifg=#a3be8c guibg=#456c26
-#     endif
-#   augroup END
-# '''
-
 # Iceberg color scheme
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
@@ -207,6 +156,21 @@ repo = 'JesseKPhillips/d.vim'
 # extend % and g% for python
 repo = 'vim-scripts/python_match.vim'
 
+[[plugins]]
+repo = 'raimon49/requirements.txt.vim'
+
+# CSV
+[[plugins]]
+repo = 'chrisbra/csv.vim'
+
+# Markdown
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+hook_add = '''
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+  let g:vim_markdown_conceal = 0
+'''
 # JSON
 [[plugins]]
 repo = 'neoclide/jsonc.vim'
@@ -218,4 +182,5 @@ repo = 'chrisbra/vim-zsh'
 # GNU As
 [[plugins]]
 repo = 'Shirk/vim-gas'
+
 
