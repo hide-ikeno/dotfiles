@@ -50,7 +50,6 @@ hook_add = '''
 [[plugins]]
 repo = 'ntpeters/vim-better-whitespace'
 hook_add = '''
-  " lua require("plugins/vim-better-whitespace").hook_add()
   let g:better_whitespace_enabled = 1
   let g:strip_whitespace_on_save  = 1
   let g:show_spaces_that_precede_tabs = 1
@@ -65,7 +64,6 @@ hook_add = '''
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
 hook_add = '''
-  " lua require("plugins/vim-tmux-navigator").hook_add()
   let g:tmux_navigator_no_mappings = 1
   nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
   nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
@@ -125,13 +123,13 @@ repo = 'chemzqm/unite-location'
 # Appearance
 #==============================================================================
 
-# Iceberg color scheme
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
-
-# palenight
-[[plugins]]
-repo = 'drewtempelmeyer/palenight.vim'
+# # Iceberg color scheme
+# [[plugins]]
+# repo = 'cocopon/iceberg.vim'
+#
+# # palenight
+# [[plugins]]
+# repo = 'drewtempelmeyer/palenight.vim'
 
 #==============================================================================
 # Syntax, filetype (not necessary for lazy loading)

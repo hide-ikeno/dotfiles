@@ -113,18 +113,18 @@ api.nvim_set_keymap("n", "<S-Return>", "zMza", {noremap = true})
 -- Smart open/close fold
 function smart_fold_closer()
   if vim.fn.foldlevel(".") == 0 then
-    api.nvim_command("normal! zM") 
+    api.nvim_command("normal! zM")
     return
   end
 
   local foldc_lnum = vim.fn.foldclosed(".")
-  api.nvim_command("normal! zM") 
+  api.nvim_command("normal! zM")
   if foldc_lnum == -1 then
     return
   end
 
   if vim.fn.foldclosed('.') == foldc_lnum then
-    api.nvim_command("normal! zM") 
+    api.nvim_command("normal! zM")
   end
   return
 end
@@ -139,7 +139,7 @@ api.nvim_set_keymap("n", "<C-_>", ":<C-u>lua smart_fold_closer()<CR>",
 
 -- Window/Tabs operation {{{
 -- Use 's' key as the prefix to control window/tab
- 
+
 -- new tab
 api.nvim_set_keymap("n", "st", ":tabnew<CR>", {noremap = true, silent = true})
 -- close window
@@ -166,7 +166,7 @@ api.nvim_set_keymap("n", "<S-Down>",  "<C-w>-", {noremap = true})
 
 --- Leader mappings {{{
 -- ;; to :
-api.nvim_set_keymap("n", "<Leader>;",  ":", {noremap = true, silent = true})
+-- api.nvim_set_keymap("n", "<Leader>;",  ":", {noremap = true, silent = true})
 
 -- Quit
 api.nvim_set_keymap("n", "<Leader>q",  ":quit<CR>",        {noremap = true, silent = true})

@@ -15,7 +15,7 @@ if vim.fn.exists("syntax_on") then
   vim.api.nvim_command("syntax reset")
 end
 
-vim.g.colors_name = "iceberg"
+-- vim.g.colors_name = "iceberg"
 
 -- Colors for terminal
 if vim.fn.has("nvim") then

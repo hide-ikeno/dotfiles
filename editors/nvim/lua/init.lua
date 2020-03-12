@@ -340,3 +340,6 @@ require("dein")
 -- Key mappings
 require("mappings")
 
+-- Appearance
+require("theme")
+

@@ -94,6 +94,14 @@ repo = 'Shougo/neco-syntax'
 depends = ['deoplete.nvim']
 on_source = ['deoplete.nvim']
 
+[[plugins]]
+repo = 'Shougo/neoinclude.vim'
+on_source = ['deoplete.nvim']
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = 'vim'
+
 # Completion preview window based on neovim's floating window
 [[plugins]]
 repo = 'ncm2/float-preview.nvim'
