@@ -388,11 +388,11 @@ hook_source = '''
   let g:calendar_google_task = 1
 '''
 
-# Set the buffer filetype based on the code block
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-on_event = 'BufEnter'
+# # Set the buffer filetype based on the code block
+# [[plugins]]
+# repo = 'osyo-manga/vim-precious'
+# depends = ['context_filetype.vim']
+# on_event = 'BufEnter'
 
 # [DO]cument [GE]nerator
 [[plugins]]
