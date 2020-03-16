@@ -1,52 +1,34 @@
--- Statusline colors
 local vim = vim or {}
+local M = {}
 
-local current_mode_label = {
-  ["n"]  = "NORMAL ";
-  ["no"] = "N-OP ";
-  ["v"]  = "VISUAL ";
-  ["V"]  = "V-LINE ";
-  [""] = "V-BLOCK ";
-  ["s"]  = "SELECT ";
-  ["S"]  = "S-LINE ";
-  [""] = "S-BLOCK ";
-  ["i"]  = "INSERT ";
-  ["R"]  = "REPLACE ";
-  ["Rv"] = "V-REPLACE ";
-  ["c"]  = "COMMAND ";
-  ["cv"] = "VIM EX ";
-  ["ce"] = "EX ";
-  ["r"]  = "PROMPT ";
-  ["rm"] = "MORE ";
-  ["r?"] = "CONFIRM ";
-  ["!"]  = "SHELL ";
-  ["t"]  = "TERMINAL ";
-}
-
+-- Separators
 local separator = {
-  left  = "";
-  right = "";
+  -- left  = "";
+  -- right = "";
+  left  = "";
+  right = "";
   sub_left  = "";
   sub_right = "";
   edge  = "";
 }
 
+-- -- Colors
 local colors = {
   -- iceberg color theme
   base     = {"#3e445e", "#0f1117", 238, 233};
   edge     = {"#17171b", "#818596", 234, 245};
   gradient = {"#6b7089", "#2e313f", 242, 236};
   nc       = {"#3e445e", "#0f1117", 238, 233};
-  normal   = {"#17171b", "#818596", 234, 245};
+  normal   = {"#161821", "#b4be82", 234, 150};
   error    = {"#161821", "#e27878", 234, 203};
   warning  = {"#161821", "#e2a478", 234, 216};
   insert   = {"#161821", "#84a0c6", 234, 110};
   replace  = {"#161821", "#e2a478", 234, 216};
-  visual   = {"#161821", "#b4be82", 234, 150};
+  visual   = {"#161821", "#a093c7", 234, 140};
+  misc     = {"#17171b", "#818596", 234, 245};
   tabfill  = {"#3e445e", "#0f1117", 238, 233};
   tabsel   = {"#17171b", "#818596", 234, 245};
 }
-
 
 local function highlight(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
   local parts = {group}
@@ -62,40 +44,79 @@ local function highlight(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
   vim.api.nvim_command('highlight '..table.concat(parts, ' '))
 end
 
+-- Mode colors
+highlight("StatusLineModeNormal", colors.normal[1], colors.normal[2], colors.normal[3], colors.normal[4], nil, nil)
+highlight("StatusLineModeNormalSep", colors.normal[2], nil, colors.normal[4], nil, nil, nil)
+highlight("StatusLineModeInsert", colors.insert[1], colors.insert[2], colors.insert[3], colors.insert[4], nil, nil)
+highlight("StatusLineModeInsertSep", colors.insert[2], nil, colors.insert[4], nil, nil, nil)
+highlight("StatusLineModeVisual", colors.visual[1], colors.visual[2], colors.visual[3], colors.visual[4], nil, nil)
+highlight("StatusLineModeVisualSep", colors.visual[2], nil, colors.visual[4], nil, nil, nil)
+highlight("StatusLineModeReplace", colors.replace[1], colors.replace[2], colors.replace[3], colors.replace[4], nil, nil)
+highlight("StatusLineModeReplaceSep", colors.replace[2], nil, colors.replace[4], nil, nil, nil)
+highlight("StatusLineModeMisc", colors.misc[1], colors.misc[2], colors.misc[3], colors.misc[4], nil, nil)
+highlight("StatusLineModeMiscSep", colors.misc[2], nil, colors.misc[4], nil, nil, nil)
 
-local function redraw_mode_color(mode)
-  if mode == "i" then
-    highlight("StatusLineMode", colors.insert[1], colors.insert[2], colors.insert[3], colors.insert[4], nil, nil)
-    highlight("StatusLineModeSep", colors.insert[2], colors.gradient[2], colors.insert[4], colors.gradient[4], nil, nil)
-  elseif mode == "R" then
-    highlight("StatusLineMode", colors.replace[1], colors.replace[2], colors.replace[3], colors.replace[4], nil, nil)
-    highlight("StatusLineModeSep", colors.replace[2], colors.gradient[2], colors.replace[4], colors.gradient[4], nil, nil)
-  elseif mode == "v" or mode == "V" or mode == "" then
-    highlight("StatusLineMode", colors.visual[1], colors.visual[2], colors.visual[3], colors.visual[4], nil, nil)
-    highlight("StatusLineModeSep", colors.visual[2], colors.gradient[2], colors.visual[4], colors.gradient[4], nil, nil)
-  else
-    highlight("StatusLineMode", colors.normal[1], colors.normal[2], colors.normal[3], colors.normal[4], nil, nil)
-    highlight("StatusLineModeSep", colors.normal[2], colors.gradient[2], colors.normal[4], colors.gradient[4], nil, nil)
-  end
-end
+-- Gradient color
+highlight("StatusLineGradient", colors.gradient[1], colors.gradient[2], colors.gradient[3], colors.gradient[4], nil, nil)
+highlight("StatusLineGradientSep", colors.gradient[2], nil, colors.gradient[4], nil, nil, nil)
 
+-- Base color
+highlight("StatusLineBase", colors.base[1], colors.base[2], colors.base[3], colors.base[4], nil, nil)
+highlight("StatusLineBaseSep", colors.base[2], nil, colors.base[4], nil, nil, nil)
 
-local function highlight_active()
-  highlight("StatusLineBase", colors.base[1], colors.base[2], colors.base[3], colors.base[4], nil, nil)
-  highlight("StatusLineGradient", colors.gradient[1], colors.gradient[2], colors.gradient[3], colors.gradient[4],  nil, nil)
-  highlight("StatusLineEdge", colors.edge[1], colors.edge[2], colors.edge[3], colors.edge[4], nil, nil)
+-- Edge color
+highlight("StatusLineEdge", colors.edge[1], colors.edge[2], colors.edge[3], colors.edge[4], nil, nil)
+highlight("StatusLineEdgeSep", colors.edge[2], nil, colors.edge[4], nil, nil, nil)
 
-  highlight("StatusLineGradientSep", colors.gradient[2], colors.base[2], colors.gradient[4], colors.base[4], nil, nil)
-  highlight("StatusLineEdgeSep", colors.edge[2], colors.gradient[2], colors.edge[4], colors.gradient[4], nil, nil)
-end
+-- NC color
+highlight("StatusLineBaseNC", colors.nc[1], colors.nc[2], colors.nc[3], colors.nc[4], nil, nil)
+highlight("StatusLineBaseNCSep", colors.nc[2], nil, colors.nc[4], nil, nil, nil)
 
+-- Mode hightlight
+local current_mode_label = setmetatable({
+    ["n"]  = " NORMAL ";
+    ["no"] = " N-Operator Pending ";
+    ["v"]  = " VISUAL ";
+    ["V"]  = " V-Line ";
+    [""] = " V-Block ";
+    ["s"]  = " SELECT ";
+    ["S"]  = " S-Line ";
+    [""] = " S-Block ";
+    ["i"]  = " INSERT ";
+    ["ic"] = " INSERT ";
+    ["ix"] = " INSERT ";
+    ["R"]  = " REPLACE ";
+    ["Rv"] = " V-REPLACE ";
+    ["c"]  = " COMMAND ";
+    ["cv"] = " Vim Ex ";
+    ["ce"] = " Ex ";
+    ["r"]  = " Prompt ";
+    ["rm"] = " More ";
+    ["r?"] = " Confirm ";
+    ["!"]  = " Shell ";
+    ["t"]  = " TERMINAL ";
+  }, {
+    -- fix wired issues
+    __index = function(_, _)
+      return "V-BLOCK"
+    end
+  })
 
-local function highlight_inactive()
-  highlight("StatusLineBaseNC", colors.nc[1],  colors.nc[2],  colors.nc[3],  colors.nc[4],  nil, nil)
-end
+local current_mode_hi_groups = setmetatable({
+    ["n"]  = {"Normal",  "NormalSep"};
+    ["i"]  = {"Insert",  "InsertSep"};
+    ["v"]  = {"Visual",  "VisualSep"};
+    ["V"]  = {"Visual",  "VisualSep"};
+    [""] = {"Visual",  "VisualSep"};
+    ["R"]  = {"Replace", "ReplaceSep"};
+    ["Rv"] = {"Replace", "ReplaceSep"};
+  }, {
+    __index = function(_, _)
+      return {"Misc", "MiscSep"}
+    end
+  })
 
-
-function StatuslineMode()
+local function statusline_mode()
   local ft = vim.fn.filetype
   if ft == "denite" then
     return " Denite "
@@ -104,12 +125,12 @@ function StatuslineMode()
   end
 
   local mode = vim.fn.mode()
-  redraw_mode_color(mode)
+  -- redraw_mode_color(mode)
   return current_mode_label[mode]
 end
 
 
-function StatuslineReadonly()
+local function statusline_readonly()
   local ft = vim.bo.filetype
   if ft ~= "help" and vim.bo.readonly then
     return " "
@@ -119,43 +140,43 @@ function StatuslineReadonly()
 end
 
 
-function StatuslineModified()
+local function statusline_modified()
   return vim.bo.modified and "  " or (vim.bo.modifiable and "" or " - ")
 end
 
 
-function StatuslineGitbranch()
+local function statusline_gitbranch()
   local branch = vim.fn["gitbranch#name"]()
   return branch == "" and "" or "  "..branch
 end
 
 
-function StatuslineFilename()
+local function statusline_filename()
   if vim.bo.buftype == "terminal" then
     local title = vim.api.nvim_buf_get_var(0, "term_title")
     local pid   = vim.api.nvim_buf_get_var(0, "terminal_job_pid")
-    return string.format("%s (%s)", title, pid);
+    return string.format(" %s (%s) ", title, pid);
   end
 
   local ft_lean = { "tagbar", "vista", "defx", "coc-explorer", "magit" }
   local ft = vim.bo.filetype
   if vim.tbl_contains(ft_lean, ft) then
-    return ""
+    return " "
   end
 
   local fname = vim.fn.expand("%:t")
   if fname == "" then
-    return "[No Name]"
+    return " [No Name] "
   end
 
   local icon = #ft ~= 0 and vim.fn.WebDevIconsGetFileTypeSymbol() or "no ft"
-  local ro = StatuslineReadonly()
-  local mo = StatuslineModified()
-  return string.format("%s %s%s %s", icon, ro, fname, mo)
+  local ro = statusline_readonly()
+  local mo = statusline_modified()
+  return string.format(" %s %s%s %s", icon, ro, fname, mo)
 end
 
 
-function StatuslineFiletype()
+local function statusline_filetype()
   if vim.api.nvim_win_get_width(0) < 80 then
     return ""
   end
@@ -164,17 +185,17 @@ function StatuslineFiletype()
 end
 
 
-function StatuslineFileformat()
+local function statusline_fileformat()
   if vim.api.nvim_win_get_width(0) < 80 then
     return ""
   end
   local ff = vim.bo.fileformat
   local icon = vim.fn.WebDevIconsGetFileFormatSymbol()
-  return string.format("%s %s", icon, ff)
+  return string.format(" %s %s ", icon, ff)
 end
 
 
-function StatuslineFileencoding()
+local function statusline_fileencoding()
   if vim.api.nvim_win_get_width(0) < 80 then
     return ""
   end
@@ -187,34 +208,51 @@ end
 
 
 -- Build the string for statusline
-function StatuslineActive()
-  highlight_active()
+function M.activeLine()
+  local mode = vim.api.nvim_get_mode()['mode']
+  local mode_label = current_mode_label[mode]
+  local mode_hi = current_mode_hi_groups[mode]
+  local filename = statusline_filename()
+  local branch = statusline_gitbranch()
+  local fenc = statusline_fileencoding()
+  local ff = statusline_fileformat()
   local parts = {
-    -- Left segment
-    "%#StatusLineMode# %{v:lua.StatuslineMode()}";
-    "%#StatusLineModeSep#" .. separator.left;
-    "%#StatusLineGradient# %{v:lua.StatuslineFilename()} ";
-    "%#StatusLineGradientSep#" .. separator.left;
-    "%#StatusLineBase# %{v:lua.StatuslineGitbranch()}";
-    "%=";
-    -- Right segment
-    "%{&paste ?'PASTE ':''}%{&spell?'SPELL ':''}";
+    --[[ Left segment ]]
+    -- current mode
+    "%#StatusLineMode".. mode_hi[2] .. "#" .. separator.left;
+    "%#StatusLineMode".. mode_hi[1] .. "#" .. mode_label;
+    "%#StatusLineMode".. mode_hi[2] .. "#" .. separator.right;
+    -- filename
+    " %#StatusLineGradientSep#" .. separator.left;
+    "%#StatusLineGradient#" .. filename;
     "%#StatusLineGradientSep#" .. separator.right;
-    "%#StatusLineGradient# %{v:lua.StatuslineFileencoding()} %{v:lua.StatuslineFileformat()} ";
-    "%#StatusLineEdgeSep#" .. separator.right;
+    -- git branch
+    " %#StatusLineBaseSep#" .. separator.left;
+    "%#StatusLineBase#" .. branch;
+    "%#StatusLineBaseSep#" .. separator.right;
+    "%=";
+    --[[ Right segment ]]
+    -- spell or paste mode
+    " %#StatusLineBaseSep#" .. separator.left;
+    "%#StatusLineBase#%{&paste ?' PASTE ':' '}%{&spell?' SPELL ':' '}";
+    "%#StatusLineBaseSep#" .. separator.right;
+    " %#StatusLineGradientSep#" .. separator.left;
+    "%#StatusLineGradient#" .. fenc .. " " .. ff;
+    "%#StatusLineGradientSep#" .. separator.right;
+    " %#StatusLineEdgeSep#" .. separator.left;
     "%#StatusLineEdge#  %3l  %-2v (%P) " .. separator.edge;
+    "%#StatusLineEdgeSep#" .. separator.right;
   }
   return table.concat(parts, "")
 end
 
-
-function StatuslineInactive()
-  highlight_inactive()
+function M.inActiveLine()
   return "%#StatusLineBaseNC#  %n: %f"
 end
 
-
-function StatuslineDefx()
+function M.defxLine()
   return "%  %n: Defx"
 end
+
+return M
 

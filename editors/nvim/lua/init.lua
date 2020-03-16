@@ -15,7 +15,7 @@ local function configure_path(new_paths, path_var)
   local function add_paths(list)
     for _, x in ipairs(list) do
       if not is_empty(x) then
-        y = vim.fn.expand(x)
+        local y = vim.fn.expand(x)
         if utils.path.is_dir(y) and not vim.tbl_contains(paths, y) then
           paths[#paths+1] = y
         end
@@ -347,6 +347,6 @@ require("dein")
 -- Key mappings
 require("mappings")
 
--- Appearance
-require("theme")
+-- -- Appearance
+-- require("theme")
 
