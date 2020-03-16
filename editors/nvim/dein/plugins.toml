@@ -124,8 +124,8 @@ repo = 'chemzqm/unite-location'
 #==============================================================================
 
 # Iceberg color scheme
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
+# [[plugins]]
+# repo = 'cocopon/iceberg.vim'
 
 # # palenight
 # [[plugins]]
