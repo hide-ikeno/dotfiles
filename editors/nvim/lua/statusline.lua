@@ -44,6 +44,10 @@ local function highlight(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
   vim.api.nvim_command('highlight '..table.concat(parts, ' '))
 end
 
+-------------------------------------------------------------------------------
+-- Statusline
+-------------------------------------------------------------------------------
+
 -- Mode colors
 highlight("StatusLineModeNormal", colors.normal[1], colors.normal[2], colors.normal[3], colors.normal[4], nil, nil)
 highlight("StatusLineModeNormalSep", colors.normal[2], nil, colors.normal[4], nil, nil, nil)
@@ -252,6 +256,57 @@ end
 
 function M.defxLine()
   return "%  %n: Defx"
+end
+
+-------------------------------------------------------------------------------
+-- Tabline
+-------------------------------------------------------------------------------
+
+-- https://github.com/haorenW1025/dotfiles/blob/130dbf80e73e71cc8f6b89066f536417f455b088/nvim/lua/status-line.lua
+local function get_tab_label(n)
+  local current_win = vim.api.nvim_tabpage_get_win(n)
+  local current_buf = vim.api.nvim_win_get_buf(current_win)
+  local filename = vim.api.nvim_buf_get_name(current_buf)
+  if string.find(filename, 'term://') ~= nil then
+    return ' ' .. vim.api.nvim_call_function('fnamemodify', {filename, ":p:t"})
+  end
+  filename = vim.api.nvim_call_function('fnamemodify', {filename, ":p:t"})
+  if filename == '' then
+    return "No Name"
+  end
+  -- local icon = icons.deviconTable[filename]
+  local icon = vim.fn.WebDevIconsGetFileTypeSymbol(filename) or ""
+  if icon ~= nil then
+    return icon .. " " .. filename
+  end
+  return filename
+end
+
+-- Tabfill
+highlight("TabLineSel", colors.tabsel[1], colors.tabsel[2], colors.tabsel[3], colors.tabsel[4], nil, nil)
+highlight("TabLineSelSep", colors.tabsel[2], nil, colors.tabsel[4], nil, nil, nil)
+
+-- Tabsel
+highlight("TabLineFill", colors.tabfill[1], colors.tabfill[2], colors.tabfill[3], colors.tabfill[4], nil, nil)
+highlight("TabLineFillSep", colors.tabfill[2], nil, colors.tabfill[4], nil, nil, nil)
+
+function M.TabLine()
+  local tabline = ''
+  local tab_list = vim.api.nvim_list_tabpages()
+  local current_tab = vim.api.nvim_get_current_tabpage()
+  for _, val in ipairs(tab_list) do
+    local filename = get_tab_label(val)
+    if val == current_tab then
+      tabline = tabline.."%#TabLineSelSep# " .. separator.left
+      tabline = tabline.."%#TabLineSel# "    .. filename
+      tabline = tabline.." %#TabLineSelSep#" .. separator.right
+    else
+      tabline = tabline.."%#TabLineFillSep# " .. separator.left
+      tabline = tabline.."%#TabLine# "        .. filename
+      tabline = tabline.." %#TabLineFillSep#" .. separator.right
+    end
+  end
+  return tabline
 end
 
 return M
