@@ -16,7 +16,7 @@ end)()
 -- Path utilities (picked from nvim_lsp/utils.lua)
 M.path = (function()
   local function exists(filename)
-    stat = vim.loop.fs_stat(filename)
+    local stat = vim.loop.fs_stat(filename)
     return stat and stat.type or false
   end
 
