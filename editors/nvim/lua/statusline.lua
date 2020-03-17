@@ -152,9 +152,9 @@ end
 
 
 local function statusline_gitbranch()
-  -- local branch = vim.fn["gitbranch#name"]()
-  local branch = utils.os.capture("git rev-parse --abbrev-ref HEAD 2>/dev/null")
-  branch = vim.trim(branch)
+  local branch = vim.fn["gitbranch#name"]()
+  -- local branch = utils.os.capture("git rev-parse --abbrev-ref HEAD 2>/dev/null")
+  -- branch = vim.trim(branch)
   return branch == "" and "-" or " " .. branch
 end
 

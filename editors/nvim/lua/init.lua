@@ -343,6 +343,9 @@ create_autocmds()
 
 -- Plugins
 require("dein")
+-- vim.api.nvim_command("command! PackUpdate lua require'minpac'.pack_update()")
+-- vim.api.nvim_command("command! PackStatus lua require'minpac'.pack_status()")
+-- vim.api.nvim_command("command! PackClean  lua require'minpac'.pack_clean()")
 
 -- Key mappings
 require("mappings")

@@ -5,11 +5,14 @@ local M = {}
 local base_dir = vim.env.VIM_CACHE_HOME .. "/pack/minpac"
 
 local plugins = {
+  -- Plugin manager
   {"k-takata/minpac", type = "opt"};
+
+  -- Basics
   'thinca/vim-localrc';
   'editorconfig/editorconfig-vim';
   'TravonteD/luajob';
-  'itchyny/vim-gitbranch';
+  -- 'itchyny/vim-gitbranch';
   'itchyny/vim-parenmatch';
   'Yggdroot/indentLine';
   'ntpeters/vim-better-whitespace';
@@ -18,35 +21,48 @@ local plugins = {
   'kana/vim-operator-user';
   'kana/vim-textobj-user';
   'tpope/vim-repeat';
+  'ryanoasis/vim-devicons';
 
   -- LSP
-  'neovim/nvim-lsp';
+  {'neovim/nvim-lsp',             type = "opt"};
+  {'haorenW1025/diagnostic-nvim', type = "opt"};
 
-  -- Fuzzy finder
-  {'Shougo/denite.nvim', type = "opt"};
-  {'Shougo/neoyank.vim', type = "opt"};
-  {'Shougo/neomru.vim',  type = "opt"};
-  {'Shougo/deol.nvim',   type = "opt"};
-  {'raghur/fruzzy',      type = "opt", ["do"] = "{-> fruzzy#install()}"};
+  -- Tags
+  {'ludovicchabant/vim-gutentags', type = "opt"};
+  {'liuchengxu/vista.vim',        type = "opt"};
+
+  -- Snippets
+  {'Shougo/neosnippet.vim',        type = "opt"};
 
   -- Auto completion
-  {'Shougo/deoplete.nvim', type = "opt"};
-  'ncm2/float-preview.nvim';
-  'Shougo/neco-syntax';
-  'Shougo/neosnippet-snippets';
-  'Shougo/deoplete-lsp';
-  'tbodt/deoplete-tabnine';
-  'zchee/deoplete-zsh';
+  {'haorenW1025/completion-nvim', type = "opt"};
 
-  {'Shougo/neosnippet.vim', type = "opt"};
-  {'Shougo/neoinclude.vim', type = "opt"};
-  {'Shougo/neco-vim', type = "opt"};
-  {'ludovicchabant/vim-gutentags', type = "opt"};
-  {'hrsh7th/vim-vsnip', type = "opt"};
-  {'hrsh7th/vim-vsnip-integ', type = "opt"};
+  -- {'Shougo/deoplete.nvim', type = "opt"};
+  -- 'ncm2/float-preview.nvim';
+  -- 'Shougo/neco-syntax';
+  -- 'Shougo/neosnippet-snippets';
+  -- 'Shougo/deoplete-lsp';
+  -- 'tbodt/deoplete-tabnine';
+  -- 'zchee/deoplete-zsh';
+  -- {'Shougo/neco-vim',         type = "opt"};
+  -- {'Shougo/neoinclude.vim',   type = "opt"};
+  -- {'hrsh7th/vim-vsnip',       type = "opt"};
+  -- {'hrsh7th/vim-vsnip-integ', type = "opt"};
+
+  -- Fuzzy finder
+  'junegunn/fzf';
+  'yuki-ycino/fzf-preview.vim';
+  -- {'junegunn/fzf',               type = "opt"};
+  -- {'yuki-ycino/fzf-preview.vim', type = "opt"};
+
+  -- {'Shougo/denite.nvim', type = "opt"};
+  -- {'Shougo/neoyank.vim', type = "opt"};
+  -- {'Shougo/neomru.vim',  type = "opt"};
+  -- {'Shougo/deol.nvim',   type = "opt"};
+  -- {'raghur/fruzzy',      type = "opt", ["do"] = "{-> fruzzy#install()}"};
 
   -- Filer
-  {'Shougo/defx.nvim', type = "opt"};
+  {'Shougo/defx.nvim',          type = "opt"};
   {'kristijanhusak/defx-icons', type = "opt"};
   'kristijanhusak/defx-git';
   'chemzqm/unite-location';
@@ -67,45 +83,44 @@ local plugins = {
   'rhysd/vim-gfm-syntax';
 
   -- Commands, Interfaces
-  {'liuchengxu/vista.vim', type = "opt"};
-  {'thinca/vim-qfreplace', type = "opt"};
-  {'t9md/vim-choosewin', type = "opt"};
-  {'junegunn/vim-easy-align', type = "opt"};
-  {'AndrewRadev/splitjoin.vim', type = "opt"};
-  {'rbgrouleff/bclose.vim', type = "opt"};
-  {'tyru/eskk.vim', type = "opt"};
-  {'tyru/caw.vim', type = "opt"};
-  {'kana/vim-niceblock', type = "opt"};
-  {'easymotion/vim-easymotion', type = "opt"};
-  {'haya14busa/vim-edgemotion', type = "opt"};
-  {'rhysd/accelerated-jk', type = "opt"};
-  {'osyo-manga/vim-jplus', type = "opt"};
-  {'Konfekt/FastFold', type = "opt"};
-  {'itchyny/calendar.vim', type = "opt"};
-  {'osyo-manga/vim-precious', type = "opt"};
-  {'kkoomen/vim-doge', type = "opt"};
-  {'ryanoasis/vim-devicons', type = "opt"};
+  {'thinca/vim-qfreplace',        type = "opt"};
+  {'t9md/vim-choosewin',          type = "opt"};
+  {'junegunn/vim-easy-align',     type = "opt"};
+  {'AndrewRadev/splitjoin.vim',   type = "opt"};
+  {'rbgrouleff/bclose.vim',       type = "opt"};
+  {'tyru/eskk.vim',               type = "opt"};
+  {'tyru/caw.vim',                type = "opt"};
+  {'kana/vim-niceblock',          type = "opt"};
+  {'easymotion/vim-easymotion',   type = "opt"};
+  {'haya14busa/vim-edgemotion',   type = "opt"};
+  {'rhysd/accelerated-jk',        type = "opt"};
+  {'osyo-manga/vim-jplus',        type = "opt"};
+  {'Konfekt/FastFold',            type = "opt"};
+  {'itchyny/calendar.vim',        type = "opt"};
+  {'osyo-manga/vim-precious',     type = "opt"};
+  {'kkoomen/vim-doge',            type = "opt"};
   {'norcalli/nvim-colorizer.lua', type = "opt"};
-  {'liuchengxu/vim-which-key', type = "opt"};
+  {'liuchengxu/vim-which-key',    type = "opt"};
 
   -- text objects, operators
-  {'machakann/vim-sandwich', type = "opt"};
-  {'kana/vim-operator-replace', type = "opt"};
-  {'kana/vim-textobj-entire', type = "opt"};
-  {'kana/vim-textobj-line', type = "opt"};
-  {'thinca/vim-textobj-comment', type = "opt"};
-  {'mattn/vim-textobj-url', type = "opt"};
+  {'machakann/vim-sandwich',          type = "opt"};
+  {'kana/vim-operator-replace',       type = "opt"};
+  {'kana/vim-textobj-entire',         type = "opt"};
+  {'kana/vim-textobj-line',           type = "opt"};
+  {'thinca/vim-textobj-comment',      type = "opt"};
+  {'mattn/vim-textobj-url',           type = "opt"};
   {'machakann/vim-textobj-delimited', type = "opt"};
-  {'terryma/vim-expand-region', type = "opt"};
+  {'terryma/vim-expand-region',       type = "opt"};
+
   -- Filetypes (lazy)
-  {'lambdalisue/gina.vim', type = "opt"};
-  {'airblade/vim-gitgutter', type = "opt"};
-  {'rhysd/committia.vim', type = "opt"};
-  {'rhysd/git-messenger.vim', type = "opt"};
-  {'lambdalisue/vim-pyenv', type = "opt"};
-  {'tmhedberg/SimpylFold', type = "opt"};
+  {'lambdalisue/gina.vim',        type = "opt"};
+  {'airblade/vim-gitgutter',      type = "opt"};
+  {'rhysd/committia.vim',         type = "opt"};
+  {'rhysd/git-messenger.vim',     type = "opt"};
+  {'lambdalisue/vim-pyenv',       type = "opt"};
+  {'tmhedberg/SimpylFold',        type = "opt"};
   {'iamcco/markdown-preview.vim', type = "opt"};
-  {'Shougo/vinarise.vim', type = "opt"};
+  {'Shougo/vinarise.vim',         type = "opt"};
 }
 
 local function ensure_minpac()

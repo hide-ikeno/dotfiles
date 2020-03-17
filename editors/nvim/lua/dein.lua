@@ -54,24 +54,6 @@ if vim.fn["dein#load_state"](dein_dir) == 1 then
   vim.fn["dein#end"]()
   vim.fn["dein#save_state"]()
 end
--- if dein#load_state(s:dein_dir)
---   let s:toml = [
---         \ { 'name': 'plugins.toml',      'lazy': 0 },
---         \ { 'name': 'ftplugin.toml',     'lazy': 0 },
---         \ { 'name': 'plugins_lazy.toml', 'lazy': 1 },
---         \ { 'name': 'defx.toml',         'lazy': 1 },
---         \ { 'name': 'denite.toml',       'lazy': 1 },
---         \ { 'name': 'deoplete.toml',     'lazy': 1 },
---         \ { 'name': 'which_key.toml',    'lazy': 1 },
---         \ ]
---   " Reaches here if the cache script is old, invalid, or not found.
---   " Now initialize dein.vim and start plugin configuration block.
---   call dein#begin(s:dein_dir, map(deepcopy(s:toml), {_, t -> s:base . t['name']}))
---   call map(s:toml, {_, t -> dein#load_toml(s:base . t['name'], {'lazy': t['lazy']})})
---   " REMARK: 'runtimepath' is changed after dein#end()
---   call dein#end()
---   call dein#save_state()
--- endif
 
 -- Install missing plugin(s) automatically
 if vim.fn.has('vim_starting') and vim.fn["dein#check_install"]() > 0 then
