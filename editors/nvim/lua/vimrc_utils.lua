@@ -7,9 +7,22 @@ M.os = (function()
   local is_windows = vim.loop.os_uname().version:match("Windows")
   local is_mac     = vim.loop.os_uname().version:match("Darwin")
 
+  -- Get back the output of an external command
+  local function capture(cmd, raw)
+    local f = assert(io.popen(cmd, 'r'))
+    local s = assert(f:read('*a'))
+    f:close()
+    if raw then return s end
+    s = string.gsub(s, '^%s+', '')
+    s = string.gsub(s, '%s+$', '')
+    s = string.gsub(s, '[\n\r]+', ' ')
+    return s
+  end
+
   return {
     is_windows = is_windows;
     is_mac     = is_mac;
+    capture    = capture;
   }
 end)()
 

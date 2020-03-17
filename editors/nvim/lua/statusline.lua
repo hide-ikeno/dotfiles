@@ -1,4 +1,6 @@
 local vim = vim or {}
+local utils = require("vimrc_utils")
+local icons = require("devicons")
 local M = {}
 
 -- Separators
@@ -150,8 +152,10 @@ end
 
 
 local function statusline_gitbranch()
-  local branch = vim.fn["gitbranch#name"]()
-  return branch == "" and "" or "  "..branch
+  -- local branch = vim.fn["gitbranch#name"]()
+  local branch = utils.os.capture("git rev-parse --abbrev-ref HEAD 2>/dev/null")
+  branch = vim.trim(branch)
+  return branch == "" and "-" or " " .. branch
 end
 
 
@@ -173,20 +177,20 @@ local function statusline_filename()
     return " [No Name] "
   end
 
-  local icon = #ft ~= 0 and vim.fn.WebDevIconsGetFileTypeSymbol() or "no ft"
+  local icon = #ft ~= 0 and icons.filetype_icons[fname] or "no ft"
   local ro = statusline_readonly()
   local mo = statusline_modified()
   return string.format(" %s %s%s %s", icon, ro, fname, mo)
 end
 
 
-local function statusline_filetype()
-  if vim.api.nvim_win_get_width(0) < 80 then
-    return ""
-  end
-  local ft = vim.ft.filetype
-  return #ft ~= 0 and vim.fn.WebDevIconsGetFileTypeSymbol() .. " " .. ft or "no ft"
-end
+-- local function statusline_filetype()
+--   if vim.api.nvim_win_get_width(0) < 80 then
+--     return ""
+--   end
+--   local ft = vim.ft.filetype
+--   return #ft ~= 0 and vim.fn.WebDevIconsGetFileTypeSymbol() .. " " .. ft or "no ft"
+-- end
 
 
 local function statusline_fileformat()
@@ -194,7 +198,7 @@ local function statusline_fileformat()
     return ""
   end
   local ff = vim.bo.fileformat
-  local icon = vim.fn.WebDevIconsGetFileFormatSymbol()
+  local icon = icons.fileformat_icons[ff]
   return string.format(" %s %s ", icon, ff)
 end
 
@@ -232,8 +236,8 @@ function M.activeLine()
     "%#StatusLineGradientSep#" .. separator.right;
     -- git branch
     " %#StatusLineBaseSep#" .. separator.left;
-    "%#StatusLineBase#" .. branch;
-    "%#StatusLineBaseSep#" .. separator.right;
+    "%#StatusLineBase# " .. branch;
+    " %#StatusLineBaseSep#" .. separator.right;
     "%=";
     --[[ Right segment ]]
     -- spell or paste mode
@@ -262,52 +266,52 @@ end
 -- Tabline
 -------------------------------------------------------------------------------
 
--- https://github.com/haorenW1025/dotfiles/blob/130dbf80e73e71cc8f6b89066f536417f455b088/nvim/lua/status-line.lua
-local function get_tab_label(n)
-  local current_win = vim.api.nvim_tabpage_get_win(n)
-  local current_buf = vim.api.nvim_win_get_buf(current_win)
-  local filename = vim.api.nvim_buf_get_name(current_buf)
-  if string.find(filename, 'term://') ~= nil then
-    return ' ' .. vim.api.nvim_call_function('fnamemodify', {filename, ":p:t"})
-  end
-  filename = vim.api.nvim_call_function('fnamemodify', {filename, ":p:t"})
-  if filename == '' then
-    return "No Name"
-  end
-  -- local icon = icons.deviconTable[filename]
-  local icon = vim.fn.WebDevIconsGetFileTypeSymbol(filename) or ""
-  if icon ~= nil then
-    return icon .. " " .. filename
-  end
-  return filename
-end
-
--- Tabfill
-highlight("TabLineSel", colors.tabsel[1], colors.tabsel[2], colors.tabsel[3], colors.tabsel[4], nil, nil)
-highlight("TabLineSelSep", colors.tabsel[2], nil, colors.tabsel[4], nil, nil, nil)
-
--- Tabsel
-highlight("TabLineFill", colors.tabfill[1], colors.tabfill[2], colors.tabfill[3], colors.tabfill[4], nil, nil)
-highlight("TabLineFillSep", colors.tabfill[2], nil, colors.tabfill[4], nil, nil, nil)
-
-function M.TabLine()
-  local tabline = ''
-  local tab_list = vim.api.nvim_list_tabpages()
-  local current_tab = vim.api.nvim_get_current_tabpage()
-  for _, val in ipairs(tab_list) do
-    local filename = get_tab_label(val)
-    if val == current_tab then
-      tabline = tabline.."%#TabLineSelSep# " .. separator.left
-      tabline = tabline.."%#TabLineSel# "    .. filename
-      tabline = tabline.." %#TabLineSelSep#" .. separator.right
-    else
-      tabline = tabline.."%#TabLineFillSep# " .. separator.left
-      tabline = tabline.."%#TabLine# "        .. filename
-      tabline = tabline.." %#TabLineFillSep#" .. separator.right
-    end
-  end
-  return tabline
-end
+-- -- https://github.com/haorenW1025/dotfiles/blob/130dbf80e73e71cc8f6b89066f536417f455b088/nvim/lua/status-line.lua
+-- local function get_tab_label(n)
+--   local current_win = vim.api.nvim_tabpage_get_win(n)
+--   local current_buf = vim.api.nvim_win_get_buf(current_win)
+--   local filename = vim.api.nvim_buf_get_name(current_buf)
+--   if string.find(filename, 'term://') ~= nil then
+--     return ' ' .. vim.api.nvim_call_function('fnamemodify', {filename, ":p:t"})
+--   end
+--   filename = vim.api.nvim_call_function('fnamemodify', {filename, ":p:t"})
+--   if filename == '' then
+--     return "No Name"
+--   end
+--   -- local icon = icons.deviconTable[filename]
+--   local icon = vim.fn.WebDevIconsGetFileTypeSymbol(filename) or ""
+--   if icon ~= nil then
+--     return icon .. " " .. filename
+--   end
+--   return filename
+-- end
+--
+-- -- Tabfill
+-- highlight("TabLineSel", colors.tabsel[1], colors.tabsel[2], colors.tabsel[3], colors.tabsel[4], nil, nil)
+-- highlight("TabLineSelSep", colors.tabsel[2], nil, colors.tabsel[4], nil, nil, nil)
+--
+-- -- Tabsel
+-- highlight("TabLineFill", colors.tabfill[1], colors.tabfill[2], colors.tabfill[3], colors.tabfill[4], nil, nil)
+-- highlight("TabLineFillSep", colors.tabfill[2], nil, colors.tabfill[4], nil, nil, nil)
+--
+-- function M.TabLine()
+--   local tabline = ''
+--   local tab_list = vim.api.nvim_list_tabpages()
+--   local current_tab = vim.api.nvim_get_current_tabpage()
+--   for _, val in ipairs(tab_list) do
+--     local filename = get_tab_label(val)
+--     if val == current_tab then
+--       tabline = tabline.."%#TabLineSelSep# " .. separator.left
+--       tabline = tabline.."%#TabLineSel# "    .. filename
+--       tabline = tabline.." %#TabLineSelSep#" .. separator.right
+--     else
+--       tabline = tabline.."%#TabLineFillSep# " .. separator.left
+--       tabline = tabline.."%#TabLine# "        .. filename
+--       tabline = tabline.." %#TabLineFillSep#" .. separator.right
+--     end
+--   end
+--   return tabline
+-- end
 
 return M
 
