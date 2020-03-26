@@ -95,9 +95,9 @@ hook_source = '''
   call denite#custom#source('file/rec', 'matchers', ['matcher/fruzzy'])
   call denite#custom#source('tag', 'matchers', ['matcher/substring'])
   call denite#custom#source('file/old,ghq', 'converters',
-        \ ['devicons_denite_converter', 'converter/relative_word', 'converter/relative_abbr'])
+        \ ['converter/devicons', 'converter/relative_word', 'converter/relative_abbr'])
   call denite#custom#source('file,file/rec,file_mru,buffer,directory/rec,directory_mru',
-        \ 'converters', ['devicons_denite_converter'])
+        \ 'converters', ['converter/devicons'])
 
   call denite#custom#alias('source', 'file/rec/git', 'file/rec')
   call denite#custom#var('file/rec/git', 'command',
