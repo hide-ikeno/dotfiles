@@ -76,33 +76,12 @@ hook_add = '''
 # Better whitespace highlighting for Vim
 [[plugins]]
 repo = 'ntpeters/vim-better-whitespace'
-hook_add = '''
-  let g:better_whitespace_enabled = 1
-  let g:strip_whitespace_on_save  = 1
-  let g:show_spaces_that_precede_tabs = 1
-  let g:better_whitespace_filetypes_blacklist = [
-      \ 'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help',
-      \ 'markdown', 'which_key'
-      \ ]
-  nnoremap <silent><Leader>x  :<C-u>StripWhitespace<CR>
-'''
+hook_add = 'lua require("plugins.vim-better-whitespace").hook_add()'
 
 # Seemless navitation between Tmux and Vim
 [[plugins]]
 repo = 'christoomey/vim-tmux-navigator'
-hook_add = '''
-  let g:tmux_navigator_no_mappings = 1
-  nnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
-  nnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
-  nnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
-  nnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
-  nnoremap <silent><M-\>  :<C-u>TmuxNavigatePrevious<CR>
-
-  tnoremap <silent><M-h>  :<C-u>TmuxNavigateLeft<CR>
-  tnoremap <silent><M-j>  :<C-u>TmuxNavigateDown<CR>
-  tnoremap <silent><M-k>  :<C-u>TmuxNavigateUp<CR>
-  tnoremap <silent><M-l>  :<C-u>TmuxNavigateRight<CR>
-'''
+hook_add = 'lua require("plugins.vim-tmux-navigator").hook_add()'
 
 #==============================================================================
 # Plugin dependencies (non-lazy loading)
@@ -165,9 +144,7 @@ repo = 'chemzqm/unite-location'
 # A collection of language packs for Vim
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
-hook_add = '''
-  let g:polyglot_disable = ['json', 'markdown']
-'''
+hook_add = 'lua require("plugins.vim-polyglot").hook_add()'
 
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
@@ -191,11 +168,8 @@ repo = 'chrisbra/csv.vim'
 # Markdown
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
-hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
-  let g:vim_markdown_conceal = 0
-'''
+hook_add = 'lua require("plugins.vim-markdown").hook_add()'
+
 # JSON
 [[plugins]]
 repo = 'neoclide/jsonc.vim'

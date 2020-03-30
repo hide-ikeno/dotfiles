@@ -407,24 +407,6 @@ hook_add = '''
   let g:doge_mapping_comment_jump_backward = '<M-p>'
 '''
 
-# Add filetype glyphs (icons) to other plugins
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-on_func = ['WebDevIconsGetFileTypeSymbol', 'WebDevIconsGetFileFormatSymbol']
-on_source = ['denite.nvim']
-hook_add = '''
-  let g:webdevicons_enable_nerdtree = 0
-  let g:webdevicons_enable_unite = 0
-  let g:webdevicons_enable_denite = 1
-  let g:webdevicons_enable_vimfiler = 0
-  let g:webdevicons_enable_ctrlp = 0
-  let g:webdevicons_enable_airline_tabline = 0
-  let g:webdevicons_enable_airline_statusline = 0
-  let g:webdevicons_enable_startify = 0
-  "   U+E287
-  let g:WebDevIconsUnicodeByteOrderMarkerDefaultSymbol = "\ue287"
-'''
-
 # A high-performance color highligher for Neovim
 [[plugins]]
 repo = 'norcalli/nvim-colorizer.lua'
