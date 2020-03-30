@@ -24,12 +24,12 @@ function M.hook_add()
 
   -- <Space> mappings
   vim.api.nvim_set_keymap("n", "<Space>b",
-    [[<cmd>Denite buffer file_mru, -default-action=switch<CR>]], options)
+    [[<cmd>Denite buffer file_mru -default-action=switch<CR>]], options)
   vim.api.nvim_set_keymap("n", "<Space>f",
     [[<cmd>Denite file/point file/old -sorters=sorter/rank file/rec file file:new<CR>]],
     options)
   vim.api.nvim_set_keymap("n", "<Space>h", [[<cmd>Denite help<CR>]], options)
-  vim.api.nvim_set_keymap("n", "<Space>l", [[<cmd>Denite localtion_list<CR>]], options)
+  vim.api.nvim_set_keymap("n", "<Space>l", [[<cmd>Denite location_list<CR>]], options)
   vim.api.nvim_set_keymap("n", "<Space>q", [[<cmd>Denite quickfix<CR>]], options)
   vim.api.nvim_set_keymap("n", "<Space>r",
     [[<cmd>Denite -resume -refresh -no-start-filter<CR>]], options)

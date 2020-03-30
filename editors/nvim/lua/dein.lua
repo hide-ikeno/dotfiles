@@ -35,9 +35,9 @@ if vim.fn["dein#load_state"](dein_dir) == 1 then
 
   local toml_lazy = {
     utils.path.join(dein_conf_dir, "plugins_lazy.toml");
-    utils.path.join(dein_conf_dir, "defx.toml");
-    utils.path.join(dein_conf_dir, "denite.toml");
-    utils.path.join(dein_conf_dir, "deoplete.toml");
+    --utils.path.join(dein_conf_dir, "defx.toml");
+    --utils.path.join(dein_conf_dir, "denite.toml");
+    --utils.path.join(dein_conf_dir, "deoplete.toml");
     utils.path.join(dein_conf_dir, "which_key.toml");
   }
 

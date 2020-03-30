@@ -10,10 +10,6 @@ function M.hook_source()
       return !col || getline('.')[col - 1]  =~ '\s'
     endfunction
   ]]
-  -- function! s:check_back_space() abort
-  --   let col = col('.') - 1
-  --   return !col || getline('.')[col - 1]  =~ '\s'
-  -- endfunction
   -- Key mappings
   -- <TAB>: completion.
   vim.api.nvim_set_keymap("i", "<TAB>",
@@ -21,7 +17,7 @@ function M.hook_source()
     {noremap = true, expr = true})
 
   -- <S-TAB>: completion back.
-  vim.api.nvim_set_keymap("i", "<TAB>",     [[pumvisible() ? "\<C-p>" : "\<C-h>"]],
+  vim.api.nvim_set_keymap("i", "<S-TAB>",   [[pumvisible() ? "\<C-p>" : "\<C-h>"]],
     {noremap = true, expr = true})
   vim.api.nvim_set_keymap("i", "<C-Space>", [[deoplete#refresh()]],
     {noremap = true, expr = true})
