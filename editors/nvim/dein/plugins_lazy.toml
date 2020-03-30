@@ -227,6 +227,13 @@ hook_add = '''
 # Interfaces
 #==============================================================================
 
+# Displays available keybindingss in pupup
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+on_cmd = ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!']
+hook_add = 'lua require("plugins.vim-which-key").hook_add()'
+hook_source = 'lua require("plugins.vim-which-key").hook_source()'
+
 # SKK imput method for Japanese
 [[plugins]]
 repo = 'tyru/eskk.vim'

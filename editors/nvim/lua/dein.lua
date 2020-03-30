@@ -38,7 +38,7 @@ if vim.fn["dein#load_state"](dein_dir) == 1 then
     --utils.path.join(dein_conf_dir, "defx.toml");
     --utils.path.join(dein_conf_dir, "denite.toml");
     --utils.path.join(dein_conf_dir, "deoplete.toml");
-    utils.path.join(dein_conf_dir, "which_key.toml");
+    --utils.path.join(dein_conf_dir, "which_key.toml");
   }
 
   vim.fn["dein#begin"](dein_dir, vim.tbl_flatten({toml_non_lazy, toml_lazy}))
