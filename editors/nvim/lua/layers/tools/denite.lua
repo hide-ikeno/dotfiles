@@ -193,9 +193,6 @@ function layer._on_filetype_denite()
   vim.wo.signcolumn = "no"
   vim.wo.cursorline = false
 
-  local function apply_mapping(bufnr, lhs, rhs)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, rhs, {noremap = true, silent = true, expr = true})
-  end
   local opts = {noremap = true, silent = true, expr = true}
   local opts_nowait = {noremap = true, silent = true, expr = true, nowait = true}
 

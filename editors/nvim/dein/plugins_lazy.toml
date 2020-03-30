@@ -636,15 +636,22 @@ hook_post_source = '''
   call gina#custom#execute('/\%(status\|branch\|ls\|log\|reflog\|grep\)', 'setlocal cursorline')
 '''
 
-# Show a git diff in the gutter (sign column)
+# # Show a git diff in the gutter (sign column)
+# [[plugins]]
+# repo = 'airblade/vim-gitgutter'
+# on_path = '.*'
+# hook_add = '''
+#   nmap ]g  <Plug>(GitGutterNextHunk)
+#   nmap [g  <Plug>(GitGutterPrevHunk)
+#   nmap gs  <Plug>(GitGutterPreviewHunk)
+# '''
+
+# Show differences with style
 [[plugins]]
-repo = 'airblade/vim-gitgutter'
+repo = 'mhinz/vim-signify'
 on_path = '.*'
-hook_add = '''
-  nmap ]g  <Plug>(GitGutterNextHunk)
-  nmap [g  <Plug>(GitGutterPrevHunk)
-  nmap gs  <Plug>(GitGutterPreviewHunk)
-'''
+hook_add = 'lua require("plugins.vim-signify").hook_add()'
+
 
 # More pleasant editing on commit messages
 [[plugins]]
@@ -659,10 +666,7 @@ hook_source = '''
 repo = 'rhysd/git-messenger.vim'
 on_cmd = ['GitMessenger']
 on_map = {n = '<Plug>(git-messenger'}
-hook_add = '''
-  let g:git_messenger_no_default_mappings = v:true
-  nmap gm  <Plug>(git-messenger)
-'''
+hook_add = 'lua require("plugins.git-messenger").hook_add()'
 
 #==============================================================================
 # Filetype

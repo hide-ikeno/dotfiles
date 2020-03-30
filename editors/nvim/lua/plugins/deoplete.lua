@@ -4,6 +4,16 @@ local M = {}
 function M.hook_source()
   vim.g["deoplete#enable_at_startup"] = 1
 
+  vim.api.nvim_command[[
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+  ]]
+  -- function! s:check_back_space() abort
+  --   let col = col('.') - 1
+  --   return !col || getline('.')[col - 1]  =~ '\s'
+  -- endfunction
   -- Key mappings
   -- <TAB>: completion.
   vim.api.nvim_set_keymap("i", "<TAB>",
@@ -23,15 +33,6 @@ function M.hook_source()
   -- <CR>: close popup and save indent.
   vim.api.nvim_set_keymap("i", "<CR>", [[pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"]],
     {noremap = true, silent = true, expr = true})
-
-  -- function! s:check_back_space() abort
-  --   let col = col('.') - 1
-  --   return !col || getline('.')[col - 1]  =~ '\s'
-  -- endfunction
-  --
-  -- function! s:my_cr_function() abort
-  --   return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
-  -- endfunction
 end
 
 function M.hook_post_source()
