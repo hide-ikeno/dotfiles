@@ -19,6 +19,7 @@ hook_post_source = 'lua require("plugins.nvim_lsp").hook_post_source()'
 # A wrapper for neovim built in LSP diagnosis config
 [[plugins]]
 repo = 'haorenW1025/diagnostic-nvim'
+on_cmd = ['NextDiagnostic', 'PrevDiagnostic', 'OpenDiagnostic']
 on_source = ['nvim-lsp']
 
 #==============================================================================

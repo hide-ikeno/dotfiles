@@ -151,6 +151,10 @@ local function set_global_vars_on_startup()
   vim.api.nvim_set_keymap("x", ";",       "<Nop>", {noremap = true})
   vim.api.nvim_set_keymap("n", ",",       "<Nop>", {noremap = true})
   vim.api.nvim_set_keymap("x", ",",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("n", "m",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("x", "m",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("n", "s",       "<Nop>", {noremap = true})
+  vim.api.nvim_set_keymap("x", "s",       "<Nop>", {noremap = true})
 
   --[[ Disable unnecessary default plugins ]]
   vim.g.loaded_2html_plugin      = 1

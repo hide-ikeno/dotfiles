@@ -50,10 +50,10 @@ function M.hook_add()
   vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  options)
   -- Extensions
   if vim.fn["dein#tap"]("diagnostic-nvim") ~= 0 then
-    -- vim.g.diagnostic_enable_virtual_text = 1
+    vim.g.diagnostic_enable_virtual_text = 1
     vim.api.nvim_set_keymap("n", "m]", "<cmd>NextDiagnostic<CR>",  options)
     vim.api.nvim_set_keymap("n", "m[", "<cmd>PrevDiagnostic<CR>",  options)
-    vim.api.nvim_set_keymap("n", "m?", "<cmd>OpenDiagnostic<CR>",  options)
+    vim.api.nvim_set_keymap("n", "mq", "<cmd>OpenDiagnostic<CR>",  options)
   end
 end
 

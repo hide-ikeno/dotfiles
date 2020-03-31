@@ -6,11 +6,13 @@ function M.hook_add()
   vim.api.nvim_set_keymap("n", ";",       "<cmd>WhichKey ';'<CR>",       options)
   vim.api.nvim_set_keymap("n", ",",       "<cmd>WhichKey ','<CR>",       options)
   vim.api.nvim_set_keymap("n", "s",       "<cmd>WhichKey 's'<CR>",       options)
+  vim.api.nvim_set_keymap("n", "m",       "<cmd>WhichKey 'm'<CR>",       options)
 
   vim.api.nvim_set_keymap("v", "<Space>", "<cmd>WhichKeyVisual '<Space>'<CR>", options)
   vim.api.nvim_set_keymap("v", ";",       "<cmd>WhichKeyVisual ';'<CR>",       options)
   vim.api.nvim_set_keymap("v", ",",       "<cmd>WhichKeyVisual ','<CR>",       options)
   vim.api.nvim_set_keymap("v", "s",       "<cmd>WhichKeyVisual 's'<CR>",       options)
+  vim.api.nvim_set_keymap("v", "m",       "<cmd>WhichKeyVisual 'm'<CR>",       options)
 end
 
 M._space_map = {}
@@ -55,34 +57,28 @@ function M.hook_source()
   vim.g.which_key_space_map = M._space_map
   vim.fn["which_key#register"]('<Space>', 'g:which_key_space_map')
 
-  -- " 'm' mappings {{{
-  -- " -----
-  -- " Key mapping for LSP features
-  -- let g:which_key_m_map = {
-  --      \ '?': 'diagnostic-info',
-  --      \ '[': 'diagnostic-prev',
-  --      \ ']': 'diagnostic-next',
-  --      \ 'A': 'codeaction',
-  --      \ 'D': 'declaration',
-  --      \ 'F': 'fix-current',
-  --      \ 'R': 'rename',
-  --      \ 'a': 'codeaction-selected',
-  --      \ 'd': 'definition',
-  --      \ 'e': 'refactor',
-  --      \ 'f': 'format',
-  --      \ 'h': 'document-hover',
-  --      \ 'i': 'implementation',
-  --      \ 'j': 'list-location',
-  --      \ 'L': 'codelens',
-  --      \ 'o': 'document-symbols',
-  --      \ 'q': 'list-diagnostics',
-  --      \ 'r': 'reference',
-  --      \ 's': 'workspace-symbols',
-  --      \ 't': 'type-definition',
-  --      \ }
-  --
-  -- call which_key#register('m', 'g:which_key_m_map')
-  -- " }}}
+  -- 'm' mappings
+  --  Key mapping for LSP features
+  M._m_map = {
+    ["["] = "diagnostic-prev",
+    ["]"] = "diagnostic-next",
+    ["D"] = "declaration",
+    ["F"] = "format",
+    ["H"] = "signature-help",
+    ["R"] = "rename",
+    ["d"] = "definition",
+    ["f"] = "format-range",
+    ["h"] = "document-hover",
+    ["i"] = "implementation",
+    ["o"] = "document-symbol",
+    ["p"] = "peek-definition",
+    ["q"] = "list-diagnostics",
+    ["r"] = "reference",
+    ["t"] = "type-definition",
+  }
+
+  vim.g.which_key_m_map = M._m_map
+  vim.fn["which_key#register"]('m', 'g:which_key_m_map')
 
   -- leader mappings {{{
   M._leader_map = {
@@ -151,7 +147,7 @@ function M.hook_source()
   }
 
   vim.g.which_key_s_map = M._s_map
-  vim.fn["which_key#register"](';', 'g:which_key_s_map')
+  vim.fn["which_key#register"]('s', 'g:which_key_s_map')
 
   -- which-key events
   vim.api.nvim_command("augroup user-plugin-which-key")
