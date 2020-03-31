@@ -13,9 +13,13 @@ on_ft = [
   'c', 'cpp', 'dockerfile', 'fortran', 'go', 'javascript', 'lua', 'python',
   'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
 ]
-hook_post_source = '''
-lua require("lsp-config").setup()
-'''
+hook_add = 'lua require("plugins.nvim_lsp").hook_add()'
+hook_post_source = 'lua require("plugins.nvim_lsp").hook_post_source()'
+
+# A wrapper for neovim built in LSP diagnosis config
+[[plugins]]
+repo = 'haorenW1025/diagnostic-nvim'
+on_source = ['nvim-lsp']
 
 #==============================================================================
 # Denite
