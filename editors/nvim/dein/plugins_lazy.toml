@@ -479,6 +479,10 @@ repo = 'lambdalisue/vim-pyenv'
 on_ft = 'python'
 
 [[plugins]]
+repo = 'petobens/poet-v'
+on_ft = 'python'
+
+[[plugins]]
 repo = 'tmhedberg/SimpylFold'
 on_ft = 'python'
 
