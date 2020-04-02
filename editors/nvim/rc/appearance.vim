@@ -18,14 +18,8 @@ function! s:transparent() abort
   highlight GitGutterDelete ctermbg=NONE guibg=NONE
 endfunction
 
-autocmd MyAutoCmd VimEnter *
-      \ if !exists('g:GuiLoaded') && !has("gui") && !exists('$SSH_CONNECTION') |
-      \   call s:transparent() |
-      \ endif
-
 
 " --- Status line
-
 function! InactiveLine() abort
   return luaeval("require'statusline'.inActiveLine()")
 endfunction
@@ -38,6 +32,14 @@ function! DefxLine() abort
   return luaeval("require'statusline'.defxLine()")
 endfunction
 
-autocmd MyAutoCmd FocusGained,VimEnter,WinEnter,BufEnter * setlocal statusline=%!ActiveLine()
-autocmd MyAutoCmd FocusLost,WinLeave,BufLeave            * setlocal statusline=%!InactiveLine()
-autocmd MyAutoCmd FileType defx                            setlocal statusline=%!DefxLine()
+" --- Events
+augroup user_ui_events
+autocmd!
+autocmd VimEnter *
+      \ if !exists('g:GuiLoaded') && !has("gui") && !exists('$SSH_CONNECTION') |
+      \   call s:transparent() |
+      \ endif
+autocmd FocusGained,VimEnter,WinEnter,BufEnter * setlocal statusline=%!ActiveLine()
+autocmd FocusLost,WinLeave,BufLeave            * setlocal statusline=%!InactiveLine()
+autocmd FileType defx                            setlocal statusline=%!DefxLine()
+augroup END

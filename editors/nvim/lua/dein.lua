@@ -30,7 +30,7 @@ if vim.fn["dein#load_state"](dein_dir) == 1 then
 
   local toml_non_lazy = {
     utils.path.join(dein_conf_dir, "plugins.toml");
-    utils.path.join(dein_conf_dir, "ftplugin.toml");
+    -- utils.path.join(dein_conf_dir, "ftplugin.toml");
   }
 
   local toml_lazy = {

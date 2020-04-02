@@ -8,8 +8,6 @@ lua << EOF
   -- require("theme")
 EOF
 
-execute 'source' fnameescape(expand ('$VIM_CONFIG_HOME/rc/appearance.vim'))
-
 " Do not allow run some commands from vimrc or exrc when they are not owned by
 " you. You better set 'secure' at the end of .vimrc or init.vim
 setglobal secure
