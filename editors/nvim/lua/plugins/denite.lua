@@ -135,6 +135,18 @@ function M.hook_source()
   --       \ "winrow":    s:denite_winrow,
   --       \ "winwidth":  s:denite_winwidth,
   --       \ })
+  local width = vim.api.nvim_get_option("columns")
+  local height = vim.api.nvim_get_option("lines")
+  local win_width
+  if width > 150 then
+    win_width = math.ceil(width * 0.85)
+  else
+    win_width = width - 8
+  end
+  local win_height = math.ceil(height * 0.75)
+  local wincol = math.ceil((width - win_width) / 2)
+  local winrow = math.ceil((height - win_height) / 2)
+
 
   vim.fn["denite#custom#option"]("default", {
       highlight_filter_background = "CursorLine",
@@ -144,6 +156,10 @@ function M.hook_source()
       filter_split_direction      = "floating",
       vertical_preview            = true,
       floating_preview            = true,
+      winwidth                    = win_width,
+      winheight                   = win_height,
+      wincol                      = wincol,
+      winrow                      = winrow,
     })
 
   vim.fn["denite#custom#option"]("search", {
@@ -161,7 +177,6 @@ function M.hook_source()
   vim.api.nvim_command("autocmd FileType denite        lua require('plugins.denite')._on_filetype_denite()")
   vim.api.nvim_command("autocmd FileType denite_filter lua require('plugins.denite')._on_filetype_denite_filter()")
   vim.api.nvim_command("augroup END")
-
 end
 
 function M._on_filetype_denite()
