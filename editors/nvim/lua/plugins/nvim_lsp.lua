@@ -3,17 +3,18 @@ local M = {}
 local function on_attach_callback(client, bufnr)
   vim.api.nvim_buf_set_var(bufnr, "lsp_client_id", client.id)
   -- Key mappings
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>",       {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd",    "<cmd>lua vim.lsp.buf.declaration()<CR>",      {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD",    "<cmd>lua vim.lsp.buf.implementation()<CR>",   {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "1gD",   "<cmd>lua vim.lsp.buf.type_definition()<CR>",  {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr",    "<cmd>lua vim.lsp.buf.references()<CR>",       {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<F2>",  "<cmd>lua vim.lsp.buf.rename()<CR>",           {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gQ",    "<cmd>lua vim.lsp.buf.formatting()<CR>",       {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gq",    "<cmd>lua vim.lsp.buf.range_formatting()<CR>", {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K",     "<cmd>lua vim.lsp.buf.hover()<CR>",            {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>",   {silent = true;})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "g0",    "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>",       {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd",    "<cmd>lua vim.lsp.buf.declaration()<CR>",      {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gD",    "<cmd>lua vim.lsp.buf.implementation()<CR>",   {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "1gD",   "<cmd>lua vim.lsp.buf.type_definition()<CR>",  {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr",    "<cmd>lua vim.lsp.buf.references()<CR>",       {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<F2>",  "<cmd>lua vim.lsp.buf.rename()<CR>",           {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gQ",    "<cmd>lua vim.lsp.buf.formatting()<CR>",       {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gq",    "<cmd>lua vim.lsp.buf.range_formatting()<CR>", {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "K",     "<cmd>lua vim.lsp.buf.hover()<CR>",            {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>",   {silent = true;})
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "g0",    "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  {silent = true;})
+
   -- Omni completion source
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
@@ -33,6 +34,9 @@ function M.hook_add()
   vim.g.LspDiagnosticsWarningSign     = ""
   vim.g.LspDiagnosticsInformationSign = ""
   vim.g.LspDiagnosticsHintSign        = ""
+
+  -- Debug mode
+  vim.lsp.set_log_level("debug")
 
   -- Key mappings
   local options = {noremap = true, silent = true}
@@ -55,41 +59,45 @@ function M.hook_add()
     vim.api.nvim_set_keymap("n", "m[", "<cmd>PrevDiagnostic<CR>",  options)
     vim.api.nvim_set_keymap("n", "mq", "<cmd>OpenDiagnostic<CR>",  options)
   end
+
+  -- auto commands
+
+  vim.api.nvim_command("augroup user-plugin-nvim-lsp")
+  vim.api.nvim_command("autocmd!")
+  vim.api.nvim_command("autocmd FileType c,cpp,objc,objcpp lua require('plugins.nvim_lsp')._on_filetype_c_cpp()")
+  vim.api.nvim_command("autocmd FileType fortran           lua require('plugins.nvim_lsp')._on_filetype_fortran()")
+  vim.api.nvim_command("autocmd FileType go                lua require('plugins.nvim_lsp')._on_filetype_go()")
+  vim.api.nvim_command("autocmd FileType lua               lua require('plugins.nvim_lsp')._on_filetype_lua()")
+  vim.api.nvim_command("autocmd FileType python            lua require('plugins.nvim_lsp')._on_filetype_python()")
+  vim.api.nvim_command("autocmd FileType ruby              lua require('plugins.nvim_lsp')._on_filetype_ruby()")
+  vim.api.nvim_command("autocmd FileType rust              lua require('plugins.nvim_lsp')._on_filetype_rust()")
+  vim.api.nvim_command("autocmd FileType sh                lua require('plugins.nvim_lsp')._on_filetype_sh()")
+  vim.api.nvim_command("autocmd FileType vim               lua require('plugins.nvim_lsp')._on_filetype_vim()")
+  vim.api.nvim_command("autocmd FileType yaml              lua require('plugins.nvim_lsp')._on_filetype_yaml()")
+  vim.api.nvim_command("augroup end")
 end
 
-function M.hook_post_source()
-  vim.lsp.set_log_level("debug")
-
-  -- vim.lsp.callbacks['textDocument/publishDiagnostics'] = function(_, _, result)
-  --   if vim.g.enable_nvim_lsp_diagnostics then
-  --     local util = vim.lsp.util
-  --     if not result then return end
-  --     local uri = result.uri
-  --     local bufnr = vim.uri_to_bufnr(uri)
-  --     if not bufnr then
-  --       err_message("LSP.publishDiagnostics: Couldn't find buffer for ", uri)
-  --       return
-  --     end
-  --     util.buf_clear_diagnostics(bufnr)
-  --     util.buf_diagnostics_save_positions(bufnr, result.diagnostics)
-  --     util.buf_diagnostics_virtual_text(bufnr, result.diagnostics)
-  --     util.buf_diagnostics_signs(bufnr, result.diagnostics)
-  --     -- util.set_loclist(result.diagnostics)
-  --   end
-  -- end
-
-  -- LSP setup
-
-  local nvim_lsp = require'nvim_lsp'
-  nvim_lsp.ccls.setup{
-    on_attach = on_attach_callback
+function M._on_filetype_c_cpp()
+  require'nvim_lsp'.clangd.setup{
+    cmd = {"clangd", "--background-index"};
+    on_attach = on_attach_callback;
   }
+end
 
-  nvim_lsp.fortls.setup{
-    on_attach = on_attach_callback
+function M._on_filetype_fortran()
+  require'nvim_lsp'.dockerls.setup{
+    on_attach = on_attach_callback;
   }
+end
 
-  nvim_lsp.gopls.setup{
+function M._on_filetype_fortran()
+  require'nvim_lsp'.fortls.setup{
+    on_attach = on_attach_callback;
+  }
+end
+
+function M._on_filetype_go()
+  require'nvim_lsp'.gopls.setup{
     capabilities = {
       textDocument = {
         completion = {
@@ -98,23 +106,23 @@ function M.hook_post_source()
           }
         }
       }
-    },
+    };
     init_options = {
       usePlaceholders = true,
       completeUnimported = true
-    },
+    };
+    on_attach = on_attach_callback;
+  }
+end
+
+function M._on_filetype_lua()
+  require'nvim_lsp'.sumneko_lua.setup{
     on_attach = on_attach_callback
   }
+end
 
-  nvim_lsp.flow.setup{
-    on_attach = on_attach_callback
-  }
-
-  nvim_lsp.sumneko_lua.setup{
-    on_attach = on_attach_callback
-  }
-
-  nvim_lsp.pyls.setup{
+function M._on_filetype_python()
+  require'nvim_lsp'.pyls.setup{
     settings = {
       pyls = {
         plugins = {
@@ -132,12 +140,16 @@ function M.hook_post_source()
     };
     on_attach = on_attach_callback;
   }
+end
 
-  nvim_lsp.solargraph.setup{
+function M._on_filetype_ruby()
+  require'nvim_lsp'.solargraph.setup{
     on_attach = on_attach_callback
   }
+end
 
-  nvim_lsp.rls.setup{
+function M._on_filetype_rust()
+  require'nvim_lsp'.rls.setup{
     cmd = {"rustup", "run", "nightly", "rls"};
     settings = {
       rls = {
@@ -152,30 +164,30 @@ function M.hook_post_source()
     };
     on_attach = on_attach_callback
   }
-
-   nvim_lsp.bashls.setup{
-     on_attach = on_attach_callback
-   }
-
-   nvim_lsp.texlab.setup{
-     on_attach = on_attach_callback
-   }
-
-   nvim_lsp.tsserver.setup{
-     on_attach = on_attach_callback
-   }
-
-   nvim_lsp.vimls.setup{
-     on_attach = on_attach_callback
-   }
-
-   nvim_lsp.yamlls.setup{
-     on_attach = on_attach_callback
-   }
 end
 
-function M.get_language_client_status()
-  vim.inspect(vim.lsp.get_client_by_id(1))
+function M._on_filetype_sh()
+  require'nvim_lsp'.bashls.setup{
+    on_attach = on_attach_callback
+  }
+end
+
+function M._on_filetype_sh()
+  require'nvim_lsp'.texlab.setup{
+    on_attach = on_attach_callback
+  }
+end
+
+function M._on_filetype_vim()
+  require'nvim_lsp'.vimls.setup{
+    on_attach = on_attach_callback
+  }
+end
+
+function M._on_filetype_yaml()
+  require'nvim_lsp'.yamlls.setup{
+    on_attach = on_attach_callback
+  }
 end
 
 return M

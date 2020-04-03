@@ -10,11 +10,11 @@ if = 'has("nvim-0.5")'
 on_cmd = ['LspInstall', 'LspInstallInfo']
 on_func = ['nvim_lsp#setup']
 on_ft = [
-  'c', 'cpp', 'dockerfile', 'fortran', 'go', 'javascript', 'lua', 'python',
-  'ruby', 'rust', 'sh', 'tex', 'typescript', 'vim', 'yaml'
+  'c', 'cpp', 'dockerfile', 'fortran', 'go', 'lua', 'python',
+  'ruby', 'rust', 'sh', 'tex', 'vim', 'yaml'
 ]
 hook_add = 'lua require("plugins.nvim_lsp").hook_add()'
-hook_post_source = 'lua require("plugins.nvim_lsp").hook_post_source()'
+# hook_post_source = 'lua require("plugins.nvim_lsp").hook_post_source()'
 
 # A wrapper for neovim built in LSP diagnosis config
 [[plugins]]
