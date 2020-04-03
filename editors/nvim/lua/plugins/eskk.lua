@@ -50,7 +50,7 @@ function M.hook_source()
   -- easy escape with 'jj'
   vim.api.nvim_command("augroup user-plugin-eskk")
   vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command("autocmd MyAutoCmd User eskk-initialize-post EskkMap -remap jj <ESC>")
+  vim.api.nvim_command("autocmd User eskk-initialize-post EskkMap -remap jj <ESC>")
   vim.api.nvim_command("augroup END")
 end
 
