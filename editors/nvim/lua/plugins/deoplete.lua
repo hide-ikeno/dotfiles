@@ -4,16 +4,10 @@ local M = {}
 function M.hook_source()
   vim.g["deoplete#enable_at_startup"] = 1
 
-  vim.api.nvim_command[[
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
-  ]]
   -- Key mappings
   -- <TAB>: completion.
   vim.api.nvim_set_keymap("i", "<TAB>",
-    [[pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#manual_complete()]],
+    [[pumvisible() ? "\<C-n>" : vimrc#check_back_space() ? "\<TAB>" : deoplete#manual_complete()]],
     {noremap = true, expr = true})
 
   -- <S-TAB>: completion back.

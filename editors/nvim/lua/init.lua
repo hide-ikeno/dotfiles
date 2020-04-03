@@ -195,9 +195,19 @@ require('options')
 
 -- Plugins
 require("dein")
--- vim.api.nvim_command("command! PackUpdate lua require'minpac'.pack_update()")
--- vim.api.nvim_command("command! PackStatus lua require'minpac'.pack_status()")
--- vim.api.nvim_command("command! PackClean  lua require'minpac'.pack_clean()")
+
+-- ftplugin, syntax
+if vim.fn.has("vim_starting") and vim.fn.empty(vim.fn.argv()) == 0 then
+  vim.fn["vimrc#on_filetype"]()
+end
+
+-- autocmd
+vim.api.nvim_command("augroup MuAutoCmd")
+vim.api.nvim_command("autocmd!")
+vim.api.nvim_command("autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *? call vimrc#on_filetype()")
+vim.api.nvim_command("autocmd CursorHold *? syntax sync minlines=300")
+vim.api.nvim_command("augroup END")
+
 
 -- Key mappings
 require("mappings")
@@ -207,14 +217,4 @@ require("filetype").setup()
 
 -- Appearance
 vim.api.nvim_command[[execute 'source' fnameescape(expand ('$VIM_CONFIG_HOME/rc/appearance.vim'))]]
-
-
---require("ui").setup()
-
--- vim.api.nvim_command("augroup uienter_event")
--- vim.api.nvim_command("autocmd!")
--- vim.api.nvim_command("autocmd VimEnter * lua require('ui').setup()")
--- vim.api.nvim_command("autocmd UIEnter  * lua require('ui').setup()")
--- vim.api.nvim_command("augroup END")
--- require("theme")
 

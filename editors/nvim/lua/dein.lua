@@ -60,3 +60,8 @@ if vim.fn.has('vim_starting') and vim.fn["dein#check_install"]() > 0 then
   vim.fn["dein#install"]()
 end
 
+if not vim.fn.has("vim_starting") then
+  vim.fn["dein#call_hook"]("source")
+  vim.fn["dein#call_hook"]("post_source")
+end
+
