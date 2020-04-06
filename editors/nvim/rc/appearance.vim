@@ -1,5 +1,5 @@
 " let g:colors_name = "iceberg"
-silent! colorscheme iceberg
+" silent! colorscheme iceberg
 
 " --- Transparent background on terminal
 " (taken from https://github.com/lambdalisue/dotfiles/blob/master/nvim/init.vim)
@@ -36,6 +36,7 @@ endfunction
 " --- Events
 augroup user_ui_events
   autocmd!
+  autocmd VimEnter * ++nested colorscheme iceberg
   autocmd VimEnter *
         \ if !exists('g:GuiLoaded') && !has("gui") && !exists('$SSH_CONNECTION') |
         \   call s:transparent() |
