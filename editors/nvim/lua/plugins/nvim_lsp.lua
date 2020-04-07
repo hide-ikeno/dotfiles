@@ -123,6 +123,7 @@ end
 
 function M._on_filetype_python()
   require'nvim_lsp'.pyls.setup{
+    cmd = { vim.env.PYENV_ROOT .. "/versions/neovim3/bin/pyls" };
     settings = {
       pyls = {
         plugins = {
