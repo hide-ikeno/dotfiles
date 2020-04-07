@@ -20,37 +20,6 @@ hook_add = '''
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*', 'term://.*']
 '''
 
-# A wrapper around vim.loop for job management
-[[plugins]]
-repo = 'TravonteD/luajob'
-
-# #==============================================================================
-# # Finder
-# #==============================================================================
-# [[plugins]]
-# repo = 'liuchengxu/vim-clap'
-# merged = 0
-# hook_add = '''
-#   let g:clap_cache_directory = $VIM_CACHE_HOME . '/clap'
-#   let g:clap_layout = { 'relative': 'editor' }
-#   let g:clap_search_box_border_style = 'curve'
-#   let g:clap_enable_icon = 1
-#   let g:clap_provider_grep_enable_icon = 1
-#
-#   nnoremap <silent><Space>b  <cmd>Clap! buffers<CR>
-#   nnoremap <silent><Space>f  <cmd>Clap! files<CR>
-#   nnoremap <silent><Space>h  <cmd>Clap! help_tags<CR>
-#   nnoremap <silent><Space>j  <cmd>Clap! jumps<CR>
-#   nnoremap <silent><Space>k  <cmd>Clap! maps<CR>
-#   nnoremap <silent><Space>l  <cmd>Clap! loclist<CR>
-#   nnoremap <silent><Space>q  <cmd>Clap! quickfix<CR>
-#   nnoremap <silent><Space>y  <cmd>Clap! yanks<CR>
-#   nnoremap <silent><Space>/  <cmd>Clap! lines<CR>
-#   nnoremap <silent><Space>*  <cmd>Clap! lines ++query=<cword><CR>
-#   nnoremap <silent><Space>;  <cmd>Clap! command_history<CR>
-# '''
-# hook_post_update = 'Clap install-binary'
-
 #==============================================================================
 # Interfaces
 #==============================================================================
@@ -66,12 +35,12 @@ repo = 'itchyny/vim-parenmatch'
 # Visually displaying indent levels with thin vertical lines
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_add = '''
-  let g:indentLine_enable = 1
-  let g:indentLine_char = '¦'
-  " Keep my conceal setting
-  let g:indentLine_setConceal = 0
-'''
+hook_add = 'lua require("plugins.indentLine").hook_add()'
+
+# # Visually displaying indent levels in Vim.
+# [[plugins]]
+# repo = 'nathanaelkane/vim-indent-guides'
+# hook_add = 'lua require("plugins.vim-indent-guides").hook_add()'
 
 # Better whitespace highlighting for Vim
 [[plugins]]
