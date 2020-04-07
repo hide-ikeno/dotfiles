@@ -177,7 +177,7 @@ local filetype_icons = {
 M.filetype_icons = setmetatable(filetype_icons,{
     __index = function(filetype_icons, key)
       -- get extension
-      ext = key:match("^.+%.(.+)$")
+      local ext = key:match("^.+%.(.+)$")
       if ext then
         return filetype_icons[ext]
       end
