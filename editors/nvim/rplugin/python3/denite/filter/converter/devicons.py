@@ -164,19 +164,19 @@ class Filter(Base):
         if filename.is_dir():
             return DIR_ICON
 
-        basefile = filename.stem.lower()
-        extension = filename.suffix
-        if basefile in FILENAMES:
-            return FILENAMES[basefile]
-        elif extension in EXTENSIONS:
-            return EXTENSIONS[extension]
+        name = filename.name
+        suffix = filename.suffix
+        if name in FILENAMES:
+            return FILENAMES[name]
+        elif suffix in EXTENSIONS:
+            return EXTENSIONS[suffix]
         else:
             return DEFAULT_ICON
 
     def filter(self, context):
         """Parse candidates and prepend devicons."""
         for i, candidate in enumerate(context['candidates']):
-            if i > 25:
+            if i > 50:
                 break
 
             if 'word' in candidate and 'action__path' in candidate:
