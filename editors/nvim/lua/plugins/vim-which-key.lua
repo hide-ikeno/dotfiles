@@ -36,24 +36,22 @@ function M.hook_source()
     ['v'] = "Vista",
   }
 
-  -- " gina
-  -- let g:which_key_space_map.g = {
-  --      \ 'name': '+git',
-  --      \ 's': 'Gina status',
-  --      \ 'A': 'Gina changes HEAD',
-  --      \ 'c': 'Gina commit',
-  --      \ 'C': 'Gina commit --amend',
-  --      \ 'b': 'Gina branch',
-  --      \ 'f': 'Gina ls',
-  --      \ 't': 'Gina tag',
-  --      \ 'g': 'Gina grep',
-  --      \ 'q': 'Gina qrep',
-  --      \ 'd': 'Gina changes origin/HEAD...',
-  --      \ 'l': 'Gina log',
-  --      \ 'L': 'Gina log :%',
-  --      \ 'rc': 'Gina changes <C-r><C-w>',
-  --      \ 'rs': 'Gina show <C-r><C-w>',
-  --      \ }
+  M._space_map.g = {
+    name  = "+git",
+    ['['] = "previous hunk",
+    [']'] = "next hunk",
+    ['d'] = "SignifyDiff",
+    ['p'] = "SignifyHunkDiff",
+    ['u'] = "SignifyHunkUndo",
+    ['s'] = "Gina status",
+    ['c'] = "Gina commit",
+    ['C'] = "Gina commit --amend",
+    ['b'] = "Gina branch",
+    ['t'] = "Gina tag",
+    ['l'] = "Gina log",
+    ['L'] = "Gina log :%",
+    ['f'] = "Gina ls",
+  }
   vim.g.which_key_space_map = M._space_map
   vim.fn["which_key#register"]('<Space>', 'g:which_key_space_map')
 
