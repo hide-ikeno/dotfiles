@@ -129,12 +129,6 @@ function M.hook_source()
   vim.fn["denite#custom#filter"]("matcher/ignore_globs", "ignore_globs", ignore_globs)
 
   -- Options
-  -- vim.fn["denite#custom#option"]("_", {
-  --       \ "wincol":    s:denite_wincol,
-  --       \ "winheight": s:denite_winheight,
-  --       \ "winrow":    s:denite_winrow,
-  --       \ "winwidth":  s:denite_winwidth,
-  --       \ })
   local width = vim.api.nvim_get_option("columns")
   local height = vim.api.nvim_get_option("lines")
   local win_width
@@ -182,7 +176,7 @@ end
 function M._on_filetype_denite()
   vim.wo.winblend   = 20
   vim.wo.signcolumn = "no"
-  vim.wo.cursorline = false
+  vim.wo.cursorline = true
 
   local options        = {noremap = true, silent = true, expr = true}
   local options_nowait = {noremap = true, silent = true, expr = true, nowait = true}
