@@ -102,9 +102,21 @@ repo = 'chemzqm/unite-location'
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 
-# # palenight
-# [[plugins]]
-# repo = 'drewtempelmeyer/palenight.vim'
+# Gruvbox with Material Palette
+[[plugins]]
+repo = 'sainnhe/gruvbox-material'
+
+# Forest Night
+[[plugins]]
+repo = 'sainnhe/forest-night'
+
+# Edge
+[[plugins]]
+repo = 'sainnhe/edge'
+
+# Sonokai
+[[plugins]]
+repo = 'sainnhe/sonokai'
 
 #==============================================================================
 # Syntax, filetype (not necessary for lazy loading)
