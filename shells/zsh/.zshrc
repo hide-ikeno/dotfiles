@@ -15,9 +15,20 @@ if (( ${+commands[tmux]} )); then
     source ${ZDOTDIR}/scripts/tmux_auto.zsh
 fi
 
-##======================================================================
+
+##============================================================================
+## Enable Powerlevel10k instant prompt.
+##============================================================================
+# Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+##============================================================================
 ## Plugins
-##======================================================================
+##============================================================================
 ##
 ## Zgen plugin manager
 ##
@@ -93,17 +104,17 @@ fi
 
 source "${ZGEN_INIT}"
 
-##=====================================================================
+##===========================================================================
 ## Machine local settings
-##=====================================================================
+##===========================================================================
 loadlib "${ZDOTDIR:-$HOME}/.zshrc_local"
 if [[ -e "${ZDOTDIR:-$HOME}/.zshrc_secret" ]]; then
     source "${ZDOTDIR:-$HOME}/.zshrc_secret"
 fi
 
-##=====================================================================
+##===========================================================================
 ## Profiling
-##=====================================================================
+##===========================================================================
 #if type zprof > /dev/null 2>&1; then
 #    zprof | less
 #fi
@@ -118,3 +129,4 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
+
