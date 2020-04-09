@@ -208,7 +208,6 @@ vim.api.nvim_command("autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *? call 
 vim.api.nvim_command("autocmd CursorHold *? syntax sync minlines=300")
 vim.api.nvim_command("augroup END")
 
-
 -- Key mappings
 require("mappings")
 
@@ -216,5 +215,5 @@ require("mappings")
 require("filetype").setup()
 
 -- Appearance
-vim.api.nvim_command[[execute 'source' fnameescape(expand ('$VIM_CONFIG_HOME/rc/appearance.vim'))]]
+require("style")
 

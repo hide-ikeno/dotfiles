@@ -29,6 +29,8 @@ end
 
 local os_icon = get_os_icon()
 
+local default_icon = ''
+
 local filetype_icons = {
   -- Exact Match
   ['gruntfile.coffee']   = '',
@@ -181,6 +183,7 @@ M.filetype_icons = setmetatable(filetype_icons,{
       if ext then
         return filetype_icons[ext]
       end
+      return default_icon
     end
   })
 
