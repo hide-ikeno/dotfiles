@@ -62,7 +62,14 @@ function M.hook_source()
   }
 
   -- command for find file
-  if vim.fn.executable("rg") then
+  if vim.fn.executable("fd") then
+    local cmd = {"fd", ".", "--hidden", "--type", "f"}
+    for _, x in ipairs(ignore_globs) do
+      table.insert(cmd, "--exclude")
+      table.insert(cmd, x)
+    end
+    vim.fn["denite#custom#var"]("file/rec", "command", cmd)
+  elseif vim.fn.executable("rg") then
     local cmd = {"rg", "--follow", "--hidden", "--files"}
     for _, x in ipairs(ignore_globs) do
       table.insert(cmd, "--glob=!" .. x)
