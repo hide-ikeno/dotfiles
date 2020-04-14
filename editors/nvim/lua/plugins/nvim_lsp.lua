@@ -150,24 +150,27 @@ function M._on_filetype_ruby()
 end
 
 function M._on_filetype_rust()
-  require'nvim_lsp'.rls.setup{
-    on_attach = on_attach_callback
-  }
-  -- require'nvim_lsp'.rls.setup{
-  --   cmd = {"rustup", "run", "nightly", "rls"};
-  --   settings = {
-  --     rust = {
-  --       enableMultiProjectSetup = true;
-  --       all_features = true;
-  --       all_targets = true;
-  --       full_docs = true;
-  --       jobs = 2;
-  --       unstable_features = true;
-  --       wait_to_build = 1500;
-  --     };
-  --   };
-  --   on_attach = on_attach_callback
-  -- }
+  if vim.fn.executable("rust-analylzer") then
+    require'nvim_lsp'.rls.setup{
+      on_attach = on_attach_callback
+    }
+  else
+    require'nvim_lsp'.rls.setup{
+      cmd = {"rustup", "run", "stable", "rls"};
+      settings = {
+        rust = {
+          enableMultiProjectSetup = true;
+          all_features = true;
+          all_targets = true;
+          full_docs = true;
+          jobs = 2;
+          unstable_features = true;
+          wait_to_build = 1500;
+        };
+      };
+      on_attach = on_attach_callback
+    }
+  end
 end
 
 function M._on_filetype_sh()
