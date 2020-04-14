@@ -36,7 +36,7 @@ function M.hook_add()
   vim.g.LspDiagnosticsHintSign        = ""
 
   -- Debug mode
-  vim.lsp.set_log_level("debug")
+  --vim.lsp.set_log_level("debug")
 
   -- Key mappings
   local options = {noremap = true, silent = true}
