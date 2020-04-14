@@ -48,10 +48,10 @@ function M.hook_source()
   vim.g["eskk#start_completion_length"]     = 2
 
   -- easy escape with 'jj'
-  vim.api.nvim_command("augroup user-plugin-eskk")
-  vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command("autocmd User eskk-initialize-post EskkMap -remap jj <ESC>")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("augroup user-plugin-eskk")
+  vim.cmd("autocmd!")
+  vim.cmd("autocmd User eskk-initialize-post EskkMap -remap jj <ESC>")
+  vim.cmd("augroup END")
 end
 
 return M

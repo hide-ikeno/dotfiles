@@ -29,13 +29,13 @@ function M.hook_source()
     })
 
   -- Defx events
-  vim.api.nvim_command("augroup user_plugin_defx")
-  vim.api.nvim_command("autocmd!")
+  vim.cmd("augroup user_plugin_defx")
+  vim.cmd("autocmd!")
   -- Define defx window mappings
-  vim.api.nvim_command("autocmd FileType defx lua require('plugins.defx')._defx_mappings()")
+  vim.cmd("autocmd FileType defx lua require('plugins.defx')._defx_mappings()")
   -- Delete defx buffer if it's the only buffer left in the window
-  vim.api.nvim_command("autocmd WinEnter * if &filetype == 'defx' && winnr('$') == 1 | bdelete | endif")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("autocmd WinEnter * if &filetype == 'defx' && winnr('$') == 1 | bdelete | endif")
+  vim.cmd("augroup END")
 end
 
 function M._defx_load()

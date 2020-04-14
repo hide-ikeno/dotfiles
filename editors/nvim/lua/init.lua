@@ -202,11 +202,11 @@ if vim.fn.has("vim_starting") and vim.fn.empty(vim.fn.argv()) == 0 then
 end
 
 -- autocmd
-vim.api.nvim_command("augroup MuAutoCmd")
-vim.api.nvim_command("autocmd!")
-vim.api.nvim_command("autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *? call vimrc#on_filetype()")
-vim.api.nvim_command("autocmd CursorHold *? syntax sync minlines=300")
-vim.api.nvim_command("augroup END")
+vim.cmd("augroup MuAutoCmd")
+vim.cmd("autocmd!")
+vim.cmd("autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *? call vimrc#on_filetype()")
+vim.cmd("autocmd CursorHold *? syntax sync minlines=300")
+vim.cmd("augroup END")
 
 -- Key mappings
 require("mappings")

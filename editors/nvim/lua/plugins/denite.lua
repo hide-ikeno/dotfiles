@@ -173,11 +173,11 @@ function M.hook_source()
     })
 
   -- Denite events
-  vim.api.nvim_command("augroup user-plugin-denite")
-  vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command("autocmd FileType denite        lua require('plugins.denite')._on_filetype_denite()")
-  vim.api.nvim_command("autocmd FileType denite_filter lua require('plugins.denite')._on_filetype_denite_filter()")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("augroup user-plugin-denite")
+  vim.cmd("autocmd!")
+  vim.cmd("autocmd FileType denite        lua require('plugins.denite')._on_filetype_denite()")
+  vim.cmd("autocmd FileType denite_filter lua require('plugins.denite')._on_filetype_denite_filter()")
+  vim.cmd("augroup END")
 end
 
 function M._on_filetype_denite()

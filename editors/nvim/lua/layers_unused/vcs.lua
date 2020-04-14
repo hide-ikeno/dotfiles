@@ -30,15 +30,15 @@ function layer.init_config()
   -- committia.vim
   vim.g.committia_min_window_width = 100
   -- lazy load on the specific buffers
-  vim.api.nvim_command("augroup user_plugin_committia")
-  vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command("autocmd BufEnter COMMIT_EDITMSG,MERGE_MSG ++once packadd comittia")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("augroup user_plugin_committia")
+  vim.cmd("autocmd!")
+  vim.cmd("autocmd BufEnter COMMIT_EDITMSG,MERGE_MSG ++once packadd comittia")
+  vim.cmd("augroup END")
 
   -- git-messenger
   vim.g.git_messenger_no_default_mappings = true
   vim.api.nvim_set_keymap("n", "<Leader>gm", "<Plug>(git-messenger)", {silent = true})
-  vim.api.nvim_command("packadd git-messenger") -- TODO: make it load on demand
+  vim.cmd("packadd git-messenger") -- TODO: make it load on demand
 end
 
 return layer

@@ -15,20 +15,20 @@ function layer.init_config()
     [[<cmd>Defx -listed -buffer-name=tab`tabpagenr()`<CR>]], {silent = true, noremap = true})
 
   -- auto commands
-  vim.api.nvim_command("augroup user_plugin_defx")
-  vim.api.nvim_command("autocmd!")
+  vim.cmd("augroup user_plugin_defx")
+  vim.cmd("autocmd!")
   -- Load defx plugin on demand
-  vim.api.nvim_command("autocmd CmdUndefined Defx lua require('layer.tools.defx')._defx_load()")
+  vim.cmd("autocmd CmdUndefined Defx lua require('layer.tools.defx')._defx_load()")
   -- Define defx window mappings
-  vim.api.nvim_command("autocmd FileType defx lua require('layer.tools.defx')._defx_mappings()")
+  vim.cmd("autocmd FileType defx lua require('layer.tools.defx')._defx_mappings()")
   -- Delete defx buffer if it's the only buffer left in the window
-  vim.api.nvim_command("autocmd WinEnter * if &filetype == 'defx' && winnr('$') == 1 | bdelete | endif")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("autocmd WinEnter * if &filetype == 'defx' && winnr('$') == 1 | bdelete | endif")
+  vim.cmd("augroup END")
 end
 
 function layer._defx_load()
-  vim.api.nvim_command("packadd defx")
-  vim.api.nvim_command("packadd defx-icons")
+  vim.cmd("packadd defx")
+  vim.cmd("packadd defx-icons")
 
   vim.fn["defx#custom#option"]("_", {
       columns     = "icons:git:filename:type";

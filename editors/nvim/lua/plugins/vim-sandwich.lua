@@ -41,14 +41,14 @@ function M.hook_add()
 end
 
 function M.hook_source()
-  vim.api.nvim_command[[ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) ]]
-  vim.api.nvim_command[[
+  vim.cmd[[ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) ]]
+  vim.cmd[[
     let g:sandwich#recipes += [{'buns': ['「', '」']}, {'buns': ['【', '】']}, {'buns': ['（', '）']}, {'buns': ['『', '』']}]
   ]]
-  vim.api.nvim_command[[
+  vim.cmd[[
     let g:sandwich#recipes += [{'buns': ['\(',  '\)'], 'filetype': ['vim'], 'nesting': 1}]
   ]]
-  vim.api.nvim_command[[
+  vim.cmd[[
     let g:sandwich#recipes += [{'buns': ['\%(', '\)'], 'filetype': ['vim'], 'nesting': 1}]
   ]]
 end

@@ -64,15 +64,15 @@ function layer.init_config()
 
   -- Auto commands
   local on_cmd = {'Denite', 'DeniteBufferDir', 'DeniteCursorWord', 'DeniteProjectDir'}
-  vim.api.nvim_command("augroup user-plugin-denite")
-  vim.api.nvim_command("autocmd!")
+  vim.cmd("augroup user-plugin-denite")
+  vim.cmd("autocmd!")
   -- lazy load
-  vim.api.nvim_command("autocmd CmdUndefined " .. table.concat(on_cmd, ",") ..
+  vim.cmd("autocmd CmdUndefined " .. table.concat(on_cmd, ",") ..
     " ++once lua require('layer.tools.denite')._denite_load()")
   -- buffer local settings
-  vim.api.nvim_command("autocmd FileType denite        lua require('layer.tools.denite')._on_filetype_denite()")
-  vim.api.nvim_command("autocmd FileType denite_filter lua require('layer.tools.denite')._on_filetype_denite_filter()")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("autocmd FileType denite        lua require('layer.tools.denite')._on_filetype_denite()")
+  vim.cmd("autocmd FileType denite_filter lua require('layer.tools.denite')._on_filetype_denite_filter()")
+  vim.cmd("augroup END")
 
   -- fruzzy
   vim.g["fruzzy#usenative"]   = 1
@@ -81,11 +81,11 @@ end
 
 function layer._denite_load()
   -- Load packages
-  vim.api.nvim_command("packadd denite")
-  vim.api.nvim_command("packadd fruzzy")
-  vim.api.nvim_command("packadd neoyank")
-  vim.api.nvim_command("packadd neomru")
-  vim.api.nvim_command("packadd unite-location")
+  vim.cmd("packadd denite")
+  vim.cmd("packadd fruzzy")
+  vim.cmd("packadd neoyank")
+  vim.cmd("packadd neomru")
+  vim.cmd("packadd unite-location")
 
   -- Configure denite
   local ignore_globs = {

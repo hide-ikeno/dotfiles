@@ -19,9 +19,9 @@ function M.init(group_name)
     M._group_name = group_name
   end
 
-  vim.api.nvim_command("augroup " .. M._group_name)
-  vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("augroup " .. M._group_name)
+  vim.cmd("autocmd!")
+  vim.cmd("augroup END")
 end
 
 function M.bind(trigger, func)
@@ -30,7 +30,7 @@ function M.bind(trigger, func)
     M._bound_funcs[trigger] = {}
     local cmd = string.format("autocmd %s %s  lua require('autocmd')._run_hook(%s)",
       M._group_name, trigger, trigger)
-    vim.api.nvim_command(cmd)
+    vim.cmd(cmd)
   end
   table.insert(M._bound_funcs[trigger], func)
 end

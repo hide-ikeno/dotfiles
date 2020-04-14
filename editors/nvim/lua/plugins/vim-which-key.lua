@@ -148,12 +148,12 @@ function M.hook_source()
   vim.fn["which_key#register"]('s', 'g:which_key_s_map')
 
   -- which-key events
-  vim.api.nvim_command("augroup user-plugin-which-key")
-  vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command[[
+  vim.cmd("augroup user-plugin-which-key")
+  vim.cmd("autocmd!")
+  vim.cmd[[
     autocmd FileType which_key set laststatus=0 | autocmd BufLeave <buffer> set laststatus=2
   ]]
-  vim.api.nvim_command("augroup END")
+  vim.cmd("augroup END")
 end
 
 return M

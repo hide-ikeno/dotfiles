@@ -39,9 +39,9 @@ function M.finalize()
   M.is_finalized = true
 
   -- commands
-  vim.api.nvim_command("command! PackUpdate lua require('core.plug').pack_update()")
-  vim.api.nvim_command("command! PackStatus lua require('core.plug').pack_status()")
-  vim.api.nvim_command("command! PackClean  lua require('core.plug').pack_clean()")
+  vim.cmd("command! PackUpdate lua require('core.plug').pack_update()")
+  vim.cmd("command! PackStatus lua require('core.plug').pack_status()")
+  vim.cmd("command! PackClean  lua require('core.plug').pack_clean()")
 end
 
 --- Setup minpac as a backend plugin manager
@@ -67,7 +67,7 @@ function M.pack_init()
 
   ensure_minpac(base_dir)
 
-  vim.api.nvim_command("packadd minpac")
+  vim.cmd("packadd minpac")
   vim.fn["minpac#init"]({dir = vim.env.VIM_CACHE_HOME})
   for _, p in ipairs(M.plugins) do
     if type(p) == 'string' then

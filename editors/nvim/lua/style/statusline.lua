@@ -99,7 +99,7 @@ local function highlight(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
     table.insert(parts, "cterm="..attr)
   end
   if guisp then table.insert(parts, "guisp=#"..guisp) end
-  vim.api.nvim_command('highlight '..table.concat(parts, ' '))
+  vim.cmd('highlight '..table.concat(parts, ' '))
 end
 
 

@@ -39,15 +39,15 @@ function M.setup()
   vim.g.xml_syntax_folding = 1
 
   --- Register filetype events
-  vim.api.nvim_command("augroup user_filetype_event")
-  vim.api.nvim_command("autocmd!")
-  vim.api.nvim_command("autocmd FileType *       lua require('filetype').ftplugin_common()")
-  vim.api.nvim_command("autocmd FileType c,cpp   lua require('filetype').ftplugin_c_cpp()")
-  vim.api.nvim_command("autocmd FileType fortran lua require('filetype').ftplugin_fortran()")
-  vim.api.nvim_command("autocmd FileType ruby    lua require('filetype').ftplugin_ruby()")
-  vim.api.nvim_command("autocmd FileType toml    lua require('filetype').ftplugin_toml()")
-  vim.api.nvim_command("autocmd FileType vim     lua require('filetype').ftplugin_vim()")
-  vim.api.nvim_command("augroup END")
+  vim.cmd("augroup user_filetype_event")
+  vim.cmd("autocmd!")
+  vim.cmd("autocmd FileType *       lua require('filetype').ftplugin_common()")
+  vim.cmd("autocmd FileType c,cpp   lua require('filetype').ftplugin_c_cpp()")
+  vim.cmd("autocmd FileType fortran lua require('filetype').ftplugin_fortran()")
+  vim.cmd("autocmd FileType ruby    lua require('filetype').ftplugin_ruby()")
+  vim.cmd("autocmd FileType toml    lua require('filetype').ftplugin_toml()")
+  vim.cmd("autocmd FileType vim     lua require('filetype').ftplugin_vim()")
+  vim.cmd("augroup END")
 end
 
 --- ftplugin
@@ -89,13 +89,13 @@ end
 
 -- TOML
 function M.ftplugin_toml()
-  vim.api.nvim_command("syntax sync minlines=500")
+  vim.cmd("syntax sync minlines=500")
 end
 
 -- VIM
 function M.ftplugin_vim()
   if vim.fn.line("$") > 5000 then
-    vim.api.nvim_command("syntax sync minlines=500")
+    vim.cmd("syntax sync minlines=500")
   end
   vim.wo.foldmethod = "indent"
 end
