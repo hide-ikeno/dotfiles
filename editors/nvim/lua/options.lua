@@ -51,7 +51,8 @@ vim.o.backspace = "indent,eol,start"
 if is_windows or vim.fn.has("clipboard") then
   vim.o.clipboard = "unnamed"
 else
-  vim.o.clipboard = "unnamedplus"
+  -- vim.o.clipboard = "unnamedplus"
+  vim.o.clipboard = ""
 end
 
 vim.o.showmatch  = true  -- Jump to matching bracket
