@@ -70,16 +70,21 @@ end
 -- Fortran
 function M.ftplugin_fortran()
   local ext = vim.fn.expand("%:e")
+  local bufnr = vim.api.nvim_get_current_buf()
+  -- fixed or free format
   if ext == "f" or ext == "for" then
-    vim.bo.fortran_free_source  = 0
-    vim.bo.fortran_fixed_source = 1
+    vim.api.nvim_buf_set_var(bufnr, "fortran_free_source", 0)
+    vim.api.nvim_buf_set_var(bufnr, "fortran_fixed_source", 1)
   else
-    vim.bo.fortran_free_source  = 1
-    vim.bo.fortran_fixed_source = 0
+    vim.api.nvim_buf_set_var(bufnr, "fortran_free_source", 1)
+    vim.api.nvim_buf_set_var(bufnr, "fortran_fixed_source", 0)
   end
-  vim.bo.fortran_fold              = 1
-  vim.bo.fortran_fold_conditionals = 1
-  vim.bo.fortran_do_enddo          = 1
+  -- Folding
+  vim.api.nvim_buf_set_var(bufnr, "fortran_fold", 1)
+  vim.api.nvim_buf_set_var(bufnr, "fortran_fold_conditionals", 1)
+  vim.api.nvim_buf_set_var(bufnr, "fortran_fold_multilinecomments", 1)
+  -- Indent do-enddo block
+  vim.api.nvim_buf_set_var(bufnr, "fortran_do_enddo", 1)
 end
 
 -- Ruby
