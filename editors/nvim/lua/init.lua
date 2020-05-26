@@ -206,6 +206,7 @@ vim.cmd("augroup MuAutoCmd")
 vim.cmd("autocmd!")
 vim.cmd("autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *? call vimrc#on_filetype()")
 vim.cmd("autocmd CursorHold *? syntax sync minlines=300")
+vim.cmd("autocmd TextYankPost *  silent! lua require'vim.highlight'.on_yank('IncSearch', 1000)")
 vim.cmd("augroup END")
 
 -- Key mappings

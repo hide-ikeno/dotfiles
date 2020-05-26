@@ -52,7 +52,11 @@ function M.hook_add()
   vim.api.nvim_set_keymap("x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", options)
   vim.api.nvim_set_keymap("n", "mh", "<cmd>lua vim.lsp.buf.hover()<CR>",            options)
   vim.api.nvim_set_keymap("n", "mH", "<cmd>lua vim.lsp.buf.signature_help()<CR>",   options)
-  vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  options)
+  if vim.fn["dein#tap"]("nvim-lsp-denite") ~= 0 then
+    vim.api.nvim_set_keymap("n", "mo", "<cmd>Denite lsp_symbols<CR>",  options)
+  else
+    vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  options)
+  end
   -- Extensions
   if vim.fn["dein#tap"]("diagnostic-nvim") ~= 0 then
     vim.g.diagnostic_enable_virtual_text = 1
