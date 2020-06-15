@@ -6,7 +6,7 @@ function M.hook_add()
 end
 
 function M.hook_post_update()
-  vim.fn["call fruzzy#install"]()
+  vim.fn["fruzzy#install"]()
 end
 
 return M

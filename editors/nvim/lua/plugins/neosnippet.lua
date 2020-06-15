@@ -5,6 +5,7 @@ function M.hook_add()
   vim.g["neosnippet#enable_completed_snippet"] = 1
   vim.g["neosnippet#expand_word_boundary"] = 1
   vim.g["neosnippet#snippets_directory"] = vim.env.VIM_CONFIG_HOME .. "/snippets"
+  vim.g["neosnippet#data_directory"] = vim.env.VIM_CACHE_HOME .. "/neosnippet"
 
   local options = {silent = true}
   vim.api.nvim_set_keymap("i", "<C-s>", "<Plug>(neosnippet_jump_or_expand)", options)

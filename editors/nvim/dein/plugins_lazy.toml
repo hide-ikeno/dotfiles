@@ -58,11 +58,18 @@ hook_post_update = 'lua require("plugins.fruzzy").hook_post_update()'
 repo = 'Shougo/neoyank.vim'
 on_event = 'TextYankPost'
 on_source = ['denite.nvim']
+hook_add = '''
+  let g:neoyank#file = $VIM_CACHE_HOME . "/neoyank/yank_history"
+'''
 
 # MRU
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 on_source = ['denite.nvim']
+hook_add = '''
+  let g:neomru#file_mru_path      = $VIM_CACHE_HOME . "/neomru/file"
+  let g:neomru#directory_mru_path = $VIM_CACHE_HOME . "/neomru/directory"
+'''
 
 # Dark powered shell interface for Neovim
 [[plugins]]
