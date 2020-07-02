@@ -94,6 +94,16 @@ repo = 'kristijanhusak/defx-git'
 [[plugins]]
 repo = 'chemzqm/unite-location'
 
+# Plugin library by Google
+[[plugins]]
+repo = 'google/vim-maktaba'
+on_soruce = ['vim-codefmt']
+
+[[plugins]]
+repo = 'google/vim-glaive'
+on_cmd = ['Glaive']
+
+
 #==============================================================================
 # Appearance
 #==============================================================================

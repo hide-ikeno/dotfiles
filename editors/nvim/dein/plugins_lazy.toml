@@ -1,7 +1,7 @@
 # === Plugins (lazy loading) ===
 
 #==============================================================================
-# LSP
+# LSP / Formatter / Linter
 #==============================================================================
 
 [[plugins]]
@@ -32,6 +32,17 @@ on_event = 'VimEnter'
 repo = 'weilbith/nvim-lsp-denite'
 depends = ['denite.nvim', 'nvim-lsp']
 on_source = ['nvim-lsp']
+
+# Syntax-aware code formatting
+[[plugins]]
+repo = 'google/vim-codefmt'
+on_ft = [
+  'auduino', 'bzl', 'c', 'cpp', 'dart', 'go', 'gn',
+  'html','css', 'sass', 'scss', 'less',
+  'java', 'javascript', 'json', 'proto',
+  'python', 'rust', 'sh', 'vue'
+]
+hook_add = 'lua require("plugins/codefmt").hook_add()'
 
 #==============================================================================
 # Denite
@@ -301,11 +312,16 @@ repo = 'osyo-manga/vim-jplus'
 on_map = {nx = '<Plug>'}
 hook_add = 'lua require("plugins.vim-jplus").hook_add()'
 
-# Fast folding
+# improve foldtext for better looks
 [[plugins]]
-repo = 'Konfekt/FastFold'
+repo = 'lambdalisue/readablefold.vim'
 on_event = 'BufEnter'
-hook_add = 'lua require("plugins.FastFold").hook_add()'
+
+# # Fast folding
+# [[plugins]]
+# repo = 'Konfekt/FastFold'
+# on_event = 'BufEnter'
+# hook_add = 'lua require("plugins.FastFold").hook_add()'
 
 # # Set the buffer filetype based on the code block
 # [[plugins]]

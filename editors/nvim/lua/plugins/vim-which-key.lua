@@ -52,6 +52,7 @@ function M.hook_source()
     ['L'] = "Gina log :%",
     ['f'] = "Gina ls",
   }
+
   vim.g.which_key_space_map = M._space_map
   vim.fn["which_key#register"]('<Space>', 'g:which_key_space_map')
 
@@ -112,6 +113,12 @@ function M.hook_source()
     ["r"] = "relative-number",
     ["s"] = "spell-check",
     ["w"] = "wrap-text",
+  }
+
+  M._leader_map["="] = {
+    name  = "+codefmt",
+    ['='] = "format-line",
+    ['b'] = "format-buffer",
   }
 
   vim.g.which_key_leader_map = M._leader_map
