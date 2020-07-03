@@ -79,6 +79,11 @@ function M.hook_add()
   vim.cmd("autocmd FileType sh                lua require('plugins.nvim_lsp')._on_filetype_sh()")
   vim.cmd("autocmd FileType vim               lua require('plugins.nvim_lsp')._on_filetype_vim()")
   vim.cmd("autocmd FileType yaml              lua require('plugins.nvim_lsp')._on_filetype_yaml()")
+  local efm_ft = {
+    "eruby", "vim", "make", "markdown", "rst", "yaml", "python",
+    "dockerfile", "javascript", "php", "html", "css", "json", "csv"
+  }
+  vim.cmd("autocmd FileType " .. table.concat(efm_ft, ",") .. " lua require('plugins.nvim_lsp')._configure_efm()")
   vim.cmd("augroup end")
 end
 
@@ -201,6 +206,12 @@ end
 
 function M._on_filetype_yaml()
   require'nvim_lsp'.yamlls.setup{
+    on_attach = on_attach_callback
+  }
+end
+
+function M._configure_efm()
+  require'nvim_lsp'.efm.setup{
     on_attach = on_attach_callback
   }
 end
