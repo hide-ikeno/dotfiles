@@ -69,21 +69,21 @@ function M.hook_add()
 
   vim.cmd("augroup user-plugin-nvim-lsp")
   vim.cmd("autocmd!")
-  vim.cmd("autocmd FileType c,cpp,objc,objcpp lua require('plugins.nvim_lsp')._on_filetype_c_cpp()")
-  vim.cmd("autocmd FileType fortran           lua require('plugins.nvim_lsp')._on_filetype_fortran()")
-  vim.cmd("autocmd FileType go                lua require('plugins.nvim_lsp')._on_filetype_go()")
-  vim.cmd("autocmd FileType lua               lua require('plugins.nvim_lsp')._on_filetype_lua()")
-  vim.cmd("autocmd FileType python            lua require('plugins.nvim_lsp')._on_filetype_python()")
-  vim.cmd("autocmd FileType ruby              lua require('plugins.nvim_lsp')._on_filetype_ruby()")
-  vim.cmd("autocmd FileType rust              lua require('plugins.nvim_lsp')._on_filetype_rust()")
-  vim.cmd("autocmd FileType sh                lua require('plugins.nvim_lsp')._on_filetype_sh()")
-  vim.cmd("autocmd FileType vim               lua require('plugins.nvim_lsp')._on_filetype_vim()")
-  vim.cmd("autocmd FileType yaml              lua require('plugins.nvim_lsp')._on_filetype_yaml()")
+  vim.cmd("autocmd FileType c,cpp,objc,objcpp lua require('plugins.nvim-lsp')._on_filetype_c_cpp()")
+  vim.cmd("autocmd FileType fortran           lua require('plugins.nvim-lsp')._on_filetype_fortran()")
+  vim.cmd("autocmd FileType go                lua require('plugins.nvim-lsp')._on_filetype_go()")
+  vim.cmd("autocmd FileType lua               lua require('plugins.nvim-lsp')._on_filetype_lua()")
+  vim.cmd("autocmd FileType python            lua require('plugins.nvim-lsp')._on_filetype_python()")
+  vim.cmd("autocmd FileType ruby              lua require('plugins.nvim-lsp')._on_filetype_ruby()")
+  vim.cmd("autocmd FileType rust              lua require('plugins.nvim-lsp')._on_filetype_rust()")
+  vim.cmd("autocmd FileType sh                lua require('plugins.nvim-lsp')._on_filetype_sh()")
+  vim.cmd("autocmd FileType vim               lua require('plugins.nvim-lsp')._on_filetype_vim()")
+  vim.cmd("autocmd FileType yaml              lua require('plugins.nvim-lsp')._on_filetype_yaml()")
   local efm_ft = {
     "eruby", "vim", "make", "markdown", "rst", "yaml", "python",
     "dockerfile", "javascript", "php", "html", "css", "json", "csv"
   }
-  vim.cmd("autocmd FileType " .. table.concat(efm_ft, ",") .. " lua require('plugins.nvim_lsp')._configure_efm()")
+  vim.cmd("autocmd FileType " .. table.concat(efm_ft, ",") .. " lua require('plugins.nvim-lsp')._configure_efm()")
   vim.cmd("augroup end")
 end
 

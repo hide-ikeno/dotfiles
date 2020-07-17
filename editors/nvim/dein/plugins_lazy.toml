@@ -13,8 +13,8 @@ on_ft = [
   'c', 'cpp', 'dockerfile', 'fortran', 'go', 'lua', 'python',
   'ruby', 'rust', 'sh', 'tex', 'vim', 'yaml'
 ]
-hook_add = 'lua require("plugins.nvim_lsp").hook_add()'
-# hook_post_source = 'lua require("plugins.nvim_lsp").hook_post_source()'
+hook_add = 'lua require("plugins.nvim-lsp").hook_add()'
+# hook_post_source = 'lua require("plugins.nvim-lsp").hook_post_source()'
 
 # A wrapper for neovim built in LSP diagnosis config
 [[plugins]]
@@ -42,7 +42,15 @@ on_ft = [
   'java', 'javascript', 'json', 'proto',
   'python', 'rust', 'sh', 'vue'
 ]
-hook_add = 'lua require("plugins/codefmt").hook_add()'
+hook_add = 'lua require("plugins.codefmt").hook_add()'
+
+#==============================================================================
+# Tree sitter
+#==============================================================================
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+on_event = ['BufRead']
+hook_source = 'lua require("plugins.nvim-treesitter").hook_source()'
 
 #==============================================================================
 # Denite
@@ -361,17 +369,17 @@ hook_add = '''
   xmap _ <Plug>(operator-replace)
 '''
 
-[[plugins]]
-repo = 'kana/vim-textobj-line'
-depends = ['vim-textobj-user']
-on_map = {ox = '<Plug>'}
-hook_add = 'lua require("plugins.vim-textobj-line").hook_add()'
-
-[[plugins]]
-repo = 'thinca/vim-textobj-comment'
-depends = ['vim-textobj-user']
-on_map = {ox = '<Plug>'}
-hook_add = 'lua require("plugins.vim-textobj-comment").hook_add()'
+# [[plugins]]
+# repo = 'kana/vim-textobj-line'
+# depends = ['vim-textobj-user']
+# on_map = {ox = '<Plug>'}
+# hook_add = 'lua require("plugins.vim-textobj-line").hook_add()'
+#
+# [[plugins]]
+# repo = 'thinca/vim-textobj-comment'
+# depends = ['vim-textobj-user']
+# on_map = {ox = '<Plug>'}
+# hook_add = 'lua require("plugins.vim-textobj-comment").hook_add()'
 
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
