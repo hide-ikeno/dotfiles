@@ -132,28 +132,28 @@ function M._on_filetype_lua()
 end
 
 function M._on_filetype_python()
-  require'nvim_lsp'.jedi_language_server.setup{
-    on_attach = on_attach_callback;
-  }
-  -- require'nvim_lsp'.pyls.setup{
-  --   -- cmd = { vim.env.PYENV_ROOT .. "/versions/neovim3/bin/pyls" };
-  --   settings = {
-  --     pyls = {
-  --       plugins = {
-  --         flake8 = { enabled = true };
-  --         pycodestyle = { enabled = true };
-  --         pydocstyle = { enabled = false };
-  --         pylint = { enabled = false };
-  --         yapf = { enabled = false };
-  --         jedi_definition = {
-  --           follow_imports = true;
-  --           follow_builtin_imports = true;
-  --         }
-  --       }
-  --     }
-  --   };
+  -- require'nvim_lsp'.jedi_language_server.setup{
   --   on_attach = on_attach_callback;
   -- }
+  require'nvim_lsp'.pyls.setup{
+    -- cmd = { vim.env.PYENV_ROOT .. "/versions/neovim3/bin/pyls" };
+    settings = {
+      pyls = {
+        plugins = {
+          flake8 = { enabled = true };
+          pycodestyle = { enabled = true };
+          pydocstyle = { enabled = false };
+          pylint = { enabled = false };
+          yapf = { enabled = false };
+          jedi_definition = {
+            follow_imports = true;
+            follow_builtin_imports = true;
+          }
+        }
+      }
+    };
+    on_attach = on_attach_callback;
+  }
 end
 
 function M._on_filetype_ruby()
