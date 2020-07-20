@@ -1,5 +1,3 @@
-local vim = vim or {}
-
 local M = {}
 
 --- OS specific settings
