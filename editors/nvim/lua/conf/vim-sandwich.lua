@@ -1,6 +1,6 @@
 local M = {}
 
-function M.hook_add()
+function M.setup()
   -- Variables
   vim.g["textobj#sandwich#stimeoutlen"] = 100
   vim.g.sandwich_no_default_key_mappings = 1
@@ -40,7 +40,7 @@ function M.hook_add()
   vim.api.nvim_set_keymap("x", "is", "<Plug>(textobj-sandwich-query-i)", {})
 end
 
-function M.hook_source()
+function M.config()
   vim.cmd[[ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) ]]
   vim.cmd[[
     let g:sandwich#recipes += [{'buns': ['「', '」']}, {'buns': ['【', '】']}, {'buns': ['（', '）']}, {'buns': ['『', '』']}]

@@ -1,4 +1,3 @@
-local vim = vim or {}
 local icons = require("devicons")
 
 local M = {}

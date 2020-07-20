@@ -44,6 +44,7 @@ function M.setup()
   vim.cmd("autocmd FileType *       lua require('filetype').ftplugin_common()")
   vim.cmd("autocmd FileType c,cpp   lua require('filetype').ftplugin_c_cpp()")
   vim.cmd("autocmd FileType fortran lua require('filetype').ftplugin_fortran()")
+  vim.cmd("autocmd FileType help    lua require('filetype').ftplugin_help()")
   vim.cmd("autocmd FileType ruby    lua require('filetype').ftplugin_ruby()")
   vim.cmd("autocmd FileType toml    lua require('filetype').ftplugin_toml()")
   vim.cmd("autocmd FileType vim     lua require('filetype').ftplugin_vim()")
@@ -70,21 +71,20 @@ end
 -- Fortran
 function M.ftplugin_fortran()
   local ext = vim.fn.expand("%:e")
-  local bufnr = vim.api.nvim_get_current_buf()
   -- fixed or free format
   if ext == "f" or ext == "for" then
-    vim.api.nvim_buf_set_var(bufnr, "fortran_free_source", 0)
-    vim.api.nvim_buf_set_var(bufnr, "fortran_fixed_source", 1)
+    vim.b.fortran_free_source  = 0
+    vim.b.fortran_fixed_source = 1
   else
-    vim.api.nvim_buf_set_var(bufnr, "fortran_free_source", 1)
-    vim.api.nvim_buf_set_var(bufnr, "fortran_fixed_source", 0)
+    vim.b.fortran_free_source  = 1
+    vim.b.fortran_fixed_source = 0
   end
   -- Folding
-  vim.api.nvim_buf_set_var(bufnr, "fortran_fold", 1)
-  vim.api.nvim_buf_set_var(bufnr, "fortran_fold_conditionals", 1)
-  vim.api.nvim_buf_set_var(bufnr, "fortran_fold_multilinecomments", 1)
+  vim.b.fortran_fold                   = 1
+  vim.b.fortran_fold_conditionals      = 1
+  vim.b.fortran_fold_multilinecomments = 1
   -- Indent do-enddo block
-  vim.api.nvim_buf_set_var(bufnr, "fortran_do_enddo", 1)
+  vim.b.fortran_do_enddo = 1
 end
 
 -- Ruby

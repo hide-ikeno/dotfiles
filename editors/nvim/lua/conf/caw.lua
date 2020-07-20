@@ -1,8 +1,7 @@
 local M = {}
 
-function M.hook_add()
+function M.setup()
   vim.g.caw_no_default_keymappings = 1
-
   vim.api.nvim_set_keymap("n", "<Leader>cc", "<Plug>(caw:hatpos:toggle)",     {silent = true})
   vim.api.nvim_set_keymap("x", "<Leader>cc", "<Plug>(caw:hatpos:toggle)",     {silent = true})
   vim.api.nvim_set_keymap("n", "<Leader>ca", "<Plug>(caw:dollarpos:toggle)",  {silent = true})
@@ -13,6 +12,9 @@ function M.hook_add()
   vim.api.nvim_set_keymap("x", "<Leader>cw", "<Plug>(caw:wrap:toggle)",       {silent = true})
   vim.api.nvim_set_keymap("n", "<Leader>c]", "<Plug>(caw:jump:comment-next)", {silent = true})
   vim.api.nvim_set_keymap("n", "<Leader>c[", "<Plug>(caw:jump:comment-prev)", {silent = true})
+end
+
+function M.config()
 end
 
 return M

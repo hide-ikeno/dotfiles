@@ -1,3 +1,4 @@
+--- ~/.config/nvim/lua/mapping.lua
 --- Set global key mappings
 
 local api = vim.api

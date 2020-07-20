@@ -1,4 +1,4 @@
-local util = require("vimrc_utils")
+local util = require("utils")
 local M = {}
 
 local function get_os_icon()

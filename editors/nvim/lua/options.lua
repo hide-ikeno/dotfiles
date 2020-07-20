@@ -1,4 +1,9 @@
+--- ~/.config/nvim/lua/options.lua
 --- Set global options
+local utils = require('utils')
+
+local cache_dir = vim.fn.stdpath("cache")
+local data_dir  = vim.fn.stdpath("data")
 
 --- Vim files & directories {{{
 vim.o.backup      = false
@@ -7,11 +12,10 @@ vim.o.undofile    = true
 vim.o.swapfile    = true
 
 -- Directories to store backup, swap, view, and shada files
-local cache = vim.env.VIM_CACHE_HOME
-vim.o.backupdir = table.concat({cache .. "/backup", "~/tmp", "/tmp"}, ",")
-vim.o.directory = table.concat({cache .. "/swap",   "~/tmp", "/tmp"}, ",")
-vim.o.undodir   = table.concat({cache .. "/undo",   "~/tmp", "/tmp"}, ",")
-vim.o.viewdir   = table.concat({cache .. "/view",   "~/tmp", "/tmp"}, ",")
+vim.o.backupdir = table.concat({cache_dir .. "/backup", "~/tmp", "/tmp"}, ",")
+vim.o.directory = table.concat({cache_dir .. "/swap",   "~/tmp", "/tmp"}, ",")
+vim.o.undodir   = table.concat({cache_dir .. "/undo",   "~/tmp", "/tmp"}, ",")
+vim.o.viewdir   = table.concat({cache_dir .. "/view",   "~/tmp", "/tmp"}, ",")
 
 -- Customize shada files entries.
 -- Shada files are stored to $XDG_DATA_HOME/nvim/shada/main.shada by default
@@ -22,7 +26,7 @@ vim.o.shada = [['1000,<50,@100,s10,h]]
 -- prefer english help
 vim.o.helplang  = "en,ja";
 -- The words list file where words are added by `zw` and `zg` command
-vim.o.spellfile = vim.env.VIM_DATA_HOME .. "/spell/en.utf-8.add";
+vim.o.spellfile = data_dir .. "/spell/en.utf-8.add";
 -- spell check (ignore on check on Asian characters (China, Japan, Korea))
 vim.o.spelllang = "en_us,cjk";
 vim.o.spell     = false;
@@ -48,7 +52,7 @@ vim.o.virtualedit = "block"
 -- Allow backspacing over everything in insert mode
 vim.o.backspace = "indent,eol,start"
 -- Use system clipboard
-if is_windows or vim.fn.has("clipboard") then
+if utils.os.is_windows or vim.fn.has("clipboard") then
   vim.o.clipboard = "unnamed"
 else
   -- vim.o.clipboard = "unnamedplus"
@@ -72,11 +76,6 @@ vim.o.smartcase  = true    -- Override 'ignorecase' if pattern contains upper ca
 vim.o.infercase  = true    -- Adjust case in insert completion mode
 vim.o.hlsearch   = true    -- Highlight match results
 vim.o.wrapscan   = true    -- Searches wrap around the end of the file
--- Set external commands for grep
-if vim.fn.executable('rg') then
-  vim.o.grepprg    = [[rg\ --vimgrep\ --no-heading\ -HS\ --line-number]]
-  vim.o.grepformat = "%f:%l:%c:%m"
-end
 --- }}}
 
 --- Behavior {{{
