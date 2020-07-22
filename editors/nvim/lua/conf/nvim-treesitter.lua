@@ -1,6 +1,6 @@
 local M = {}
 
-function M.hook_source()
+function M.config()
   require'nvim-treesitter.configs'.setup{
     highlight = {
       enable = true,

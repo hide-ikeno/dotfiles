@@ -1,33 +1,47 @@
 local M = {}
 
-local function on_attach_callback(client, bufnr)
-  vim.api.nvim_buf_set_var(bufnr, "lsp_client_id", client.id)
-  -- Key mappings
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>",       {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd",    "<cmd>lua vim.lsp.buf.declaration()<CR>",      {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gD",    "<cmd>lua vim.lsp.buf.implementation()<CR>",   {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "1gD",   "<cmd>lua vim.lsp.buf.type_definition()<CR>",  {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr",    "<cmd>lua vim.lsp.buf.references()<CR>",       {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<F2>",  "<cmd>lua vim.lsp.buf.rename()<CR>",           {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gQ",    "<cmd>lua vim.lsp.buf.formatting()<CR>",       {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gq",    "<cmd>lua vim.lsp.buf.range_formatting()<CR>", {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "K",     "<cmd>lua vim.lsp.buf.hover()<CR>",            {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>",   {silent = true;})
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "g0",    "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  {silent = true;})
+local nvim_lsp   = require("nvim_lsp")
+local lsp_status = require("lsp-status")
+local diagnostic = require("diagnostic")
 
+local function on_attach_callback(client)
   -- Omni completion source
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-
-  -- Extensions
-  if vim.fn["dein#tap"]("diagnostic-nvim") ~= 0 then
-    require('diagnostic').on_attach()
-  end
-  if vim.fn["dein#tap"]("completion-nvim") ~= 0 then
-    require('completion').on_attach()
-  end
+  lsp_status.on_attach(client)
+  diagnostic.on_attach()
 end
 
-function M.hook_add()
+local servers = {
+  bashls = {},
+  clangd = {
+    cmd = {
+      'clangd', -- '--background-index',
+      '--clang-tidy', '--completion-style=bundled', '--header-insertion=iwyu',
+      '--suggest-missing-includes', '--cross-file-rename'
+    },
+    callbacks = lsp_status.extensions.clangd.setup(),
+    capabilities = {
+      textDocument = {
+        completion = {
+          completionItem = {
+            snippetSupport = true
+          }
+        }
+      }
+    },
+    init_options = {
+      clangdFileStatus = true,
+      usePlaceholders = true,
+      completeUnimported = true
+    }
+  },
+  cssls = {
+    filetypes = {"css", "scss", "less", "sass"},
+    root_dir = nvim_lsp.util.root_pattern("package.json", ".git")
+  },
+}
+
+function M.setup()
   -- Variables
   vim.g.enable_nvim_lsp_diagnostics   = true
   vim.g.LspDiagnosticsErrorSign       = ""
@@ -39,31 +53,27 @@ function M.hook_add()
   --vim.lsp.set_log_level("debug")
 
   -- Key mappings
-  local options = {noremap = true, silent = true}
-  vim.api.nvim_set_keymap("n", "md", "<cmd>lua vim.lsp.buf.definition()<CR>",       options)
-  vim.api.nvim_set_keymap("n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>",      options)
-  vim.api.nvim_set_keymap("n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>",   options)
-  vim.api.nvim_set_keymap("n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>",  options)
-  vim.api.nvim_set_keymap("n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>",       options)
-  vim.api.nvim_set_keymap("n", "mp", "<cmd>lua vim.lsp.buf.peek_definition()<CR>",  options)
-  vim.api.nvim_set_keymap("n", "mR", "<cmd>lua vim.lsp.buf.rename()<CR>",           options)
-  vim.api.nvim_set_keymap("n", "mF", "<cmd>lua vim.lsp.buf.formatting()<CR>",       options)
-  vim.api.nvim_set_keymap("n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", options)
-  vim.api.nvim_set_keymap("x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", options)
-  vim.api.nvim_set_keymap("n", "mh", "<cmd>lua vim.lsp.buf.hover()<CR>",            options)
-  vim.api.nvim_set_keymap("n", "mH", "<cmd>lua vim.lsp.buf.signature_help()<CR>",   options)
-  if vim.fn["dein#tap"]("nvim-lsp-denite") ~= 0 then
-    vim.api.nvim_set_keymap("n", "mo", "<cmd>Denite lsp_symbols<CR>",  options)
-  else
-    vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  options)
-  end
-  -- Extensions
-  if vim.fn["dein#tap"]("diagnostic-nvim") ~= 0 then
-    vim.g.diagnostic_enable_virtual_text = 1
-    vim.api.nvim_set_keymap("n", "m]", "<cmd>NextDiagnostic<CR>",  options)
-    vim.api.nvim_set_keymap("n", "m[", "<cmd>PrevDiagnostic<CR>",  options)
-    vim.api.nvim_set_keymap("n", "mq", "<cmd>OpenDiagnostic<CR>",  options)
-  end
+  local opts = {noremap = true, silent = true}
+  vim.api.nvim_set_keymap("n", "mA", "<cmd>lua vim.lsp.buf.code_action()<CR>",            opts)
+  vim.api.nvim_set_keymap("n", "md", "<cmd>lua vim.lsp.buf.definition()<CR>",             opts)
+  vim.api.nvim_set_keymap("n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>",            opts)
+  vim.api.nvim_set_keymap("n", "me", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>",         opts)
+  vim.api.nvim_set_keymap("n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>",        opts)
+  vim.api.nvim_set_keymap("n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>",             opts)
+  vim.api.nvim_set_keymap("n", "mp", "<cmd>lua vim.lsp.buf.peek_definition()<CR>",        opts)
+  vim.api.nvim_set_keymap("n", "mR", "<cmd>lua vim.lsp.buf.rename()<CR>",                 opts)
+  vim.api.nvim_set_keymap("n", "mF", "<cmd>lua vim.lsp.buf.formatting()<CR>",             opts)
+  vim.api.nvim_set_keymap("n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>",       opts)
+  vim.api.nvim_set_keymap("x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>",       opts)
+  vim.api.nvim_set_keymap("n", "mh", "<cmd>lua vim.lsp.buf.hover()<CR>",                  opts)
+  vim.api.nvim_set_keymap("n", "mH", "<cmd>lua vim.lsp.buf.signature_help()<CR>",         opts)
+  vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  opts)
+
+  -- diagnostics-lsp
+  vim.api.nvim_set_keymap("n", "m]", "<cmd>NextDiagnosticCycle<CR>",  opts)
+  vim.api.nvim_set_keymap("n", "m[", "<cmd>PrevDiagnosticCycle<CR>",  opts)
+  vim.api.nvim_set_keymap("n", "mq", "<cmd>OpenDiagnostic<CR>",       opts)
 
   -- auto commands
 

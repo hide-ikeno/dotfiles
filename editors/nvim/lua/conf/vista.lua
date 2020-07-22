@@ -1,6 +1,6 @@
 local M = {}
 
-function M.hook_add()
+function M.setup()
   vim.api.nvim_set_keymap("n", "<Space>v", "<cmd>Vista!!<CR>", {noremap = true, silent = true})
 
   vim.g.vista_default_executive = "ctags"

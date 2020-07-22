@@ -10,8 +10,8 @@ local plugins = {
   },
   ["caw.vim"] = {
     loaded = false,
-    only_sequence = true,
-    only_setup = true,
+    only_sequence = false,
+    only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/caw.vim"
   },
   ["committia.vim"] = {
@@ -20,26 +20,63 @@ local plugins = {
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/committia.vim"
   },
+  ["completion-treesitter"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/completion-treesitter"
+  },
+  ["csv.vim"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/csv.vim"
+  },
+  ["d.vim"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/d.vim"
+  },
   ["editorconfig-vim"] = {
     loaded = false,
     only_sequence = true,
     only_setup = true,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/editorconfig-vim"
   },
+  ["eskk.vim"] = {
+    config = { "require'conf.eskk'.config()" },
+    keys = { { "i", "<Plug>(eskk:toggle)" }, { "c", "<Plug>(eskk:toggle)" } },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/eskk.vim"
+  },
+  ["gina.vim"] = {
+    commands = { "Gina" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/gina.vim"
+  },
   ["git-messenger.vim"] = {
     commands = { "GitMessenger" },
-    config = { "\27LJ\1\2\v\0\0\1\0\0\0\1G\0\1\0\0" },
-    keys = { { "n", "<Plug>(git-messenger)" } },
     loaded = false,
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/git-messenger.vim"
   },
-  indentLine = {
+  ["jsonc.vim"] = {
     loaded = false,
-    only_sequence = true,
-    only_setup = true,
-    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/indentLine"
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/jsonc.vim"
+  },
+  ["nvim-treesitter"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/nvim-treesitter"
   },
   ["packer.nvim"] = {
     loaded = false,
@@ -53,17 +90,61 @@ local plugins = {
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/poet-v"
   },
+  ["python_match.vim"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/python_match.vim"
+  },
+  ["requirements.txt.vim"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/requirements.txt.vim"
+  },
+  ["startuptime.vim"] = {
+    commands = { "StartupTime" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/startuptime.vim"
+  },
   ["vim-better-whitespace"] = {
     loaded = false,
     only_sequence = true,
     only_setup = true,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-better-whitespace"
   },
+  ["vim-easy-align"] = {
+    keys = { { "n", "<Plug>(EasyAlign)" }, { "v", "<Plug>(EasyAlign)" } },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-easy-align"
+  },
   ["vim-gfm-syntax"] = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-gfm-syntax"
+  },
+  ["vim-gutentags"] = {
+    loaded = false,
+    only_sequence = true,
+    only_setup = true,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-gutentags"
+  },
+  ["vim-indent-guides"] = {
+    loaded = false,
+    only_sequence = true,
+    only_setup = true,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-indent-guides"
+  },
+  ["vim-markdown"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-markdown"
   },
   ["vim-matchup"] = {
     loaded = false,
@@ -78,7 +159,7 @@ local plugins = {
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-polyglot"
   },
   ["vim-sandwich"] = {
-    config = { "\27LJ\1\2Ú\3\0\0\2\0\6\0\0174\0\0\0007\0\1\0%\1\2\0>\0\2\0014\0\0\0007\0\1\0%\1\3\0>\0\2\0014\0\0\0007\0\1\0%\1\4\0>\0\2\0014\0\0\0007\0\1\0%\1\5\0>\0\2\1G\0\1\0b    let g:sandwich#recipes += [{'buns': ['\\%(', '\\)'], 'filetype': ['vim'], 'nesting': 1}]\n  b    let g:sandwich#recipes += [{'buns': ['\\(',  '\\)'], 'filetype': ['vim'], 'nesting': 1}]\n  Ž\1    let g:sandwich#recipes += [{'buns': ['ã€Œ', 'ã€']}, {'buns': ['ã€', 'ã€‘']}, {'buns': ['ï¼ˆ', 'ï¼‰']}, {'buns': ['ã€Ž', 'ã€']}]\n  D let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) \bcmd\bvim\0" },
+    config = { "require'conf.vim-sandwich'.config()" },
     loaded = false,
     only_sequence = true,
     only_setup = true,
@@ -86,8 +167,8 @@ local plugins = {
   },
   ["vim-signify"] = {
     loaded = false,
-    only_sequence = false,
-    only_setup = false,
+    only_sequence = true,
+    only_setup = true,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-signify"
   },
   ["vim-tmux-navigator"] = {
@@ -96,12 +177,41 @@ local plugins = {
     only_setup = true,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-tmux-navigator"
   },
+  ["vim-vsnip"] = {
+    after = { "vim-vsnip-integ" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-vsnip"
+  },
+  ["vim-vsnip-integ"] = {
+    load_after = {
+      ["vim-vsnip"] = true
+    },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-vsnip-integ"
+  },
+  ["vim-zsh"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-zsh"
+  },
   ["vinarise.vim"] = {
     commands = { "Vinarise" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vinarise.vim"
+  },
+  ["vista.vim"] = {
+    commands = { "Vista" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vista.vim"
   }
 }
 
@@ -110,7 +220,7 @@ local function handle_bufread(names)
     local path = plugins[name].path
     for _, dir in ipairs({ 'ftdetect', 'ftplugin', 'after/ftdetect', 'after/ftplugin' }) do
       if #vim.fn.finddir(dir, path) > 0 then
-        vim.api.nvim_command('doautocmd BufRead')
+        vim.cmd('doautocmd BufRead')
         return
       end
     end
@@ -156,16 +266,17 @@ _packer_load = function(names, cause)
   end
 
   for cmd, _ in pairs(del_cmds) do
-    vim.api.nvim_command('silent! delcommand ' .. cmd)
+    vim.cmd('silent! delcommand ' .. cmd)
   end
 
   for key, _ in pairs(del_maps) do
-    vim.api.nvim_command(fmt('silent! %sunmap %s', key[1], key[2]))
+    vim.cmd(fmt('silent! %sunmap %s', key[1], key[2]))
   end
 
   for _, name in ipairs(names) do
     if not plugins[name].loaded then
-      vim.api.nvim_command('packadd ' .. name)
+      vim.cmd('packadd ' .. name)
+      vim._update_package_paths()
       if plugins[name].config then
         for _i, config_line in ipairs(plugins[name].config) do
           loadstring(config_line)()
@@ -175,7 +286,7 @@ _packer_load = function(names, cause)
       if plugins[name].after then
         for _, after_name in ipairs(plugins[name].after) do
           handle_after(after_name, name)
-          vim.api.nvim_command('redraw')
+          vim.cmd('redraw')
         end
       end
 
@@ -187,7 +298,7 @@ _packer_load = function(names, cause)
 
   if cause.cmd then
     local lines = cause.l1 == cause.l2 and '' or (cause.l1 .. ',' .. cause.l2)
-    vim.api.nvim_command(fmt('%s%s%s %s', lines, cause.cmd, cause.bang, cause.args))
+    vim.cmd(fmt('%s%s%s %s', lines, cause.cmd, cause.bang, cause.args))
   elseif cause.keys then
     local keys = cause.keys
     local extra = ''
@@ -215,73 +326,97 @@ _packer_load = function(names, cause)
     -- characters \<Plug> rather than the special <Plug> key.
     vim.fn.feedkeys(string.gsub(cause.keys, '^<Plug>', '\\<Plug>') .. extra)
   elseif cause.event then
-    vim.api.nvim_command(fmt('doautocmd <nomodeline> %s', cause.event))
+    vim.cmd(fmt('doautocmd <nomodeline> %s', cause.event))
   elseif cause.ft then
-    vim.api.nvim_command(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeplugin', cause.ft))
-    vim.api.nvim_command(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeindent', cause.ft))
+    vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeplugin', cause.ft))
+    vim.cmd(fmt('doautocmd <nomodeline> %s FileType %s', 'filetypeindent', cause.ft))
   end
 end
 
 -- Pre-load configuration
 -- Setup for: vim-tmux-navigator
-loadstring("\27LJ\1\2ë\3\0\0\6\0\16\0F4\0\0\0007\0\1\0'\1\1\0:\1\2\0003\0\3\0004\1\0\0007\1\4\0017\1\5\1%\2\6\0%\3\a\0%\4\b\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\6\0%\3\t\0%\4\n\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\6\0%\3\v\0%\4\f\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\6\0%\3\r\0%\4\14\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\15\0%\3\a\0%\4\b\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\15\0%\3\t\0%\4\n\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\15\0%\3\v\0%\4\f\0\16\5\0\0>\1\5\0014\1\0\0007\1\4\0017\1\5\1%\2\15\0%\3\r\0%\4\14\0\16\5\0\0>\1\5\1G\0\1\0\6t\31<cmd>TmuxNavigateRight<CR>\n<M-l>\28<cmd>TmuxNavigateUp<CR>\n<M-k>\30<cmd>TmuxNavigateDown<CR>\n<M-j>\30<cmd>TmuxNavigateLeft<CR>\n<M-h>\6n\20nvim_set_keymap\bapi\1\0\2\vsilent\2\fnoremap\2\31tmux_navigator_no_mappings\6g\bvim\0")()
-vim.api.nvim_command("packadd vim-tmux-navigator")
+require'conf.vim-tmux-navigator'.setup()
+vim.cmd("packadd vim-tmux-navigator")
 -- Setup for: vim-sandwich
-loadstring("\27LJ\1\2á\v\0\0\6\0\31\0š\0014\0\0\0007\0\1\0'\1d\0:\1\2\0004\0\0\0007\0\1\0'\1\1\0:\1\3\0004\0\0\0007\0\1\0'\1\1\0:\1\4\0004\0\0\0007\0\1\0'\1\1\0:\1\5\0003\0\6\0004\1\0\0007\1\a\0017\1\b\1%\2\t\0%\3\n\0%\4\v\0\16\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\t\0%\3\f\0%\4\r\0\16\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\t\0%\3\n\0%\4\14\0\16\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\t\0%\3\f\0%\4\15\0\16\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\t\0%\3\16\0%\4\17\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\16\0%\4\17\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\19\0%\3\16\0%\4\20\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\n\0%\4\21\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\f\0%\4\22\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\19\0%\3\23\0%\4\24\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\19\0%\3\25\0%\4\26\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\23\0%\4\24\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\25\0%\4\26\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\19\0%\3\27\0%\4\28\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\19\0%\3\29\0%\4\30\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\27\0%\4\28\0002\5\0\0>\1\5\0014\1\0\0007\1\a\0017\1\b\1%\2\18\0%\3\29\0%\4\30\0002\5\0\0>\1\5\1G\0\1\0%<Plug>(textobj-sandwich-query-i)\ais%<Plug>(textobj-sandwich-query-a)\aas$<Plug>(textobj-sandwich-auto-i)\aib$<Plug>(textobj-sandwich-auto-a)\aab&<Plug>(operator-sandwich-replace)%<Plug>(operator-sandwich-delete)!<Plug>(operator-sandwich-g@)\6o\6x\"<Plug>(operator-sandwich-add)\asal<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)k<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)m<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)\asrl<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)\asd\6n\20nvim_set_keymap\bapi\1\0\1\vsilent\2-textobj_sandwich_no_default_key_mappings.operator_sandwich_no_default_key_mappings%sandwich_no_default_key_mappings!textobj#sandwich#stimeoutlen\6g\bvim\0")()
-vim.api.nvim_command("packadd vim-sandwich")
+require'conf.vim-sandwich'.setup()
+vim.cmd("packadd vim-sandwich")
 -- Setup for: editorconfig-vim
 vim.g.EditorConfig_exclude_patterns = {'scp://.*', 'term://.*'}
-vim.api.nvim_command("packadd editorconfig-vim")
--- Setup for: indentLine
-loadstring("\27LJ\1\2Ö\1\0\0\2\0\b\0\0174\0\0\0007\0\1\0'\1\1\0:\1\2\0004\0\0\0007\0\1\0%\1\4\0:\1\3\0004\0\0\0007\0\1\0'\1\0\0:\1\5\0004\0\0\0007\0\1\0003\1\a\0:\1\6\0G\0\1\0\1\6\0\0\thelp\vdenite\18denite-filter\nvista\15vista_kind\31indentLine_fileTypeExclude\26indentLine_setConceal\aÂ¦\20indentLine_char\22indentLine_enable\6g\bvim\0")()
-vim.api.nvim_command("packadd indentLine")
--- Setup for: caw.vim
-loadstring("\27LJ\1\2æ\5\0\0\5\0\29\0U4\0\0\0007\0\1\0'\1\1\0:\1\2\0004\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\6\0%\3\a\0003\4\b\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\t\0%\2\6\0%\3\a\0003\4\n\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\v\0%\3\f\0003\4\r\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\t\0%\2\v\0%\3\f\0003\4\14\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\15\0%\3\16\0003\4\17\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\t\0%\2\15\0%\3\16\0003\4\18\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\19\0%\3\20\0003\4\21\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\t\0%\2\19\0%\3\20\0003\4\22\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\23\0%\3\24\0003\4\25\0>\0\5\0014\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\26\0%\3\27\0003\4\28\0>\0\5\1G\0\1\0\1\0\1\vsilent\2\"<Plug>(caw:jump:comment-prev)\15<Leader>c[\1\0\1\vsilent\2\"<Plug>(caw:jump:comment-next)\15<Leader>c]\1\0\1\vsilent\2\1\0\1\vsilent\2\28<Plug>(caw:wrap:toggle)\15<Leader>cw\1\0\1\vsilent\2\1\0\1\vsilent\2\27<Plug>(caw:box:toggle)\15<Leader>cb\1\0\1\vsilent\2\1\0\1\vsilent\2!<Plug>(caw:dollarpos:toggle)\15<Leader>ca\1\0\1\vsilent\2\6x\1\0\1\vsilent\2\30<Plug>(caw:hatpos:toggle)\15<Leader>cc\6n\20nvim_set_keymap\bapi\31caw_no_default_keymappings\6g\bvim\0")()
-vim.api.nvim_command("packadd caw.vim")
--- Setup for: vim-polyglot
-vim.g.polyglot_disable = {'json', 'markdown'}
-vim.api.nvim_command("packadd vim-polyglot")
--- Setup for: vim-signify
-loadstring('\27LJ\1\2õ\5\0\0\5\0\31\0I4\0\0\0007\0\1\0007\0\2\0%\1\3\0%\2\4\0%\3\5\0003\4\6\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\3\0%\2\a\0%\3\b\0003\4\t\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\3\0%\2\n\0%\3\v\0003\4\f\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\3\0%\2\r\0%\3\14\0003\4\15\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\3\0%\2\16\0%\3\17\0003\4\18\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\19\0%\2\20\0%\3\21\0003\4\22\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\23\0%\2\20\0%\3\24\0003\4\25\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\19\0%\2\26\0%\3\27\0003\4\28\0>\0\5\0014\0\0\0007\0\1\0007\0\2\0%\1\23\0%\2\26\0%\3\29\0003\4\30\0>\0\5\1G\0\1\0\1\0\1\vsilent\2!<Plug>(signify-outer-visual)\1\0\1\vsilent\2"<Plug>(signify-outer-pending)\aah\1\0\1\vsilent\2!<Plug>(signify-inner-visual)\6x\1\0\1\vsilent\2"<Plug>(signify-inner-pending)\aih\6o\1\0\1\vsilent\2\30<Plug>(signify-next-hunk)\15\\<Space>g]\1\0\1\vsilent\2\30<Plug>(signify-prev-hunk)\15\\<Space>g[\1\0\2\fnoremap\2\vsilent\2\29<cmd>SignifyHunkUndo<CR>\15\\<Space>gu\1\0\2\fnoremap\2\vsilent\2\29<cmd>SignifyHunkDiff<CR>\15\\<Space>gp\1\0\2\fnoremap\2\vsilent\2\25<cmd>SignifyDiff<CR>\15\\<Space>gd\6n\20nvim_set_keymap\bapi\bvim\0')()
+vim.cmd("packadd editorconfig-vim")
+-- Setup for: vista.vim
+require'conf.vista'.setup()
+-- Setup for: poet-v
+vim.g.poetv_auto_activate = 1
+-- Setup for: vim-easy-align
+require'conf.vim-easy-align'.setup()
 -- Setup for: vinarise.vim
 vim.g.vinarise_enable_auto_detect = 1
 -- Setup for: git-messenger.vim
-loadstring("\27LJ\1\2\1\0\0\5\0\t\0\r4\0\0\0007\0\1\0)\1\2\0:\1\2\0004\0\0\0007\0\3\0007\0\4\0%\1\5\0%\2\6\0%\3\a\0003\4\b\0>\0\5\1G\0\1\0\1\0\1\vsilent\2\26<Plug>(git-messenger)\agm\6n\20nvim_set_keymap\bapi&git_messenger_no_default_mappings\6g\bvim\0")()
+require'conf.git-messenger'.setup()
+-- Setup for: eskk.vim
+require'conf.eskk'.setup()
+-- Setup for: vim-gutentags
+require'conf.vim-gutentags'.setup()
+vim.cmd("packadd vim-gutentags")
+-- Setup for: vim-vsnip
+require('conf.vim-vsnip').setup()
+-- Setup for: caw.vim
+require'conf.caw'.setup()
+-- Setup for: vim-polyglot
+vim.g.polyglot_disable = {'json', 'markdown'}
+vim.cmd("packadd vim-polyglot")
+-- Setup for: vim-indent-guides
+require'conf.vim-indent-guides'.setup()
+vim.cmd("packadd vim-indent-guides")
+-- Setup for: vim-signify
+require'conf.vim-signify'.setup()
+vim.cmd("packadd vim-signify")
 -- Setup for: vim-better-whitespace
-loadstring("\27LJ\1\2ï\2\0\0\5\0\r\0\0254\0\0\0007\0\1\0'\1\1\0:\1\2\0004\0\0\0007\0\1\0'\1\1\0:\1\3\0004\0\0\0007\0\1\0'\1\1\0:\1\4\0004\0\0\0007\0\1\0003\1\6\0:\1\5\0004\0\0\0007\0\a\0007\0\b\0%\1\t\0%\2\n\0%\3\v\0003\4\f\0>\0\5\1G\0\1\0\1\0\2\vsilent\2\fnoremap\2\29<cmd>StripWhitespace<CR>\14<Leader>x\6n\20nvim_set_keymap\bapi\1\t\0\0\tdiff\14gitcommit\tdefx\vdenite\aqf\thelp\rmarkdown\14which_key*better_whitespace_filetypes_blacklist\"show_spaces_that_precede_tabs\29strip_whitespace_on_save\30better_whitespace_enabled\6g\bvim\0")()
-vim.api.nvim_command("packadd vim-better-whitespace")
+require'conf.vim-better-whitespace'.setup()
+vim.cmd("packadd vim-better-whitespace")
 -- Setup for: committia.vim
 vim.g.committia_min_window_width = 100
--- Setup for: poet-v
-vim.g.poetv_auto_activate = 1
 -- Post-load configuration
 -- Config for: nvim-colorizer.lua
-loadstring("\27LJ\1\0027\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\14colorizer\frequire\0")
+require'colorizer'.setup()
 -- Conditional loads
+vim._update_package_paths()
 END
 
 function! s:load(names, cause) abort
   call luaeval('_packer_load(_A[1], _A[2])', [a:names, a:cause])
 endfunction
 
+" Runtimepath customization
+
 " Load plugins in order defined by `after`
 
 " Command lazy-loads
-command! -nargs=* -range -bang -complete=file GitMessenger call s:load(['git-messenger.vim'], { "cmd": "GitMessenger", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file Gina call s:load(['gina.vim'], { "cmd": "Gina", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file Vista call s:load(['vista.vim'], { "cmd": "Vista", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Vinarise call s:load(['vinarise.vim'], { "cmd": "Vinarise", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file GitMessenger call s:load(['git-messenger.vim'], { "cmd": "GitMessenger", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 
 " Keymap lazy-loads
-nnoremap <silent> <Plug>(git-messenger) <cmd>call <SID>load(['git-messenger.vim'], { "keys": "<Plug>(git-messenger)", "prefix": "" })<cr>
+inoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)" })<cr>
+nnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
+cnoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)", "prefix": "" })<cr>
+vnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
 
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
-  au FileType markdown ++once call s:load(['vim-gfm-syntax'], { "ft": "markdown" })
-  au FileType python ++once call s:load(['poet-v', 'SimpylFold'], { "ft": "python" })
+  au FileType markdown ++once call s:load(['vim-gfm-syntax', 'vim-markdown'], { "ft": "markdown" })
+  au FileType d ++once call s:load(['d.vim'], { "ft": "d" })
+  au FileType csv ++once call s:load(['csv.vim'], { "ft": "csv" })
+  au FileType jsonc ++once call s:load(['jsonc.vim'], { "ft": "jsonc" })
+  au FileType python ++once call s:load(['python_match.vim', 'poet-v', 'SimpylFold'], { "ft": "python" })
+  au FileType zsh ++once call s:load(['vim-zsh'], { "ft": "zsh" })
   " Event lazy-loads
-  au VimEnter * ++once call s:load(['vim-matchup'], { "event": "VimEnter *" })
+  au BufRead requirements.txt ++once call s:load(['requirements.txt.vim'], { "event": "BufRead requirements.txt" })
   au BufRead COMMIT_EDITMSG ++once call s:load(['committia.vim'], { "event": "BufRead COMMIT_EDITMSG" })
-  au BufEnter * ++once call s:load(['vim-signify'], { "event": "BufEnter *" })
+  au CursorMoved * ++once call s:load(['caw.vim'], { "event": "CursorMoved *" })
+  au InsertCharPre * ++once call s:load(['vim-vsnip'], { "event": "InsertCharPre *" })
+  au CursorHold * ++once call s:load(['vim-matchup'], { "event": "CursorHold *" })
 augroup END
-
-" Runtimepath customization

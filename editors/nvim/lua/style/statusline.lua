@@ -1,4 +1,5 @@
 local icons = require("devicons")
+-- local git = require("git")
 
 local M = {}
 
@@ -187,14 +188,6 @@ end
 -- end
 --
 
-local function statusline_gitbranch()
-  local branch = vim.fn["gitbranch#name"]()
-  -- local branch = utils.os.capture("git rev-parse --abbrev-ref HEAD 2>/dev/null")
-  -- branch = vim.trim(branch)
-  return branch == "" and "" or " " .. branch
-end
-
-
 local function statusline_filename()
   if vim.bo.buftype == "terminal" then
     local title = vim.api.nvim_buf_get_var(0, "term_title")
@@ -246,6 +239,28 @@ local function statusline_fileencoding()
   return string.format(" %s", fenc)
 end
 
+local function statusline_gitbranch()
+  local branch = vim.fn["gitbranch#name"]()
+  -- local branch = utils.os.capture("git rev-parse --abbrev-ref HEAD 2>/dev/null")
+  -- branch = vim.trim(branch)
+  return branch == "" and "" or " " .. branch
+end
+
+local function statusline_git_info(path)
+  local branch_sign = ''
+  local git_info = git.info(path)
+  if not git_info or git_info.branch == '' then
+    return ''
+  end
+  local changes  = git_info.stats
+  local added    = changes.added > 0 and ('+' .. changes.added .. ' ') or ''
+  local modified = changes.modified > 0 and ('~' .. changes.modified .. ' ') or ''
+  local removed  = changes.removed > 0 and ('-' .. changes.removed) or ''
+  local pad      = ((added ~= '') or (removed ~= '') or (modified ~= '')) and ' ' or ''
+  local diff_str = string.format('%s%s%s%s', added, removed, modified, pad)
+  return string.format('%s%s %s ', diff_str, branch_sign, git_info.branch)
+end
+
 function M.statusline_active()
   local mode = vim.api.nvim_get_mode()['mode']
   local mode_label = current_mode_label[mode]
@@ -266,6 +281,14 @@ function M.statusline_active()
     s = s .. "%#SL_GitBranch#" .. branch
     s = s .. "%#SL_Sep2#" .. separator.right
   end
+  -- local buf_name = vim.fn.bufname()
+  -- local buf_path = vim.fn.resolve(vim.fn.fnamemodify(buf_name, ":p"))
+  -- local vcs = statusline_git_info(buf_path)
+  -- if #vcs > 0 then
+  --   s = s .. "%#SL_Sep2#" .. separator.left
+  --   s = s .. "%#SL_GitBranch#" .. vcs
+  --   s = s .. "%#SL_Sep2#" .. separator.right
+  -- end
 
   s = s .. "%="
 

@@ -176,7 +176,7 @@ local function disable_default_plugins()
   vim.g.loaded_zip               = 1
   vim.g.loaded_zipPlugin         = 1
   -- Disable ruby support in neovim
-  vim.g.loaded_ruby_provider     = 1
+  -- vim.g.loaded_ruby_provider     = 1
 end
 
 
