@@ -140,6 +140,8 @@ path=(
     ${HOME}/.poetry/bin(N-/)
     # Yarn bin dir (set by `yarn config set prefix $HOME/.yarn`)
     ${HOME}/.yarn/bin
+    # Ruby gem
+    ${XDG_DATA_HOME}/share/gem/bin(N-/)
     # for OSX
     /Library/Tex/texbin(N-/)
     # for OSX, GNU commands installed with Homebrew

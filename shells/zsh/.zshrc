@@ -7,6 +7,11 @@
 #     return 0
 # fi
 
+# Setup Fzf
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ]]; then
+  source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+fi
+
 ## Tmux
 # Attach tmux session automatically if exists, create new session otherwise.
 if (( ${+commands[tmux]} )); then
@@ -129,4 +134,3 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
-
