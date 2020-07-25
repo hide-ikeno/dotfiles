@@ -1,5 +1,5 @@
 local icons = require("devicons")
--- local git = require("git")
+local git = require("git")
 
 local M = {}
 
@@ -252,13 +252,14 @@ local function statusline_git_info(path)
   if not git_info or git_info.branch == '' then
     return ''
   end
-  local changes  = git_info.stats
-  local added    = changes.added > 0 and ('+' .. changes.added .. ' ') or ''
-  local modified = changes.modified > 0 and ('~' .. changes.modified .. ' ') or ''
-  local removed  = changes.removed > 0 and ('-' .. changes.removed) or ''
-  local pad      = ((added ~= '') or (removed ~= '') or (modified ~= '')) and ' ' or ''
-  local diff_str = string.format('%s%s%s%s', added, removed, modified, pad)
-  return string.format('%s%s %s ', diff_str, branch_sign, git_info.branch)
+  -- local changes  = git_info.stats
+  -- local added    = changes.added > 0 and ('+' .. changes.added .. ' ') or ''
+  -- local modified = changes.modified > 0 and ('~' .. changes.modified .. ' ') or ''
+  -- local removed  = changes.removed > 0 and ('-' .. changes.removed) or ''
+  -- local pad      = ((added ~= '') or (removed ~= '') or (modified ~= '')) and ' ' or ''
+  -- local diff_str = string.format('%s%s%s%s', added, removed, modified, pad)
+  -- return string.format('%s%s %s ', diff_str, branch_sign, git_info.branch)
+  return string.format("%s %s ", branch_sign, git_info.branch)
 end
 
 function M.statusline_active()
@@ -275,20 +276,20 @@ function M.statusline_active()
   s = s .. "%#SL_FileName#" .. filename
   s = s .. "%#SL_Sep1#" .. separator.right
 
-  local branch = statusline_gitbranch()
-  if #branch > 0 then
-    s = s .. "%#SL_Sep2#" .. separator.left
-    s = s .. "%#SL_GitBranch#" .. branch
-    s = s .. "%#SL_Sep2#" .. separator.right
-  end
-  -- local buf_name = vim.fn.bufname()
-  -- local buf_path = vim.fn.resolve(vim.fn.fnamemodify(buf_name, ":p"))
-  -- local vcs = statusline_git_info(buf_path)
-  -- if #vcs > 0 then
+  -- local branch = statusline_gitbranch()
+  -- if #branch > 0 then
   --   s = s .. "%#SL_Sep2#" .. separator.left
-  --   s = s .. "%#SL_GitBranch#" .. vcs
+  --   s = s .. "%#SL_GitBranch#" .. branch
   --   s = s .. "%#SL_Sep2#" .. separator.right
   -- end
+  local buf_name = vim.fn.bufname()
+  local buf_path = vim.fn.resolve(vim.fn.fnamemodify(buf_name, ":p"))
+  local vcs = statusline_git_info(buf_path)
+  if #vcs > 0 then
+    s = s .. "%#SL_Sep2#" .. separator.left
+    s = s .. "%#SL_GitBranch#" .. vcs
+    s = s .. "%#SL_Sep2#" .. separator.right
+  end
 
   s = s .. "%="
 
