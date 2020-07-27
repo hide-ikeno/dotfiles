@@ -20,7 +20,18 @@ local plugins = {
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/committia.vim"
   },
+  ["completion-nvim"] = {
+    after = { "completion-treesitter" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/completion-nvim"
+  },
   ["completion-treesitter"] = {
+    load_after = {
+      ["completion-nvim"] = true,
+      ["nvim-treesitter"] = true
+    },
     loaded = false,
     only_sequence = false,
     only_setup = false,
@@ -52,6 +63,12 @@ local plugins = {
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/eskk.vim"
   },
+  ["fzf-preview.vim"] = {
+    loaded = false,
+    only_sequence = true,
+    only_setup = true,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/fzf-preview.vim"
+  },
   ["gina.vim"] = {
     commands = { "Gina" },
     loaded = false,
@@ -73,6 +90,7 @@ local plugins = {
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/jsonc.vim"
   },
   ["nvim-treesitter"] = {
+    after = { "completion-treesitter" },
     loaded = false,
     only_sequence = false,
     only_setup = false,
@@ -158,6 +176,13 @@ local plugins = {
     only_setup = true,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-polyglot"
   },
+  ["vim-qfreplace"] = {
+    config = { "\27LJ\1\2Ï\1\0\0\6\0\v\0\0224\0\0\0007\0\1\0%\1\2\0>\0\2\0014\0\0\0007\0\1\0%\1\3\0>\0\2\0014\0\0\0007\0\4\0007\0\5\0'\1\0\0%\2\6\0%\3\a\0%\4\b\0003\5\t\0>\0\6\0014\0\0\0007\0\1\0%\1\n\0>\0\2\1G\0\1\0\16augroup END\1\0\1\fnoremap\2\23<cmd>Qfreplace<CR>\6R\6n\24nvim_buf_set_keymap\bapi\rautocmd!\28augroup qfreplace_setup\bcmd\bvim\0" },
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-qfreplace"
+  },
   ["vim-sandwich"] = {
     config = { "require'conf.vim-sandwich'.config()" },
     loaded = false,
@@ -212,6 +237,12 @@ local plugins = {
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vista.vim"
+  },
+  ["yankround.vim"] = {
+    loaded = false,
+    only_sequence = true,
+    only_setup = true,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/yankround.vim"
   }
 }
 
@@ -355,9 +386,14 @@ vim.g.vinarise_enable_auto_detect = 1
 require'conf.git-messenger'.setup()
 -- Setup for: eskk.vim
 require'conf.eskk'.setup()
+-- Setup for: yankround.vim
+vim.g.yankround_dir = vim.fn.stdpath('cache') .. '/yankround'
+vim.cmd("packadd yankround.vim")
 -- Setup for: vim-gutentags
 require'conf.vim-gutentags'.setup()
 vim.cmd("packadd vim-gutentags")
+-- Setup for: completion-nvim
+require'conf.completion-nvim'.setup()
 -- Setup for: vim-vsnip
 require('conf.vim-vsnip').setup()
 -- Setup for: caw.vim
@@ -376,6 +412,9 @@ require'conf.vim-better-whitespace'.setup()
 vim.cmd("packadd vim-better-whitespace")
 -- Setup for: committia.vim
 vim.g.committia_min_window_width = 100
+-- Setup for: fzf-preview.vim
+require'conf.fzf-preview'.setup()
+vim.cmd("packadd fzf-preview.vim")
 -- Post-load configuration
 -- Config for: nvim-colorizer.lua
 require'colorizer'.setup()
@@ -400,23 +439,25 @@ command! -nargs=* -range -bang -complete=file GitMessenger call s:load(['git-mes
 
 " Keymap lazy-loads
 inoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)" })<cr>
-nnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
-cnoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)", "prefix": "" })<cr>
 vnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
+cnoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)", "prefix": "" })<cr>
+nnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
 
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
-  au FileType markdown ++once call s:load(['vim-gfm-syntax', 'vim-markdown'], { "ft": "markdown" })
   au FileType d ++once call s:load(['d.vim'], { "ft": "d" })
+  au FileType markdown ++once call s:load(['vim-gfm-syntax', 'vim-markdown'], { "ft": "markdown" })
+  au FileType qf ++once call s:load(['vim-qfreplace'], { "ft": "qf" })
   au FileType csv ++once call s:load(['csv.vim'], { "ft": "csv" })
   au FileType jsonc ++once call s:load(['jsonc.vim'], { "ft": "jsonc" })
-  au FileType python ++once call s:load(['python_match.vim', 'poet-v', 'SimpylFold'], { "ft": "python" })
   au FileType zsh ++once call s:load(['vim-zsh'], { "ft": "zsh" })
+  au FileType python ++once call s:load(['SimpylFold', 'python_match.vim', 'poet-v'], { "ft": "python" })
   " Event lazy-loads
-  au BufRead requirements.txt ++once call s:load(['requirements.txt.vim'], { "event": "BufRead requirements.txt" })
-  au BufRead COMMIT_EDITMSG ++once call s:load(['committia.vim'], { "event": "BufRead COMMIT_EDITMSG" })
+  au CursorHold * ++once call s:load(['vim-matchup'], { "event": "CursorHold *" })
+  au BufEnter COMMIT_EDITMSG ++once call s:load(['committia.vim'], { "event": "BufEnter COMMIT_EDITMSG" })
   au CursorMoved * ++once call s:load(['caw.vim'], { "event": "CursorMoved *" })
   au InsertCharPre * ++once call s:load(['vim-vsnip'], { "event": "InsertCharPre *" })
-  au CursorHold * ++once call s:load(['vim-matchup'], { "event": "CursorHold *" })
+  au BufEnter requirements.txt ++once call s:load(['requirements.txt.vim'], { "event": "BufEnter requirements.txt" })
+  au BufEnter * ++once call s:load(['completion-nvim'], { "event": "BufEnter *" })
 augroup END

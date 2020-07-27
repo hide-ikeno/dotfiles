@@ -132,6 +132,18 @@ local function init()
     setup = "require'conf.eskk'.setup()",
     config = "require'conf.eskk'.config()",
   }
+
+  -- Perform the replacement in quickfix
+  use {
+    "thinca/vim-qfreplace",
+    ft = {"qf"},
+    config = function()
+      vim.cmd("augroup qfreplace_setup")
+      vim.cmd("autocmd!")
+      vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", {noremap = true})
+      vim.cmd("augroup END")
+    end
+  }
   -- }}}
 
   -- [[ Syntax, filetype ]] {{{
@@ -160,7 +172,7 @@ local function init()
   -- Python
   use { "vim-scripts/python_match.vim", ft = {"python"} }
 
-  use { "raimon49/requirements.txt.vim", event = "BufRead requirements.txt" }
+  use { "raimon49/requirements.txt.vim", event = "BufEnter requirements.txt" }
 
   use {
     "petobens/poet-v", ft = {"python"},
@@ -192,14 +204,13 @@ local function init()
   -- Show difference with style
   use {
     "mhinz/vim-signify",
-    -- event = {"BufRead *"},
     setup = "require'conf.vim-signify'.setup()"
   }
 
   -- More pleasant editing on commit messsages
   use {
     "rhysd/committia.vim",
-    event = {"BufRead COMMIT_EDITMSG"},
+    event = {"BufEnter COMMIT_EDITMSG"},
     setup = "vim.g.committia_min_window_width = 100"
   }
 
@@ -214,15 +225,19 @@ local function init()
   -- [[ LSP, Tag jumps ]] {{{
 
   -- Collection of common configurations for Nvim LSP client
-  use "neovim/nvim-lsp"
-  use "nvim-lua/diagnostic-nvim"
-  use "nvim-lua/lsp-status.nvim"
+  use {
+    "neovim/nvim-lsp",
+    event = {"BufNewFile *", "BufRead *"},
+    config = "require'conf.nvim-lsp'.config()"
+  }
+
+
+  -- use "nvim-lua/diagnostic-nvim"
+  -- use "nvim-lua/lsp-status.nvim"
 
   -- Manage tag files
   use {
     "ludovicchabant/vim-gutentags",
-    -- opt = true,
-    -- event = "BufRead *",
     setup = "require'conf.vim-gutentags'.setup()"
   }
 
@@ -232,6 +247,16 @@ local function init()
     cmd = {"Vista"},
     setup = "require'conf.vista'.setup()"
   }
+  -- }}}
+
+  -- [[ Treesitter ]] {{{
+
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    event = {"BufNewFile *", "BufRead *"},
+    config = "require('conf.nvim-treesitter').config()"
+  }
+
   -- }}}
 
   -- [[ Auto completion ]] {{{
@@ -248,17 +273,19 @@ local function init()
     after = {"vim-vsnip"}
   }
 
-  use "nvim-lua/completion-nvim"
-  -- }}}
-
-  -- [[ Treesitter ]] {{{
   use {
-    "nvim-treesitter/nvim-treesitter",
-    opt = true,
-    -- config = "require('conf.nvim-treesitter').config()"
+    "nvim-lua/completion-nvim",
+    event = "BufEnter *",
+    requires = {
+      "vim-vsnip",
+      "vim-vsnip-integ",
+      {
+        "nvim-treesitter/completion-treesitter",
+        after = { "completion-nvim", "nvim-treesitter" }
+      }
+    },
+    setup = "require'conf.completion-nvim'.setup()"
   }
-
-  use { "nvim-treesitter/completion-treesitter", opt = true }
   -- }}}
 
   -- [[ Fuzzy finder ]] {{{
@@ -271,43 +298,19 @@ local function init()
     "yuki-ycino/fzf-preview.vim",
     branch = "release",
     run = ":UpdateRemotePlugins",
-    requires = { "LeafCage/yankround.vim" }
+    requires = {
+      {
+        "LeafCage/yankround.vim",
+        setup = "vim.g.yankround_dir = vim.fn.stdpath('cache') .. '/yankround'"
+      },
+      "ryanoasis/vim-devicons",
+      "lambdalisue/gina.vim",
+      "liuchengxu/vista.vim",
+    },
+    setup = "require'conf.fzf-preview'.setup()"
   }
+
   -- }}}
-
---  use "Shougo/neosnippet-snippets"
---  use "Shougo/deoplete-lsp"
---  use "tbodt/deoplete-tabnine"
---  use "zchee/deoplete-zsh"
---  use "kristijanhusak/defx-git"
---  use "chemzqm/unite-location"
---  use "google/vim-maktaba"
---  use "google/vim-glaive"
-
--- dein/plugins_lazy.toml:repo = "weilbith/nvim-lsp-smag"
--- dein/plugins_lazy.toml:repo = "weilbith/nvim-lsp-denite"
--- dein/plugins_lazy.toml:repo = "google/vim-codefmt"
-
--- dein/plugins_lazy.toml:repo = "Shougo/denite.nvim"
--- dein/plugins_lazy.toml:repo = "raghur/fruzzy"
--- dein/plugins_lazy.toml:repo = "Shougo/neoyank.vim"
--- dein/plugins_lazy.toml:repo = "Shougo/neomru.vim"
--- dein/plugins_lazy.toml:repo = "Shougo/deol.nvim"
--- dein/plugins_lazy.toml:repo = "Shougo/deoplete.nvim"
--- dein/plugins_lazy.toml:repo = "Shougo/neco-syntax"
--- dein/plugins_lazy.toml:repo = "Shougo/neoinclude.vim"
--- dein/plugins_lazy.toml:repo = "Shougo/neco-vim"
--- dein/plugins_lazy.toml:repo = "ncm2/float-preview.nvim"
--- dein/plugins_lazy.toml:repo = "Shougo/neosnippet.vim"
--- dein/plugins_lazy.toml:# repo = "cohama/lexima.vim"
--- dein/plugins_lazy.toml:repo = "hrsh7th/vim-vsnip"
--- dein/plugins_lazy.toml:repo = "hrsh7th/vim-vsnip-integ"
--- dein/plugins_lazy.toml:repo = "Shougo/defx.nvim"
--- dein/plugins_lazy.toml:repo = "kristijanhusak/defx-icons"
--- dein/plugins_lazy.toml:repo = "thinca/vim-qfreplace"
--- dein/plugins_lazy.toml:repo = "rbgrouleff/bclose.vim"
--- dein/plugins_lazy.toml:repo = "liuchengxu/vim-which-key"
-
 end
 
 -- Hack for convenience: make this module (1) ensure packer.init() is called and (2) re-export all

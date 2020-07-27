@@ -9,31 +9,29 @@ local function on_attach_callback(client)
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
   lsp_status.on_attach(client)
   diagnostic.on_attach()
+
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd[[augroup nvim_lsp_user_autocmds]]
+    vim.cmd[[autocmd!]]
+    vim.cmd[[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
+    vim.cmd[[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+    vim.cmd[[augroup END]]
+  end
 end
 
 local servers = {
   bashls = {},
   clangd = {
+
+  },
+    clangd = {
     cmd = {
       'clangd', -- '--background-index',
       '--clang-tidy', '--completion-style=bundled', '--header-insertion=iwyu',
       '--suggest-missing-includes', '--cross-file-rename'
     },
     callbacks = lsp_status.extensions.clangd.setup(),
-    capabilities = {
-      textDocument = {
-        completion = {
-          completionItem = {
-            snippetSupport = true
-          }
-        }
-      }
-    },
-    init_options = {
-      clangdFileStatus = true,
-      usePlaceholders = true,
-      completeUnimported = true
-    }
+    init_options = {clangdFileStatus = true, usePlaceholders = true, completeUnimported = true}
   },
   cssls = {
     filetypes = {"css", "scss", "less", "sass"},
