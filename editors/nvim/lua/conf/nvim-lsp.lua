@@ -30,10 +30,10 @@ function M.setup()
   -- vim.g.LspDiagnosticsWarningSign     = ""
   -- vim.g.LspDiagnosticsInformationSign = ""
   -- vim.g.LspDiagnosticsHintSign        = ""
-  vim.fn.sign_define("LspDiagnosticsErrorSign", { test = "", texthl = "LspDiagnosticError" })
-  vim.fn.sign_define("LspDiagnosticsWarningSign", { test = "", texthl = "LspDiagnosticWarning" })
-  vim.fn.sign_define("LspDiagnosticsInformationSign", { test = "", texthl = "LspDiagnosticInformtion" })
-  vim.fn.sign_define("LspDiagnosticsHintSign", { test = "", texthl = "LspDiagnosticHint" })
+  vim.fn.sign_define("LspDiagnosticsErrorSign",       { text = "", texthl = "LspDiagnosticError"      })
+  vim.fn.sign_define("LspDiagnosticsWarningSign",     { text = "", texthl = "LspDiagnosticWarning"    })
+  vim.fn.sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
+  vim.fn.sign_define("LspDiagnosticsHintSign",        { text = "", texthl = "LspDiagnosticHint"       })
 
   -- Debug mode
   --vim.lsp.set_log_level("debug")
@@ -104,8 +104,9 @@ function M.config()
         python = {
           jediEnabled = false,
           analysis = {cachingLevel = 'Library'},
-          formatting = {provider = 'yapf'},
-          venvFolders = {"envs", ".pyenv", ".direnv", ".cache/pypoetry/virtualenvs"},
+          formatting = {provider = 'black'},
+          -- venvFolders = {"envs", ".pyenv", ".direnv", ".cache/pypoetry/virtualenvs"},
+          venvPath = "${workspaceFolder}/.venv",
           workspaceSymbols = {enabled = true}
         }
       },
@@ -134,33 +135,33 @@ function M.config()
         }
       }
     },
-    texlab = {
-      settings = {
-        latex = {
-          forwardSearch = {
-            executable = 'okular',
-            args = {'--unique', 'file:%p#src:%l%f'}
-          }
-        }
-      },
-      commands = {
-        TexlabForwardSearch = {
-          function()
-            local pos = vim.api.nvim_win_get_cursor(0)
-            local params = {
-              textDocument = {uri = vim.uri_from_bufnr(0)},
-              position = {line = pos[1] - 1, character = pos[2]}
-            }
-
-            vim.lsp.buf_request(0, 'textDocument/forwardSearch', params, function(err, _, result, _)
-              if err then error(tostring(err)) end
-              print('Forward search ' .. vim.inspect(pos) .. ' ' .. texlab_search_status[result])
-            end)
-          end,
-          description = 'Run synctex forward search'
-        }
-      }
-    },
+    -- texlab = {
+    --   settings = {
+    --     latex = {
+    --       forwardSearch = {
+    --         executable = 'okular',
+    --         args = {'--unique', 'file:%p#src:%l%f'}
+    --       }
+    --     }
+    --   },
+    --   commands = {
+    --     TexlabForwardSearch = {
+    --       function()
+    --         local pos = vim.api.nvim_win_get_cursor(0)
+    --         local params = {
+    --           textDocument = {uri = vim.uri_from_bufnr(0)},
+    --           position = {line = pos[1] - 1, character = pos[2]}
+    --         }
+    --
+    --         vim.lsp.buf_request(0, 'textDocument/forwardSearch', params, function(err, _, result, _)
+    --           if err then error(tostring(err)) end
+    --           print('Forward search ' .. vim.inspect(pos) .. ' ' .. texlab_search_status[result])
+    --         end)
+    --       end,
+    --       description = 'Run synctex forward search'
+    --     }
+    --   }
+    -- },
     vimls = {},
     yamlls = {},
   }

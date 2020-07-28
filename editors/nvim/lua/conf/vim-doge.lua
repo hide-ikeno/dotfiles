@@ -1,6 +1,6 @@
 local M = {}
 
-function M.hook_add()
+function M.setup()
   vim.g.doge_doc_standard_c      = "doxygen_qt"
   vim.g.doge_doc_standard_cpp    = "doxygen_qt"
   vim.g.doge_doc_standard_python = "numpy"

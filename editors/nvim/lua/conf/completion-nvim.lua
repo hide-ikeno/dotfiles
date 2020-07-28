@@ -16,6 +16,29 @@ function M.setup()
         {complete_items = {"path"}, triggered_only = {"/"}}
       }
     },
+    cpp = {
+      default = {
+        {complete_items = {"ts", "lsp"}},
+        {mode = "<C-p>"},
+        {mode = "<C-n>"}
+      },
+      comment = {},
+      string = {
+        {complete_items = {"path"}, triggered_only = {"/"}}
+      }
+    },
+    python = {
+      default = {
+        {complete_items = {"ts"}},
+        {complete_items = {"lsp", "snippet"}},
+        {mode = "<C-p>"},
+        {mode = "<C-n>"}
+      },
+      comment = {},
+      string = {
+        {complete_items = {"path"}, triggered_only = {"/"}}
+      }
+    },
   }
 
   vim.g.completion_customize_lsp_label = {

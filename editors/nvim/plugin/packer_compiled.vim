@@ -38,6 +38,12 @@ local plugins = {
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/completion-treesitter"
   },
+  edge = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/edge"
+  },
   ["editorconfig-vim"] = {
     loaded = false,
     only_sequence = true,
@@ -46,11 +52,16 @@ local plugins = {
   },
   ["eskk.vim"] = {
     config = { "require'conf.eskk'.config()" },
-    keys = { { "i", "<Plug>(eskk:toggle)" }, { "c", "<Plug>(eskk:toggle)" } },
     loaded = false,
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/eskk.vim"
+  },
+  ["forest-night"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/forest-night"
   },
   ["fzf-preview.vim"] = {
     loaded = false,
@@ -71,6 +82,12 @@ local plugins = {
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/git-messenger.vim"
+  },
+  ["gruvbox-material"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/gruvbox-material"
   },
   ["nvim-lsp"] = {
     config = { "require'conf.nvim-lsp'.config()" },
@@ -112,8 +129,13 @@ local plugins = {
     only_setup = true,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-better-whitespace"
   },
+  ["vim-doge"] = {
+    loaded = false,
+    only_sequence = false,
+    only_setup = false,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-doge"
+  },
   ["vim-easy-align"] = {
-    keys = { { "n", "<Plug>(EasyAlign)" }, { "v", "<Plug>(EasyAlign)" } },
     loaded = false,
     only_sequence = false,
     only_setup = false,
@@ -136,6 +158,12 @@ local plugins = {
     only_sequence = false,
     only_setup = false,
     path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-matchup"
+  },
+  ["vim-operator-replace"] = {
+    loaded = false,
+    only_sequence = true,
+    only_setup = true,
+    path = "/Users/ikeno/.local/share/nvim/site/pack/packer/opt/vim-operator-replace"
   },
   ["vim-polyglot"] = {
     loaded = false,
@@ -372,15 +400,20 @@ require'conf.vim-better-whitespace'.setup()
 vim.cmd("packadd vim-better-whitespace")
 -- Setup for: vim-which-key
 require'conf.vim-which-key'.setup()
+-- Setup for: vim-doge
+require'conf.vim-doge'.setup()
+-- Setup for: vim-polyglot
+vim.g.polyglot_disable = {'json', 'markdown'}
+vim.cmd("packadd vim-polyglot")
 -- Setup for: vim-indent-guides
 require'conf.vim-indent-guides'.setup()
 vim.cmd("packadd vim-indent-guides")
 -- Setup for: vim-signify
 require'conf.vim-signify'.setup()
 vim.cmd("packadd vim-signify")
--- Setup for: vim-polyglot
-vim.g.polyglot_disable = {'json', 'markdown'}
-vim.cmd("packadd vim-polyglot")
+-- Setup for: vim-operator-replace
+require'conf.vim-operator-replace'.setup()
+vim.cmd("packadd vim-operator-replace")
 -- Setup for: nvim-lsp
 require'conf.nvim-lsp'.setup()
 -- Setup for: committia.vim
@@ -408,27 +441,37 @@ command! -nargs=* -range -bang -complete=file WhichKey call s:load(['vim-which-k
 command! -nargs=* -range -bang -complete=file Gina call s:load(['gina.vim'], { "cmd": "Gina", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Vista call s:load(['vista.vim'], { "cmd": "Vista", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file WhichKeyVisual call s:load(['vim-which-key'], { "cmd": "WhichKeyVisual", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file Vinarise call s:load(['vinarise.vim'], { "cmd": "Vinarise", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file GitMessenger call s:load(['git-messenger.vim'], { "cmd": "GitMessenger", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file Vinarise call s:load(['vinarise.vim'], { "cmd": "Vinarise", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 
 " Keymap lazy-loads
-vnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
-inoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)" })<cr>
-nnoremap <silent> <Plug>(EasyAlign) <cmd>call <SID>load(['vim-easy-align'], { "keys": "<Plug>(EasyAlign)", "prefix": "" })<cr>
-cnoremap <silent> <Plug>(eskk:toggle) <cmd>call <SID>load(['eskk.vim'], { "keys": "<Plug>(eskk:toggle)", "prefix": "" })<cr>
 
 augroup packer_load_aucmds
   au!
   " Filetype lazy-loads
-  au FileType python ++once call s:load(['SimpylFold', 'poet-v'], { "ft": "python" })
+  au FileType lua ++once call s:load(['vim-doge'], { "ft": "lua" })
+  au FileType ruby ++once call s:load(['vim-doge'], { "ft": "ruby" })
+  au FileType typescript ++once call s:load(['vim-doge'], { "ft": "typescript" })
   au FileType qf ++once call s:load(['vim-qfreplace'], { "ft": "qf" })
+  au FileType sh ++once call s:load(['vim-doge'], { "ft": "sh" })
+  au FileType php ++once call s:load(['vim-doge'], { "ft": "php" })
+  au FileType c ++once call s:load(['vim-doge'], { "ft": "c" })
+  au FileType scalar ++once call s:load(['vim-doge'], { "ft": "scalar" })
+  au FileType r ++once call s:load(['vim-doge'], { "ft": "r" })
+  au FileType javascript ++once call s:load(['vim-doge'], { "ft": "javascript" })
+  au FileType groovy ++once call s:load(['vim-doge'], { "ft": "groovy" })
+  au FileType kotlin ++once call s:load(['vim-doge'], { "ft": "kotlin" })
+  au FileType coffee ++once call s:load(['vim-doge'], { "ft": "coffee" })
+  au FileType python ++once call s:load(['SimpylFold', 'poet-v', 'vim-doge'], { "ft": "python" })
+  au FileType cpp ++once call s:load(['vim-doge'], { "ft": "cpp" })
+  au FileType java ++once call s:load(['vim-doge'], { "ft": "java" })
   " Event lazy-loads
   au BufNewFile * ++once call s:load(['nvim-treesitter', 'nvim-lsp'], { "event": "BufNewFile *" })
   au CursorHold * ++once call s:load(['vim-matchup'], { "event": "CursorHold *" })
   au BufEnter COMMIT_EDITMSG ++once call s:load(['committia.vim'], { "event": "BufEnter COMMIT_EDITMSG" })
-  au CursorMoved * ++once call s:load(['caw.vim'], { "event": "CursorMoved *" })
-  au InsertCharPre * ++once call s:load(['vim-vsnip'], { "event": "InsertCharPre *" })
+  au CursorMoved * ++once call s:load(['caw.vim', 'vim-easy-align'], { "event": "CursorMoved *" })
+  au InsertCharPre * ++once call s:load(['eskk.vim'], { "event": "InsertCharPre *" })
+  au InsertEnter * ++once call s:load(['completion-nvim', 'vim-vsnip'], { "event": "InsertEnter *" })
   au BufRead * ++once call s:load(['nvim-treesitter', 'nvim-lsp'], { "event": "BufRead *" })
-  au BufEnter * ++once call s:load(['completion-nvim'], { "event": "BufEnter *" })
 augroup END

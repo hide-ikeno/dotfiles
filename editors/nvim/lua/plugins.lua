@@ -6,7 +6,7 @@ local function ensure_packer()
 
   if not packer_exists then
     local dir  = vim.fn.stdpath('data') .. '/site/pack/packer/opt/'
-    local repo = "https://github.com/wbthomason/packer.nvim",
+    local repo = "https://github.com/wbthomason/packer.nvim"
 
     vim.fn.mkdir(dir, 'p')
 
@@ -58,9 +58,6 @@ local function init()
 
   -- [[ Interfaces ]] {{{
 
-  -- Provides the branch name of the current git repository
-  use "itchyny/vim-gitbranch"
-
   -- Visually displaying indent levels in code
   use {
     "nathanaelkane/vim-indent-guides",
@@ -111,8 +108,15 @@ local function init()
   use "kana/vim-textobj-user"
 
   use {
+    "kana/vim-operator-replace",
+    requires = { "vim-operator-user" },
+    setup = "require'conf.vim-operator-replace'.setup()"
+  }
+
+
+  use {
     "machakann/vim-sandwich",
-    setup  = "require'conf.vim-sandwich'.setup()",
+    setup = "require'conf.vim-sandwich'.setup()",
     config = "require'conf.vim-sandwich'.config()",
   }
 
@@ -128,15 +132,14 @@ local function init()
   -- Smart align
   use {
     "junegunn/vim-easy-align",
-    -- event = "BufRead *",
-    keys = { {"n", "<Plug>(EasyAlign)"}, {"v", "<Plug>(EasyAlign)"} },
+    event = "CursorMoved *",
     setup = "require'conf.vim-easy-align'.setup()"
   }
 
   -- SKK input method for Japanese
   use {
     "tyru/eskk.vim",
-    keys = { {"i", "<Plug>(eskk:toggle)"}, {"c", "<Plug>(eskk:toggle)"} },
+    event = "InsertCharPre *",
     setup = "require'conf.eskk'.setup()",
     config = "require'conf.eskk'.config()",
   }
@@ -152,12 +155,22 @@ local function init()
       vim.cmd("augroup END")
     end
   }
+
+  -- (DO)cument (GE)nerator
+  use {
+    "kkoomen/vim-doge",
+    ft = {
+      "python", "php", "javascript", "typescript", "coffee", "lua", "java",
+      "groovy", "ruby", "scalar", "kotlin", "r", "c", "cpp", "sh"
+    },
+    setup = "require'conf.vim-doge'.setup()"
+  }
   -- }}}
 
   -- [[ Colorscheme ]]
 
-  use { "sainnhe/edge",             opt = true }
-  use { "sainnhe/forest-night",     opt = true }
+  use { "sainnhe/edge", opt = true }
+  use { "sainnhe/forest-night", opt = true }
   use { "sainnhe/gruvbox-material", opt = true }
 
   -- A color scheme template
@@ -248,9 +261,6 @@ local function init()
     config = "require'conf.nvim-lsp'.config()"
   }
 
-  -- use "nvim-lua/diagnostic-nvim"
-  -- use "nvim-lua/lsp-status.nvim"
-
   -- Manage tag files
   use {
     "ludovicchabant/vim-gutentags",
@@ -280,7 +290,7 @@ local function init()
   -- Snippet plugin for (Neo)Vim that supports LSP/VSCode's snippet format
   use {
     "hrsh7th/vim-vsnip",
-    event = "InsertCharPre *",
+    event = "InsertEnter *",
     setup = "require('conf.vim-vsnip').setup()",
   }
   use {
@@ -291,7 +301,7 @@ local function init()
 
   use {
     "nvim-lua/completion-nvim",
-    event = "BufEnter *",
+    event = "InsertEnter *",
     requires = {
       "vim-vsnip",
       "vim-vsnip-integ",
@@ -330,8 +340,8 @@ local function init()
   -- }}}
 end
 
--- Hack for convenience: make this module (1) ensure packer.init() is called and (2) re-export all
--- of packer's functions
+-- Hack for convenience: make this module (1) ensure packer.init() is called and
+-- (2) re-export all of packer's functions
 local plugins = setmetatable({}, {
   __index = function(_, key)
     init()

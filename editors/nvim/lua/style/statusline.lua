@@ -227,7 +227,6 @@ local function statusline_fileformat()
   return string.format(" %s %s ", icon, ff)
 end
 
-
 local function statusline_fileencoding()
   if vim.api.nvim_win_get_width(0) < 80 then
     return ""
@@ -237,13 +236,6 @@ local function statusline_fileencoding()
     fenc = vim.o.encoding
   end
   return string.format(" %s", fenc)
-end
-
-local function statusline_gitbranch()
-  local branch = vim.fn["gitbranch#name"]()
-  -- local branch = utils.os.capture("git rev-parse --abbrev-ref HEAD 2>/dev/null")
-  -- branch = vim.trim(branch)
-  return branch == "" and "" or " " .. branch
 end
 
 local function statusline_git_info(path)
@@ -260,6 +252,13 @@ local function statusline_git_info(path)
   -- local diff_str = string.format('%s%s%s%s', added, removed, modified, pad)
   -- return string.format('%s%s %s ', diff_str, branch_sign, git_info.branch)
   return string.format("%s %s ", branch_sign, git_info.branch)
+end
+
+local function statusline_lsp_status()
+  if #vim.lsp.buf_get_clients() > 0 then
+    return require'lsp-status'.status()
+  end
+  return ""
 end
 
 function M.statusline_active()
@@ -311,6 +310,13 @@ function M.statusline_active()
   s = s .. "%#SL_Sep2#" .. separator.left;
   s = s .. "%#SL_LinCol# %3l %-2v (%P) %#SL_Sep2#";
   s = s .. "%#SL_Sep2#" .. separator.right;
+
+  local lsp_status = statusline_lsp_status()
+  if #lsp_status > 0 then
+    s = s .. "%#SL_Sep2#" .. separator.left;
+    s = s .. "%#SL_LinCol# " .. lsp_status;
+    s = s .. "%#SL_Sep2#" .. separator.right;
+  end
 
   return s
 end
