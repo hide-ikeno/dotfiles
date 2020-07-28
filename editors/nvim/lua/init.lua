@@ -122,8 +122,8 @@ end
 
 --- Set nvim default global vars on startup {{{1
 
---- Python interpreter {{{2
-local function set_python_interpreter()
+--- Python, Node.js providers {{{2
+local function set_providers()
   --[[
     Set python2/python3 interpretor (required to setup plugins using neovim
     python API).
@@ -134,6 +134,8 @@ local function set_python_interpreter()
   --]]
   vim.g.python3_host_prog = vim.env.PYENV_ROOT .. "/versions/neovim3/bin/python"
   vim.g.python_host_prog  = vim.env.PYENV_ROOT .. "/versions/neovim2/bin/python"
+  -- Set Node.js provider
+  vim.g.node_host_prog = vim.env.HOME .. "/.yarn/bin/neovim-node-host"
 end
 
 --- Set mapleader, localmapleader, and other prefix keys for keymap {{{2
@@ -188,7 +190,7 @@ if vim.fn.has("vim_starting") then
   ensure_nvim_dirs()
   set_encodings()
   enable_truecolor()
-  set_python_interpreter()
+  set_providers()
   set_prefix_keys()
   disable_default_plugins()
 end
@@ -202,7 +204,7 @@ vim.cmd("command! PackerInstall packadd packer.nvim | lua require('plugins').ins
 vim.cmd("command! PackerUpdate  packadd packer.nvim | lua require('plugins').update()")
 vim.cmd("command! PackerSync    packadd packer.nvim | lua require('plugins').sync()")
 vim.cmd("command! PackerClean   packadd packer.nvim | lua require('plugins').clean()")
-vim.cmd("command! PackerCompile packadd packer.nvim | lua require('plugins').compile('~/.config/nvim/plugin/packer_load.vim')")
+vim.cmd("command! PackerCompile packadd packer.nvim | lua require('plugins').compile('~/.config/nvim/plugin/packer_compiled.vim')")
 
 -- -- ftplugin, syntax
 -- if vim.fn.has("vim_starting") and vim.fn.empty(vim.fn.argv()) == 0 then

@@ -12,8 +12,14 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "<Space>f", "<cmd>FzfPreviewFromResources directory old<CR>", opts)
   vim.api.nvim_set_keymap("n", "<Space>l", "<cmd>FzfPreviewLocationList<CR>", opts)
   vim.api.nvim_set_keymap("n", "<Space>p", "<cmd>FzfPreviewFromResources project_mru git<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<Space>q", "<cmd>FzfPreviewQuickfix<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>q", "<cmd>FzfPreviewQuickFix<CR>", opts)
   vim.api.nvim_set_keymap("n", "<Space>t", "<cmd>FzfPreviewBufferTags<CR>", opts)
+
+  vim.api.nvim_set_keymap("n", "<Space>ga", "<cmd>FzfPreviewGitAction<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>gb", "<cmd>FzfPreviewGitBranches<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>gf", "<cmd>FzfPreviewGitFiles<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>gl", "<cmd>FzfPreviewGitLogs<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>gs", "<cmd>FzfPreviewGitStatus<CR>", opts)
 
   vim.api.nvim_set_keymap(
     "n", "<Space>/",

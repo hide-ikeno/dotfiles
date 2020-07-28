@@ -23,7 +23,7 @@ end
 
 vim.cmd("augroup user_style_events")
 vim.cmd("autocmd!")
--- vim.cmd("autocmd VimEnter * ++nested colorscheme edge")
+vim.cmd("autocmd VimEnter * ++nested colorscheme edge")
 vim.cmd("autocmd VimEnter,ColorScheme * lua require('style.statusline').apply_theme()")
 vim.cmd("autocmd FocusGained,VimEnter,WinEnter,BufEnter * setlocal statusline=%!ActiveLine()")
 vim.cmd("autocmd FocusLost,WinLeave,BufLeave            * setlocal statusline=%!InActiveLine()")

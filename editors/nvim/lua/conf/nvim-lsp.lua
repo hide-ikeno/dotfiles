@@ -1,51 +1,39 @@
 local M = {}
 
-local nvim_lsp   = require("nvim_lsp")
-local lsp_status = require("lsp-status")
-local diagnostic = require("diagnostic")
+local function make_on_attach(config)
+  return function(client)
+    if config.before then
+      config.before(client)
+    end
+    -- Omni completion source
+    vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+    require'lsp-status'.on_attach(client)
+    require'diagnostic'.on_attach()
 
-local function on_attach_callback(client)
-  -- Omni completion source
-  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-  lsp_status.on_attach(client)
-  diagnostic.on_attach()
-
-  if client.resolved_capabilities.document_highlight then
-    vim.cmd[[augroup nvim_lsp_user_autocmds]]
-    vim.cmd[[autocmd!]]
-    vim.cmd[[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-    vim.cmd[[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
-    vim.cmd[[augroup END]]
+    if client.resolved_capabilities.document_highlight then
+      vim.cmd[[augroup nvim_lsp_user_autocmds]]
+      vim.cmd[[autocmd!]]
+      vim.cmd[[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
+      vim.cmd[[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+      vim.cmd[[augroup END]]
+    end
+    if config.after then
+      config.after(client)
+    end
   end
 end
-
-local servers = {
-  bashls = {},
-  clangd = {
-
-  },
-    clangd = {
-    cmd = {
-      'clangd', -- '--background-index',
-      '--clang-tidy', '--completion-style=bundled', '--header-insertion=iwyu',
-      '--suggest-missing-includes', '--cross-file-rename'
-    },
-    callbacks = lsp_status.extensions.clangd.setup(),
-    init_options = {clangdFileStatus = true, usePlaceholders = true, completeUnimported = true}
-  },
-  cssls = {
-    filetypes = {"css", "scss", "less", "sass"},
-    root_dir = nvim_lsp.util.root_pattern("package.json", ".git")
-  },
-}
 
 function M.setup()
   -- Variables
   vim.g.enable_nvim_lsp_diagnostics   = true
-  vim.g.LspDiagnosticsErrorSign       = ""
-  vim.g.LspDiagnosticsWarningSign     = ""
-  vim.g.LspDiagnosticsInformationSign = ""
-  vim.g.LspDiagnosticsHintSign        = ""
+  -- vim.g.LspDiagnosticsErrorSign       = ""
+  -- vim.g.LspDiagnosticsWarningSign     = ""
+  -- vim.g.LspDiagnosticsInformationSign = ""
+  -- vim.g.LspDiagnosticsHintSign        = ""
+  vim.fn.sign_define("LspDiagnosticsErrorSign", { test = "", texthl = "LspDiagnosticError" })
+  vim.fn.sign_define("LspDiagnosticsWarningSign", { test = "", texthl = "LspDiagnosticWarning" })
+  vim.fn.sign_define("LspDiagnosticsInformationSign", { test = "", texthl = "LspDiagnosticInformtion" })
+  vim.fn.sign_define("LspDiagnosticsHintSign", { test = "", texthl = "LspDiagnosticHint" })
 
   -- Debug mode
   --vim.lsp.set_log_level("debug")
@@ -72,156 +60,129 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "m]", "<cmd>NextDiagnosticCycle<CR>",  opts)
   vim.api.nvim_set_keymap("n", "m[", "<cmd>PrevDiagnosticCycle<CR>",  opts)
   vim.api.nvim_set_keymap("n", "mq", "<cmd>OpenDiagnostic<CR>",       opts)
-
-  -- auto commands
-
-  vim.cmd("augroup user-plugin-nvim-lsp")
-  vim.cmd("autocmd!")
-  vim.cmd("autocmd FileType c,cpp,objc,objcpp lua require('plugins.nvim-lsp')._on_filetype_c_cpp()")
-  vim.cmd("autocmd FileType fortran           lua require('plugins.nvim-lsp')._on_filetype_fortran()")
-  vim.cmd("autocmd FileType go                lua require('plugins.nvim-lsp')._on_filetype_go()")
-  vim.cmd("autocmd FileType lua               lua require('plugins.nvim-lsp')._on_filetype_lua()")
-  vim.cmd("autocmd FileType python            lua require('plugins.nvim-lsp')._on_filetype_python()")
-  vim.cmd("autocmd FileType ruby              lua require('plugins.nvim-lsp')._on_filetype_ruby()")
-  vim.cmd("autocmd FileType rust              lua require('plugins.nvim-lsp')._on_filetype_rust()")
-  vim.cmd("autocmd FileType sh                lua require('plugins.nvim-lsp')._on_filetype_sh()")
-  vim.cmd("autocmd FileType vim               lua require('plugins.nvim-lsp')._on_filetype_vim()")
-  vim.cmd("autocmd FileType yaml              lua require('plugins.nvim-lsp')._on_filetype_yaml()")
-  local efm_ft = {
-    "eruby", "vim", "make", "markdown", "rst", "yaml", "python",
-    "dockerfile", "javascript", "php", "html", "css", "json", "csv"
-  }
-  vim.cmd("autocmd FileType " .. table.concat(efm_ft, ",") .. " lua require('plugins.nvim-lsp')._configure_efm()")
-  vim.cmd("augroup end")
 end
 
-function M._on_filetype_c_cpp()
-  require'nvim_lsp'.clangd.setup{
-    cmd = {"clangd", "--background-index"};
-    on_attach = on_attach_callback;
-  }
-end
+function M.config()
+  local nvim_lsp   = require("nvim_lsp")
+  local lsp_status = require("lsp-status")
 
-function M._on_filetype_fortran()
-  require'nvim_lsp'.dockerls.setup{
-    on_attach = on_attach_callback;
-  }
-end
-
-function M._on_filetype_fortran()
-  require'nvim_lsp'.fortls.setup{
-    on_attach = on_attach_callback;
-  }
-end
-
-function M._on_filetype_go()
-  require'nvim_lsp'.gopls.setup{
-    capabilities = {
-      textDocument = {
-        completion = {
-          completionItem = {
-            snippetSupport = true
-          }
-        }
+  -- Setup language servers
+  local servers = {
+    bashls = {},
+    clangd = {
+      cmd = {
+        'clangd', -- '--background-index',
+        '--clang-tidy', '--completion-style=bundled', '--header-insertion=iwyu',
+        '--suggest-missing-includes', '--cross-file-rename'
+      },
+      callbacks = lsp_status.extensions.clangd.setup(),
+      init_options = {
+        clangdFileStatus = true,
+        usePlaceholders = true,
+        completeUnimported = true
       }
-    };
-    init_options = {
-      usePlaceholders = true,
-      completeUnimported = true
-    };
-    on_attach = on_attach_callback;
-  }
-end
-
-function M._on_filetype_lua()
-  require'nvim_lsp'.sumneko_lua.setup{
-    on_attach = on_attach_callback
-  }
-end
-
-function M._on_filetype_python()
-  -- require'nvim_lsp'.jedi_language_server.setup{
-  --   on_attach = on_attach_callback;
-  -- }
-  require'nvim_lsp'.pyls.setup{
-    -- cmd = { vim.env.PYENV_ROOT .. "/versions/neovim3/bin/pyls" };
-    settings = {
-      pyls = {
-        plugins = {
-          flake8 = { enabled = true };
-          pycodestyle = { enabled = true };
-          pydocstyle = { enabled = false };
-          pylint = { enabled = false };
-          yapf = { enabled = false };
-          jedi_definition = {
-            follow_imports = true;
-            follow_builtin_imports = true;
-          }
-        }
-      }
-    };
-    on_attach = on_attach_callback;
-  }
-end
-
-function M._on_filetype_ruby()
-  require'nvim_lsp'.solargraph.setup{
-    on_attach = on_attach_callback
-  }
-end
-
-function M._on_filetype_rust()
-  if vim.fn.executable("rust-analylzer") then
-    require'nvim_lsp'.rls.setup{
-      on_attach = on_attach_callback
-    }
-  else
-    require'nvim_lsp'.rls.setup{
-      cmd = {"rustup", "run", "stable", "rls"};
-      settings = {
-        rust = {
-          enableMultiProjectSetup = true;
-          all_features = true;
-          all_targets = true;
-          full_docs = true;
-          jobs = 2;
-          unstable_features = true;
-          wait_to_build = 1500;
-        };
+    },
+    cmake = {},
+    cssls = {
+      filetypes = {"css", "scss", "less", "sass"},
+      root_dir = nvim_lsp.util.root_pattern("package.json", ".git")
+    },
+    fortls = {},
+    gopls = {
+      init_options = {
+        usePlaceholders = true,
+        completeUnimported = true
       };
-      on_attach = on_attach_callback
+    },
+    html = {},
+    jsonls = {},
+    julials = {},
+    pyls_ms = {
+      -- cmd = {'mspyls'},
+      callbacks = lsp_status.extensions.pyls_ms.setup(),
+      settings = {
+        python = {
+          jediEnabled = false,
+          analysis = {cachingLevel = 'Library'},
+          formatting = {provider = 'yapf'},
+          venvFolders = {"envs", ".pyenv", ".direnv", ".cache/pypoetry/virtualenvs"},
+          workspaceSymbols = {enabled = true}
+        }
+      },
+      root_dir = function(fname)
+        return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+          'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
+          '.gitignore')(fname)
+        or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+      end
+    },
+    rust_analyzer = {},
+    solargraph = {},
+    sumneko_lua = {
+      cmd = {'lua-language-server'},
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {'vim'}
+          },
+          completion = {
+            keywordSnippet = 'Disable'
+          },
+          runtime = {
+            version = 'LuaJIT'
+          }
+        }
+      }
+    },
+    texlab = {
+      settings = {
+        latex = {
+          forwardSearch = {
+            executable = 'okular',
+            args = {'--unique', 'file:%p#src:%l%f'}
+          }
+        }
+      },
+      commands = {
+        TexlabForwardSearch = {
+          function()
+            local pos = vim.api.nvim_win_get_cursor(0)
+            local params = {
+              textDocument = {uri = vim.uri_from_bufnr(0)},
+              position = {line = pos[1] - 1, character = pos[2]}
+            }
+
+            vim.lsp.buf_request(0, 'textDocument/forwardSearch', params, function(err, _, result, _)
+              if err then error(tostring(err)) end
+              print('Forward search ' .. vim.inspect(pos) .. ' ' .. texlab_search_status[result])
+            end)
+          end,
+          description = 'Run synctex forward search'
+        }
+      }
+    },
+    vimls = {},
+    yamlls = {},
+  }
+
+  local snippet_capabilities = {
+    textDocument = {
+      completion = {
+        completionItem = {
+          snippetSupport = true
+        }
+      }
     }
+  }
+
+  for server, config in pairs(servers) do
+    config.on_attach = make_on_attach(config)
+    config.capabilities = vim.tbl_deep_extend(
+      "keep", config.capabilities or {}, lsp_status.capabilities, snippet_capabilities
+      )
+
+    nvim_lsp[server].setup(config)
   end
-end
-
-function M._on_filetype_sh()
-  require'nvim_lsp'.bashls.setup{
-    on_attach = on_attach_callback
-  }
-end
-
-function M._on_filetype_sh()
-  require'nvim_lsp'.texlab.setup{
-    on_attach = on_attach_callback
-  }
-end
-
-function M._on_filetype_vim()
-  require'nvim_lsp'.vimls.setup{
-    on_attach = on_attach_callback
-  }
-end
-
-function M._on_filetype_yaml()
-  require'nvim_lsp'.yamlls.setup{
-    on_attach = on_attach_callback
-  }
-end
-
-function M._configure_efm()
-  require'nvim_lsp'.efm.setup{
-    on_attach = on_attach_callback
-  }
 end
 
 return M

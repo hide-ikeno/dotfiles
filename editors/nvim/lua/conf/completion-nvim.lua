@@ -46,6 +46,9 @@ function M.setup()
     Default       = ""
   }
 
+end
+
+function M.config()
   vim.cmd[[ augroup completion_nvim_autocmd ]]
   vim.cmd[[ autocmd! ]]
   vim.cmd[[ autocmd BufEnter *         lua require'completion'.on_attach()]]
@@ -53,8 +56,5 @@ function M.setup()
   vim.cmd[[ autocmd BufEnter *.c,*.cpp let g:completion_trigger_character = ['.', '::', '->'] ]]
   vim.cmd[[ augroup END ]]
 end
-
--- function M.config()
--- end
 
 return M

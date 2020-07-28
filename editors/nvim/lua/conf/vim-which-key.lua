@@ -1,6 +1,6 @@
 local M = {}
 
-function M.hook_add()
+function M.setup()
   local options = {noremap = true, silent = true}
   vim.api.nvim_set_keymap("n", "<Space>", "<cmd>WhichKey '<Space>'<CR>", options)
   vim.api.nvim_set_keymap("n", ";",       "<cmd>WhichKey ';'<CR>",       options)
@@ -21,18 +21,20 @@ M._localleader_map = {}
 M._s_map = {}
 M._m_map = {}
 
-function M.hook_source()
+function M.config()
   M._space_map = {
-    ['['] = "previous item in list",
-    [']'] = "next item in list",
-    ['/'] = "grep",
-    ['*'] = "grep-current-word",
+    ['/'] = "lines",
+    ['*'] = "lines-current-word",
+    ['B'] = "all-buffers",
+    ['G'] = "grep-project",
     ['b'] = "buffers",
-    ['d'] = "Defx",
+    -- ['d'] = "Defx",
     ['f'] = "files",
-    ['h'] = "help",
+    -- ['h'] = "help",
     ['l'] = "locationlist",
+    ['p'] = "project-files",
     ['q'] = "quickfix",
+    ['t'] = "buffer-tags",
     ['v'] = "Vista",
   }
 
@@ -43,14 +45,18 @@ function M.hook_source()
     ['d'] = "SignifyDiff",
     ['p'] = "SignifyHunkDiff",
     ['u'] = "SignifyHunkUndo",
-    ['s'] = "Gina status",
-    ['c'] = "Gina commit",
-    ['C'] = "Gina commit --amend",
-    ['b'] = "Gina branch",
-    ['t'] = "Gina tag",
-    ['l'] = "Gina log",
-    ['L'] = "Gina log :%",
-    ['f'] = "Gina ls",
+    -- ['s'] = "Gina status",
+    -- ['c'] = "Gina commit",
+    -- ['C'] = "Gina commit --amend",
+    -- ['b'] = "Gina branch",
+    -- ['t'] = "Gina tag",
+    -- ['l'] = "Gina log",
+    -- ['L'] = "Gina log :%",
+    -- ['f'] = "Gina ls",
+    ['a'] = "git-actions",
+    ['b'] = "git-branches",
+    ['f'] = "git-files",
+    ['l'] = "git-logs",
   }
 
   vim.g.which_key_space_map = M._space_map
@@ -66,6 +72,7 @@ function M.hook_source()
     ["H"] = "signature-help",
     ["R"] = "rename",
     ["d"] = "definition",
+    ["e"] = "show-line-diagnostics",
     ["f"] = "format-range",
     ["h"] = "document-hover",
     ["i"] = "implementation",
@@ -115,11 +122,11 @@ function M.hook_source()
     ["w"] = "wrap-text",
   }
 
-  M._leader_map["="] = {
-    name  = "+codefmt",
-    ['='] = "format-line",
-    ['b'] = "format-buffer",
-  }
+  -- M._leader_map["="] = {
+  --   name  = "+codefmt",
+  --   ['='] = "format-line",
+  --   ['b'] = "format-buffer",
+  -- }
 
   vim.g.which_key_leader_map = M._leader_map
   vim.fn["which_key#register"](';', 'g:which_key_leader_map')

@@ -86,6 +86,14 @@ local function init()
   -- Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
   use "Shougo/context_filetype.vim"
 
+  --
+  use {
+    "liuchengxu/vim-which-key",
+    cmd = {"WhichKey", "WhichKeyVisual"},
+    setup = "require'conf.vim-which-key'.setup()",
+    config = "require'conf.vim-which-key'.config()",
+  }
+
   -- A high-performance color highlighter for NeoVim
   use {
     "norcalli/nvim-colorizer.lua",
@@ -146,6 +154,15 @@ local function init()
   }
   -- }}}
 
+  -- [[ Colorscheme ]]
+
+  use { "sainnhe/edge",             opt = true }
+  use { "sainnhe/forest-night",     opt = true }
+  use { "sainnhe/gruvbox-material", opt = true }
+
+  -- A color scheme template
+  -- use "Iron-E/nvim-highlite"
+
   -- [[ Syntax, filetype ]] {{{
 
   -- A solid language pack for Vim
@@ -160,33 +177,28 @@ local function init()
   -- GNU As
   use "Shirk/vim-gas"
 
-  -- CSV
-  use { "chrisbra/csv.vim", ft = {"csv"} }
-
-  -- D language
-  use { "JesseKPhillips/d.vim", ft = {"d"} }
-
   -- Jsonc
-  use { "neoclide/jsonc.vim", ft = {"jsonc"} }
+  use "neoclide/jsonc.vim"
 
   -- Python
-  use { "vim-scripts/python_match.vim", ft = {"python"} }
+  use "vim-scripts/python_match.vim"
 
-  use { "raimon49/requirements.txt.vim", event = "BufEnter requirements.txt" }
+  use "raimon49/requirements.txt.vim"
 
   use {
-    "petobens/poet-v", ft = {"python"},
+    "petobens/poet-v",
+    ft = {"python"},
     setup = "vim.g.poetv_auto_activate = 1"
   }
 
   use { "tmhedberg/SimpylFold", ft = {"python"} }
 
   -- Markdown
-  use { "rcmdnk/vim-markdown", ft = {"markdown"} }
-  use { "rhysd/vim-gfm-syntax", ft = {"markdown"} }
+  use "rcmdnk/vim-markdown"
+  use "rhysd/vim-gfm-syntax"
 
   -- Zsh
-  use { "chrisbra/vim-zsh", ft = {"zsh"} }
+  use "chrisbra/vim-zsh"
 
   -- Hex editor
   use {
@@ -228,9 +240,13 @@ local function init()
   use {
     "neovim/nvim-lsp",
     event = {"BufNewFile *", "BufRead *"},
+    requires = {
+      "nvim-lua/diagnostic-nvim",
+      "nvim-lua/lsp-status.nvim",
+    },
+    setup = "require'conf.nvim-lsp'.setup()",
     config = "require'conf.nvim-lsp'.config()"
   }
-
 
   -- use "nvim-lua/diagnostic-nvim"
   -- use "nvim-lua/lsp-status.nvim"
@@ -284,7 +300,8 @@ local function init()
         after = { "completion-nvim", "nvim-treesitter" }
       }
     },
-    setup = "require'conf.completion-nvim'.setup()"
+    setup = "require'conf.completion-nvim'.setup()",
+    config = "require'conf.completion-nvim'.config()"
   }
   -- }}}
 
