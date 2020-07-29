@@ -54,7 +54,7 @@ function M.setup()
   vim.api.nvim_set_keymap("x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>",       opts)
   vim.api.nvim_set_keymap("n", "mh", "<cmd>lua vim.lsp.buf.hover()<CR>",                  opts)
   vim.api.nvim_set_keymap("n", "mH", "<cmd>lua vim.lsp.buf.signature_help()<CR>",         opts)
-  vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",  opts)
+  vim.api.nvim_set_keymap("n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",        opts)
 
   -- diagnostics-lsp
   vim.api.nvim_set_keymap("n", "m]", "<cmd>NextDiagnosticCycle<CR>",  opts)
@@ -87,6 +87,8 @@ function M.config()
       filetypes = {"css", "scss", "less", "sass"},
       root_dir = nvim_lsp.util.root_pattern("package.json", ".git")
     },
+    -- diagnosticls = {},
+    -- efm = {},
     fortls = {},
     gopls = {
       init_options = {
@@ -95,28 +97,33 @@ function M.config()
       };
     },
     html = {},
+    jedi_language_server = {
+      init_options = {
+        markupKindPreferred = "plaintext" -- 'plaintext' or 'markdown'
+      }
+    },
     jsonls = {},
     julials = {},
-    pyls_ms = {
-      -- cmd = {'mspyls'},
-      callbacks = lsp_status.extensions.pyls_ms.setup(),
-      settings = {
-        python = {
-          jediEnabled = false,
-          analysis = {cachingLevel = 'Library'},
-          formatting = {provider = 'black'},
-          -- venvFolders = {"envs", ".pyenv", ".direnv", ".cache/pypoetry/virtualenvs"},
-          venvPath = "${workspaceFolder}/.venv",
-          workspaceSymbols = {enabled = true}
-        }
-      },
-      root_dir = function(fname)
-        return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-          'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-          '.gitignore')(fname)
-        or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end
-    },
+    -- pyls_ms = {
+    --   -- cmd = {'mspyls'},
+    --   callbacks = lsp_status.extensions.pyls_ms.setup(),
+    --   settings = {
+    --     python = {
+    --       jediEnabled = false,
+    --       analysis = {cachingLevel = 'Library'},
+    --       formatting = {provider = 'black'},
+    --       -- venvFolders = {"envs", ".pyenv", ".direnv", ".cache/pypoetry/virtualenvs"},
+    --       venvPath = "${workspaceFolder}/.venv",
+    --       workspaceSymbols = {enabled = true}
+    --     }
+    --   },
+    --   root_dir = function(fname)
+    --     return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+    --       'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
+    --       '.gitignore')(fname)
+    --     or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+    --   end
+    -- },
     rust_analyzer = {},
     solargraph = {},
     sumneko_lua = {
@@ -125,9 +132,6 @@ function M.config()
         Lua = {
           diagnostics = {
             globals = {'vim'}
-          },
-          completion = {
-            keywordSnippet = 'Disable'
           },
           runtime = {
             version = 'LuaJIT'
@@ -184,6 +188,7 @@ function M.config()
 
     nvim_lsp[server].setup(config)
   end
+
 end
 
 return M
