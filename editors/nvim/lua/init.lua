@@ -22,12 +22,12 @@ local function configure_path(new_paths, path_var)
     end
   end
 
-  -- Add given directories in the path list.
-  add_paths(new_paths)
   -- Split path_var string with the separator, and filter out non-exsiting dirs
   if not is_empty(path_var) then
     add_paths(vim.split(path_var, path_separator, true))
   end
+  -- Add given directories in the path list.
+  add_paths(new_paths)
   -- concat paths
   return table.concat(paths, path_separator)
 end
