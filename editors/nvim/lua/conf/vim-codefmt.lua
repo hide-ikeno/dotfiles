@@ -1,6 +1,6 @@
 local M = {}
 
-function M.hook_add()
+function M.setup()
   vim.api.nvim_set_keymap("n", "<Leader>=", ":set opfunc=codefmt#FormatMap<CR>g@", {silent = true; unique = true;})
   vim.api.nvim_set_keymap("n", "<Leader>==", ":FormatLines<CR>",          {silent = true; unique = true;})
   vim.api.nvim_set_keymap("x", "<Leader>=",  ":<C-u>FormatLines<CR>",     {silent = true; unique = true;})

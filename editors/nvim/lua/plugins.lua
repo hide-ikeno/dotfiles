@@ -83,7 +83,7 @@ local function init()
   -- Find fenced code blocks and filetype (e.g., Javascript blocks inside HTML)
   use "Shougo/context_filetype.vim"
 
-  --
+  -- Show keybindings in popup
   use {
     "liuchengxu/vim-which-key",
     cmd = {"WhichKey", "WhichKeyVisual"},
@@ -164,6 +164,19 @@ local function init()
       "groovy", "ruby", "scalar", "kotlin", "r", "c", "cpp", "sh"
     },
     setup = "require'conf.vim-doge'.setup()"
+  }
+
+  -- Syntax-aware code formatting
+  use {
+    "google/vim-codefmt",
+    requires = {
+      "google/vim-maktaba",
+      "google/vim-glaive"
+    },
+    cmd = {
+      "FormatLines", "FormatCode", "AutoFormatBuffer", "NoAutoFormatBuffer"
+    },
+    setup = "require'conf.vim-codefmt'.setup()"
   }
   -- }}}
 
