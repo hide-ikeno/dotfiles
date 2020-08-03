@@ -134,26 +134,27 @@ end
 -- Mode colors
 function M.apply_theme(theme_name)
   local c = theme[theme_name]
-  highlight("SL_ModeNormal",  c.bg_grey[1], c.green[1],  c.bg_grey[2], c.green[2],  "bold", nil)
-  highlight("SL_ModeInsert",  c.bg_grey[1], c.blue[1],   c.bg_grey[2], c.blue[2],   "bold", nil)
-  highlight("SL_ModeVisual",  c.bg_grey[1], c.purple[1], c.bg_grey[2], c.purple[2], "bold", nil)
-  highlight("SL_ModeReplace", c.bg_grey[1], c.red[1],    c.bg_grey[2], c.red[2],    "bold", nil)
-  highlight("SL_ModeCommand", c.bg_grey[1], c.yellow[1], c.bg_grey[2], c.yellow[2], "bold", nil)
+  highlight("StatusLineModeNormal",  c.bg_grey[1], c.green[1],  c.bg_grey[2], c.green[2],  "bold", nil)
+  highlight("StatusLineModeInsert",  c.bg_grey[1], c.blue[1],   c.bg_grey[2], c.blue[2],   "bold", nil)
+  highlight("StatusLineModeVisual",  c.bg_grey[1], c.purple[1], c.bg_grey[2], c.purple[2], "bold", nil)
+  highlight("StatusLineModeReplace", c.bg_grey[1], c.red[1],    c.bg_grey[2], c.red[2],    "bold", nil)
+  highlight("StatusLineModeCommand", c.bg_grey[1], c.yellow[1], c.bg_grey[2], c.yellow[2], "bold", nil)
 
-  highlight("SL_ModeSepNormal",  c.green[1],  nil, c.green[2],  nil, nil, nil)
-  highlight("SL_ModeSepInsert",  c.blue[1],   nil, c.blue[2],   nil, nil, nil)
-  highlight("SL_ModeSepVisual",  c.purple[1], nil, c.purple[2], nil, nil, nil)
-  highlight("SL_ModeSepReplace", c.red[1],    nil, c.red[2],    nil, nil, nil)
-  highlight("SL_ModeSepCommand", c.yellow[1], nil, c.yellow[2], nil, nil, nil)
+  highlight("StatusLineModeSepNormal",  c.green[1],  nil, c.green[2],  nil, nil, nil)
+  highlight("StatusLineModeSepInsert",  c.blue[1],   nil, c.blue[2],   nil, nil, nil)
+  highlight("StatusLineModeSepVisual",  c.purple[1], nil, c.purple[2], nil, nil, nil)
+  highlight("StatusLineModeSepReplace", c.red[1],    nil, c.red[2],    nil, nil, nil)
+  highlight("StatusLineModeSepCommand", c.yellow[1], nil, c.yellow[2], nil, nil, nil)
 
-  highlight("SL_FileName",   c.fg[1],     c.bg_grey[1], c.fg[2],     c.bg_grey[2], nil, nil)
-  highlight("SL_FileType",   c.blue[1],   c.bg_alt[1],  c.blue[2],   c.bg_alt[2],  nil, nil)
-  highlight("SL_FileFormat", c.fg[1],     c.bg_alt[1],  c.fg[2],     c.bg_alt[2],  nil, nil)
-  highlight("SL_GitBranch",  c.purple[1], c.bg_alt[1],  c.purple[2], c.bg_alt[2],  nil, nil)
-  highlight("SL_LinCol",     c.fg[1],     c.bg_alt[1],  c.fg[2],     c.bg_alt[2],  nil, nil)
+  highlight("StatusLineFileName",   c.fg[1],     c.bg_grey[1], c.fg[2],     c.bg_grey[2], nil, nil)
+  highlight("StatusLineFileType",   c.blue[1],   c.bg_alt[1],  c.blue[2],   c.bg_alt[2],  nil, nil)
+  highlight("StatusLineFileFormat", c.fg[1],     c.bg_alt[1],  c.fg[2],     c.bg_alt[2],  nil, nil)
+  highlight("StatusLineVCS",        c.purple[1], c.bg_alt[1],  c.purple[2], c.bg_alt[2],  nil, nil)
+  highlight("StatusLineLinCol",     c.fg[1],     c.bg_alt[1],  c.fg[2],     c.bg_alt[2],  nil, nil)
+  highlight("StatusLineLspStatus",  c.fg[1],     c.bg_grey[1], c.fg[2],     c.bg_grey[2], nil, nil)
 
-  highlight("SL_Sep1", c.bg_grey[1], nil, c.bg_grey[2], nil, nil, nil)
-  highlight("SL_Sep2", c.bg_alt[1],  nil, c.bg_alt[2],  nil, nil, nil)
+  highlight("StatusLineSep1", c.bg_grey[1], nil, c.bg_grey[2], nil, nil, nil)
+  highlight("StatusLineSep2", c.bg_alt[1],  nil, c.bg_alt[2],  nil, nil, nil)
 end
 
 
@@ -236,7 +237,7 @@ local function statusline_filename()
 
   local ro = statusline_readonly()
   local mo = statusline_modified()
-  return string.format("%s%s %s", ro, fname, mo)
+  return string.format("%s %s %s", ro, fname, mo)
 end
 
 
@@ -294,28 +295,28 @@ function M.statusline_active()
   local mode_label = current_mode_label[mode]
   local mode_hi = current_mode_hi_groups[mode]
 
-  local s = "%#SL_ModeSep" .. mode_hi .. "#" .. separator.left
-  s = s .. "%#SL_Mode"    .. mode_hi .. "#" .. mode_label
-  s = s .. "%#SL_ModeSep" .. mode_hi .. "#" .. separator.right
+  local s = "%#StatusLineModeSep" .. mode_hi .. "#" .. separator.left
+  s = s .. "%#StatusLineMode"    .. mode_hi .. "#" .. mode_label
+  s = s .. "%#StatusLineModeSep" .. mode_hi .. "#" .. separator.right
 
   local filename = statusline_filename()
-  s = s .. "%#SL_Sep1#" .. separator.left
-  s = s .. "%#SL_FileName#" .. filename
-  s = s .. "%#SL_Sep1#" .. separator.right
+  s = s .. "%#StatusLineSep1#" .. separator.left
+  s = s .. "%#StatusLineFileName#" .. filename
+  s = s .. "%#StatusLineSep1#" .. separator.right
 
   -- local branch = statusline_gitbranch()
   -- if #branch > 0 then
-  --   s = s .. "%#SL_Sep2#" .. separator.left
-  --   s = s .. "%#SL_GitBranch#" .. branch
-  --   s = s .. "%#SL_Sep2#" .. separator.right
+  --   s = s .. "%#StatusLineSep2#" .. separator.left
+  --   s = s .. "%#StatusLineVCS#" .. branch
+  --   s = s .. "%#StatusLineSep2#" .. separator.right
   -- end
   local buf_name = vim.fn.bufname()
   local buf_path = vim.fn.resolve(vim.fn.fnamemodify(buf_name, ":p"))
   local vcs = statusline_git_info(buf_path)
   if #vcs > 0 then
-    s = s .. "%#SL_Sep2#" .. separator.left
-    s = s .. "%#SL_GitBranch#" .. vcs
-    s = s .. "%#SL_Sep2#" .. separator.right
+    s = s .. "%#StatusLineSep2#" .. separator.left
+    s = s .. "%#StatusLineVCS#" .. vcs
+    s = s .. "%#StatusLineSep2#" .. separator.right
   end
 
   s = s .. "%="
@@ -323,27 +324,27 @@ function M.statusline_active()
   local width = vim.api.nvim_win_get_width(0)
   if width > 80 then
     local ft = statusline_filetype()
-    s = s .. "%#SL_Sep2#" .. separator.left
-    s = s .. "%#SL_FileType#" .. ft
-    s = s .. "%#SL_Sep2#" .. separator.right
+    s = s .. "%#StatusLineSep2#" .. separator.left
+    s = s .. "%#StatusLineFileType#" .. ft
+    s = s .. "%#StatusLineSep2#" .. separator.right
     if width > 100 then
       local fenc = statusline_fileencoding()
       local ff = statusline_fileformat()
-      s = s .. "%#SL_Sep2#" .. separator.left
-      s = s .. "%#SL_FileFormat#" .. fenc .. ff
-      s = s .. "%#SL_Sep2#" .. separator.right
+      s = s .. "%#StatusLineSep2#" .. separator.left
+      s = s .. "%#StatusLineFileFormat#" .. fenc .. ff
+      s = s .. "%#StatusLineSep2#" .. separator.right
     end
   end
 
-  s = s .. "%#SL_Sep2#" .. separator.left;
-  s = s .. "%#SL_LinCol# %3l %-2v (%P) %#SL_Sep2#";
-  s = s .. "%#SL_Sep2#" .. separator.right;
+  s = s .. "%#StatusLineSep2#" .. separator.left;
+  s = s .. "%#StatusLineLinCol# %3l %-2v (%P) %#StatusLineSep2#";
+  s = s .. "%#StatusLineSep2#" .. separator.right;
 
   local lsp_status = statusline_lsp_status()
   if #lsp_status > 0 then
-    s = s .. "%#SL_Sep2#" .. separator.left;
-    s = s .. "%#SL_LinCol# " .. lsp_status;
-    s = s .. "%#SL_Sep2#" .. separator.right;
+    s = s .. "%#StatusLineSep1#" .. separator.left;
+    s = s .. "%#StatusLineLspStatus# " .. lsp_status;
+    s = s .. "%#StatusLineSep1#" .. separator.right;
   end
 
   return s
