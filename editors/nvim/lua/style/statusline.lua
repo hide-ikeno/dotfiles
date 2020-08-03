@@ -29,11 +29,39 @@ local separator = {
 --   tabsel   = {"#17171b", "#818596", 234, 245};
 -- }
 
-local colors = {
+local theme = {}
+
+theme["edge_dark_default"] = {
+  fg      = { "#c5cdd9", 250 };
+  bg      = { "#2c2e34", 235 };
+  bg_alt  = { "#363944", 237 };
+  bg_grey = { "#414550", 238 };
+  red     = { "#ec7279", 203 };
+  purple  = { "#d38aea", 176 };
+  yellow  = { "#deb974", 179 };
+  green   = { "#a0c980", 107 };
+  blue    = { "#6cb6eb", 110 };
+  cyan    = { "#5dbbc1", 72  };
+}
+
+theme["edge_dark_aura"] = {
   fg      = { "#c5cdd9", 250 };
   bg      = { "#2b2d37", 235 };
-  bg_alt  = { "#2f323e", 236 };
+  bg_alt  = { "#363a49", 237 };
   bg_grey = { "#404455", 238 };
+  red     = { "#ec7279", 203 };
+  purple  = { "#d38aea", 176 };
+  yellow  = { "#deb974", 179 };
+  green   = { "#a0c980", 107 };
+  blue    = { "#6cb6eb", 110 };
+  cyan    = { "#5dbbc1", 72  };
+}
+
+theme["edge_dark_neon"] = {
+  fg      = { "#c5cdd9", 250 };
+  bg      = { "#2b2d3a", 235 };
+  bg_alt  = { "#363a4e", 237 };
+  bg_grey = { "#3f445b", 238 };
   red     = { "#ec7279", 203 };
   purple  = { "#d38aea", 176 };
   yellow  = { "#deb974", 179 };
@@ -104,8 +132,8 @@ end
 
 
 -- Mode colors
-function M.apply_theme()
-  local c = colors
+function M.apply_theme(theme_name)
+  local c = theme[theme_name]
   highlight("SL_ModeNormal",  c.bg_grey[1], c.green[1],  c.bg_grey[2], c.green[2],  "bold", nil)
   highlight("SL_ModeInsert",  c.bg_grey[1], c.blue[1],   c.bg_grey[2], c.blue[2],   "bold", nil)
   highlight("SL_ModeVisual",  c.bg_grey[1], c.purple[1], c.bg_grey[2], c.purple[2], "bold", nil)

@@ -402,18 +402,18 @@ vim.cmd("packadd vim-better-whitespace")
 require'conf.vim-which-key'.setup()
 -- Setup for: vim-doge
 require'conf.vim-doge'.setup()
--- Setup for: vim-polyglot
-vim.g.polyglot_disable = {'json', 'markdown'}
-vim.cmd("packadd vim-polyglot")
+-- Setup for: vim-operator-replace
+require'conf.vim-operator-replace'.setup()
+vim.cmd("packadd vim-operator-replace")
 -- Setup for: vim-indent-guides
 require'conf.vim-indent-guides'.setup()
 vim.cmd("packadd vim-indent-guides")
 -- Setup for: vim-signify
 require'conf.vim-signify'.setup()
 vim.cmd("packadd vim-signify")
--- Setup for: vim-operator-replace
-require'conf.vim-operator-replace'.setup()
-vim.cmd("packadd vim-operator-replace")
+-- Setup for: vim-polyglot
+vim.g.polyglot_disable = {'json', 'markdown'}
+vim.cmd("packadd vim-polyglot")
 -- Setup for: nvim-lsp
 require'conf.nvim-lsp'.setup()
 -- Setup for: committia.vim
@@ -441,9 +441,9 @@ command! -nargs=* -range -bang -complete=file WhichKey call s:load(['vim-which-k
 command! -nargs=* -range -bang -complete=file Gina call s:load(['gina.vim'], { "cmd": "Gina", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Vista call s:load(['vista.vim'], { "cmd": "Vista", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file WhichKeyVisual call s:load(['vim-which-key'], { "cmd": "WhichKeyVisual", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file GitMessenger call s:load(['git-messenger.vim'], { "cmd": "GitMessenger", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
-command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 command! -nargs=* -range -bang -complete=file Vinarise call s:load(['vinarise.vim'], { "cmd": "Vinarise", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file StartupTime call s:load(['startuptime.vim'], { "cmd": "StartupTime", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
+command! -nargs=* -range -bang -complete=file GitMessenger call s:load(['git-messenger.vim'], { "cmd": "GitMessenger", "l1": <line1>, "l2": <line2>, "bang": <q-bang>, "args": <q-args> })
 
 " Keymap lazy-loads
 
@@ -453,15 +453,15 @@ augroup packer_load_aucmds
   au FileType lua ++once call s:load(['vim-doge'], { "ft": "lua" })
   au FileType ruby ++once call s:load(['vim-doge'], { "ft": "ruby" })
   au FileType typescript ++once call s:load(['vim-doge'], { "ft": "typescript" })
-  au FileType qf ++once call s:load(['vim-qfreplace'], { "ft": "qf" })
   au FileType sh ++once call s:load(['vim-doge'], { "ft": "sh" })
-  au FileType php ++once call s:load(['vim-doge'], { "ft": "php" })
+  au FileType qf ++once call s:load(['vim-qfreplace'], { "ft": "qf" })
+  au FileType r ++once call s:load(['vim-doge'], { "ft": "r" })
   au FileType c ++once call s:load(['vim-doge'], { "ft": "c" })
   au FileType scalar ++once call s:load(['vim-doge'], { "ft": "scalar" })
-  au FileType r ++once call s:load(['vim-doge'], { "ft": "r" })
-  au FileType javascript ++once call s:load(['vim-doge'], { "ft": "javascript" })
-  au FileType groovy ++once call s:load(['vim-doge'], { "ft": "groovy" })
   au FileType kotlin ++once call s:load(['vim-doge'], { "ft": "kotlin" })
+  au FileType javascript ++once call s:load(['vim-doge'], { "ft": "javascript" })
+  au FileType php ++once call s:load(['vim-doge'], { "ft": "php" })
+  au FileType groovy ++once call s:load(['vim-doge'], { "ft": "groovy" })
   au FileType coffee ++once call s:load(['vim-doge'], { "ft": "coffee" })
   au FileType python ++once call s:load(['SimpylFold', 'poet-v', 'vim-doge'], { "ft": "python" })
   au FileType cpp ++once call s:load(['vim-doge'], { "ft": "cpp" })
