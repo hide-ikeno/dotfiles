@@ -3,3 +3,12 @@
 	email = hide.ikeno@gmail.com
 [ghq]
 	root = ~/src
+[core]
+	pager = delta
+[delta]
+	line-numbers = true
+	side-by-side = true
+	syntax-theme = TwoDark
+	file-modified-label = modified
+[interactive]
+	diffFilter = delta
