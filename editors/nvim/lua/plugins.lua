@@ -326,6 +326,13 @@ local function init()
     setup = "require'conf.completion-nvim'.setup()",
     config = "require'conf.completion-nvim'.config()"
   }
+
+  -- VSCode extensions for snippets
+  use "krvajal/vscode-fortran-support"
+  use "microsoft/vscode-go"
+  use "microsoft/vscode-python"
+  use "rust-lang/vscode-rust"
+
   -- }}}
 
   -- [[ Fuzzy finder ]] {{{
