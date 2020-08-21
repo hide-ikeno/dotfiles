@@ -39,11 +39,12 @@ api.nvim_set_keymap("n", "M", "m", {noremap = true})
 api.nvim_set_keymap("n", "Y", "y$", {noremap = true})
 
 -- Emacs-like cursor move in insert/command mode
+-- NOTE: <C-f> and <C-b> are mapped in lua/conf/vim-vsnip.lua
 api.nvim_set_keymap("i", "<C-a>", "<Home>",  {noremap = true})
-api.nvim_set_keymap("i", "<C-b>", "<Left>",  {noremap = true})
+-- api.nvim_set_keymap("i", "<C-b>", "<Left>",  {noremap = true})
 api.nvim_set_keymap("i", "<C-d>", "<Del>",   {noremap = true})
 api.nvim_set_keymap("i", "<C-e>", "<End>",   {noremap = true})
-api.nvim_set_keymap("i", "<C-f>", "<Right>", {noremap = true})
+-- api.nvim_set_keymap("i", "<C-f>", "<Right>", {noremap = true})
 api.nvim_set_keymap("i", "<C-k>", "<C-o>D",  {noremap = true})
 
 api.nvim_set_keymap("c", "<C-a>", "<Home>",  {noremap = true})
