@@ -264,14 +264,14 @@ local function init()
 
   -- Collection of common configurations for Nvim LSP client
   use {
-    "neovim/nvim-lsp",
+    "neovim/nvim-lspconfig",
     event = {"BufNewFile *", "BufRead *"},
     requires = {
       "nvim-lua/diagnostic-nvim",
       "nvim-lua/lsp-status.nvim",
     },
-    setup = "require'conf.nvim-lsp'.setup()",
-    config = "require'conf.nvim-lsp'.config()"
+    setup = "require'conf.nvim-lspconfig'.setup()",
+    config = "require'conf.nvim-lspconfig'.config()"
   }
 
   -- Manage tag files
