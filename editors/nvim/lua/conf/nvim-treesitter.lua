@@ -3,7 +3,10 @@ local M = {}
 function M.config()
   require'nvim-treesitter.configs'.setup{
     highlight = {
-      enable = true,
+      -- temporary disable highlight until
+      -- https://github.com/nvim-treesitter/nvim-treesitter/issues/423
+      -- is fixed
+      enable = false,
       disable = {},
       custom_captures = {
         -- ["foo.bar"] = "Identifier"

@@ -42,6 +42,11 @@ return require("packer").startup{
       "christoomey/vim-tmux-navigator",
       setup = "require'conf.vim-tmux-navigator'.setup()"
     }
+
+    -- Lua plugin dependencies
+    use "nvim-lua/plenary.nvim"
+    use "nvim-lua/popup.nvim"
+
     -- }}}
 
     -- [[ Interfaces ]] {{{
@@ -85,6 +90,9 @@ return require("packer").startup{
       config = "require'colorizer'.setup()"
     }
 
+    -- A lua fork of vim-devicons
+    use 'kyazdani42/nvim-web-devicons'
+
     -- Breakdown Vim's --startuptime output
     use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
 
@@ -112,10 +120,15 @@ return require("packer").startup{
 
     -- Smart commenter
     use {
-      "tyru/caw.vim",
+      "tpope/vim-commentary",
       event = "CursorMoved *",
-      setup = "require'conf.caw'.setup()",
     }
+    -- *** caw.vim conflicts with nvim-treesitter
+    -- use {
+    --   "tyru/caw.vim",
+    --   event = "CursorMoved *",
+    --   setup = "require'conf.caw'.setup()",
+    -- }
 
     -- Smart align
     use {
@@ -318,32 +331,41 @@ return require("packer").startup{
     -- VSCode extensions for snippets
     use "krvajal/vscode-fortran-support"
     use "microsoft/vscode-go"
-    use "microsoft/vscode-python"
     use "rust-lang/vscode-rust"
 
     -- }}}
 
     -- [[ Fuzzy finder ]] {{{
     use {
-      "junegunn/fzf",
-      run = "./install --all --xdg --no-update-rc"
-    }
-
-    use {
-      "yuki-ycino/fzf-preview.vim",
-      branch = "release",
-      run = ":UpdateRemotePlugins",
+      "nvim-lua/telescope.nvim",
+      opt = false,
       requires = {
-        {
-          "LeafCage/yankround.vim",
-          setup = "vim.g.yankround_dir = vim.fn.stdpath('cache') .. '/yankround'"
-        },
-        "ryanoasis/vim-devicons",
-        "lambdalisue/gina.vim",
-        "liuchengxu/vista.vim",
+        "nvim-lua/plenary.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-lua/nvim-web-devicons",
       },
-      setup = "require'conf.fzf-preview'.setup()"
+      setup = "require'conf.telescope'.setup()",
     }
+    -- use {
+    --   "junegunn/fzf",
+    --   run = "./install --all --xdg --no-update-rc"
+    -- }
+
+    -- use {
+    --   "yuki-ycino/fzf-preview.vim",
+    --   branch = "release",
+    --   run = ":UpdateRemotePlugins",
+    --   requires = {
+    --     {
+    --       "LeafCage/yankround.vim",
+    --       setup = "vim.g.yankround_dir = vim.fn.stdpath('cache') .. '/yankround'"
+    --     },
+    --     "ryanoasis/vim-devicons",
+    --     "lambdalisue/gina.vim",
+    --     "liuchengxu/vista.vim",
+    --   },
+    --   setup = "require'conf.fzf-preview'.setup()"
+    -- }
 
     -- }}}
   end
