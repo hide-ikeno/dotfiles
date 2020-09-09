@@ -87,6 +87,7 @@ local function ensure_nvim_dirs()
   vim.fn.mkdir(cache_dir .. "/view",    "p")
   vim.fn.mkdir(cache_dir .. "/session", "p")
   vim.fn.mkdir(data_dir  .. "/spell",   "p")
+  vim.fn.mkdir(data_dir  .. "/site",    "p")
 
   vim.o.packpath = utils.path.join(data_dir, "site")
 end
@@ -200,11 +201,7 @@ end
 require('options')
 
 -- Plugins
-vim.cmd("command! PackerInstall packadd packer.nvim | lua require('plugins').install()")
-vim.cmd("command! PackerUpdate  packadd packer.nvim | lua require('plugins').update()")
-vim.cmd("command! PackerSync    packadd packer.nvim | lua require('plugins').sync()")
-vim.cmd("command! PackerClean   packadd packer.nvim | lua require('plugins').clean()")
-vim.cmd("command! PackerCompile packadd packer.nvim | lua require('plugins').compile('~/.config/nvim/plugin/packer_compiled.vim')")
+require("plugins")
 
 -- -- ftplugin, syntax
 -- if vim.fn.has("vim_starting") and vim.fn.empty(vim.fn.argv()) == 0 then
