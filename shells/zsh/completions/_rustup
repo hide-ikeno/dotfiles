@@ -15,7 +15,6 @@ _rustup() {
 
     local context curcontext="$curcontext" state line
     _arguments "${_arguments_options[@]}" \
-'--toolchain=[Toolchain name, such as '\''stable'\'', '\''nightly'\'', or '\''1.8.0'\''. For more information see `rustup help toolchain`]' \
 '-v[Enable verbose output]' \
 '--verbose[Enable verbose output]' \
 '(-v --verbose)-q[Disable progress output]' \
@@ -24,15 +23,16 @@ _rustup() {
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'::+toolchain -- release channel (e.g. +stable) or custom toolchain to set override:_files' \
 ":: :_rustup_commands" \
 "*::: :->rustup" \
 && ret=0
     case $state in
     (rustup)
-        words=($line[1] "${words[@]}")
+        words=($line[2] "${words[@]}")
         (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:rustup-command-$line[1]:"
-        case $line[1] in
+        curcontext="${curcontext%:*:*}:rustup-command-$line[2]:"
+        case $line[2] in
             (dump-testament)
 _arguments "${_arguments_options[@]}" \
 '-h[Prints help information]' \
@@ -80,6 +80,14 @@ _arguments "${_arguments_options[@]}" \
 '--version[Prints version information]' \
 && ret=0
 ;;
+(keys)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+&& ret=0
+;;
 (help)
 _arguments "${_arguments_options[@]}" \
 '-h[Prints help information]' \
@@ -94,6 +102,7 @@ esac
 ;;
 (install)
 _arguments "${_arguments_options[@]}" \
+'--profile=[]: :(minimal default complete)' \
 '--no-self-update[Don'\''t perform self-update when running the `rustup install` command]' \
 '--force[Force an update, even if some components are missing]' \
 '-h[Prints help information]' \
@@ -167,12 +176,14 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (update)
 _arguments "${_arguments_options[@]}" \
+'--profile=[]: :(minimal default complete)' \
 '*-c+[Add specific components on installation]' \
 '*--component=[Add specific components on installation]' \
 '*-t+[Add specific targets on installation]' \
 '*--target=[Add specific targets on installation]' \
-'--no-self-update[Don'\''t perform self update when running the `rustup toolchain install` command]' \
+'--no-self-update[Don'\''t perform self update when running the`rustup toolchain install` command]' \
 '--force[Force an update, even if some components are missing]' \
+'--allow-downgrade[Allow rustup to downgrade the toolchain to satisfy your component choice]' \
 '-h[Prints help information]' \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
@@ -182,12 +193,14 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (add)
 _arguments "${_arguments_options[@]}" \
+'--profile=[]: :(minimal default complete)' \
 '*-c+[Add specific components on installation]' \
 '*--component=[Add specific components on installation]' \
 '*-t+[Add specific targets on installation]' \
 '*--target=[Add specific targets on installation]' \
-'--no-self-update[Don'\''t perform self update when running the `rustup toolchain install` command]' \
+'--no-self-update[Don'\''t perform self update when running the`rustup toolchain install` command]' \
 '--force[Force an update, even if some components are missing]' \
+'--allow-downgrade[Allow rustup to downgrade the toolchain to satisfy your component choice]' \
 '-h[Prints help information]' \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
@@ -197,12 +210,14 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (install)
 _arguments "${_arguments_options[@]}" \
+'--profile=[]: :(minimal default complete)' \
 '*-c+[Add specific components on installation]' \
 '*--component=[Add specific components on installation]' \
 '*-t+[Add specific targets on installation]' \
 '*--target=[Add specific targets on installation]' \
-'--no-self-update[Don'\''t perform self update when running the `rustup toolchain install` command]' \
+'--no-self-update[Don'\''t perform self update when running the`rustup toolchain install` command]' \
 '--force[Force an update, even if some components are missing]' \
+'--allow-downgrade[Allow rustup to downgrade the toolchain to satisfy your component choice]' \
 '-h[Prints help information]' \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
@@ -234,8 +249,8 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
-':toolchain -- Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more information see `rustup help toolchain`:_files' \
-':path:_files' \
+':toolchain -- Custom toolchain name:_files' \
+':path -- Path to the directory:_files' \
 && ret=0
 ;;
 (help)
@@ -881,6 +896,13 @@ _rustup__toolchain__install_commands() {
     )
     _describe -t commands 'rustup toolchain install commands' commands "$@"
 }
+(( $+functions[_rustup__show__keys_commands] )) ||
+_rustup__show__keys_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'rustup show keys commands' commands "$@"
+}
 (( $+functions[_rustup__toolchain__link_commands] )) ||
 _rustup__toolchain__link_commands() {
     local commands; commands=(
@@ -1021,6 +1043,7 @@ _rustup__show_commands() {
         "active-toolchain:Show the active toolchain" \
 "home:Display the computed value of RUSTUP_HOME" \
 "profile:Show the current profile" \
+"keys:Display the known PGP keys" \
 "help:Prints this message or the help of the given subcommand(s)" \
     )
     _describe -t commands 'rustup show commands' commands "$@"
