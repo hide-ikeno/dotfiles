@@ -85,8 +85,8 @@ if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
     # plugins
     zgen load "greymd/tmux-xpanes"
     # zgen load "mollifier/anyframe"
-    zgen load "junegunn/fzf"  "shell/key-bindings.zsh"
-    zgen load "junegunn/fzf"  "shell/completion.zsh"
+    # zgen load "junegunn/fzf"  "shell/key-bindings.zsh"
+    # zgen load "junegunn/fzf"  "shell/completion.zsh"
     zgen load "zsh-users/zsh-completions"
     zgen load "zsh-users/zsh-autosuggestions"
     zgen load "zdharma/fast-syntax-highlighting"
