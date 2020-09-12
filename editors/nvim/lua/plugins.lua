@@ -293,7 +293,6 @@ return require("packer").startup{
 
     use {
       "nvim-treesitter/nvim-treesitter",
-      event = {"BufNewFile *", "BufRead *"},
       config = "require('conf.nvim-treesitter').config()"
     }
 
