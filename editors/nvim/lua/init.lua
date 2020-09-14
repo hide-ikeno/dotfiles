@@ -39,20 +39,10 @@ local function set_envs()
       "~/.poetry/bin",
       "~/.yarn/bin",
       "~/.cargo/bin",
-      "~/.goenv/bin",
-      "~/.nodenv/bin",
-      "~/.rbenv/bin",
-      "~/.pyenv/bin",
-      "~/.nodenv/shims",
-      "~/.rbenv/shims",
-      "~/.pyenv/shims",
-      "~/.anyenv/envs/goenv/bin",
-      "~/.anyenv/envs/rbenv/bin",
-      "~/.anyenv/envs/pyenv/bin",
-      "~/.anyenv/envs/nodenv/shims",
-      "~/.anyenv/envs/rbenv/shims",
-      "~/.anyenv/envs/pyenv/shims",
+      "~/.asdf/bin",
+      "~/.asdf/shims",
       "~/.local/bin",
+      "~/.local/share/gem/bin",
       "~/bin",
       "/Library/Tex/texbin",
       "/usr/local/bin",
@@ -71,9 +61,6 @@ local function set_envs()
       "/Applications/Xcode.app/Contents/Developer/usr/share/man",
       "/opt/intel/man/",
     }, os.getenv("MANPATH"))
-
-  -- Pyenv root directory
-  vim.env.PYENV_ROOT = vim.fn.expand('~/.anyenv/envs/pyenv')
 end
 
 --- Ensure cache and data directories exist {{{1
@@ -133,8 +120,8 @@ local function set_providers()
     pynvim + development tools) and set python3_host_prog and python_host_prog
     to point the corresponding python interpreters.
   --]]
-  vim.g.python3_host_prog = vim.env.PYENV_ROOT .. "/versions/neovim3/bin/python"
-  vim.g.python_host_prog  = vim.env.PYENV_ROOT .. "/versions/neovim2/bin/python"
+  vim.g.python3_host_prog = vim.env.HOME .. "/.asdf/shims/python3"
+  vim.g.python_host_prog  = vim.env.HOME .. "/.asdf/shims/python2"
   -- Set Node.js provider
   vim.g.node_host_prog = vim.env.HOME .. "/.yarn/bin/neovim-node-host"
 end
