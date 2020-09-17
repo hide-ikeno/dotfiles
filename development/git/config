@@ -12,3 +12,5 @@
 	file-modified-label = modified
 [interactive]
 	diffFilter = delta
+[pull]
+	rebase = false
