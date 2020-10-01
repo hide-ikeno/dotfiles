@@ -7,10 +7,7 @@ function M.config()
     ensure_installed = "all",
     -- [[ Highlight ]] {{{
     highlight = {
-      -- temporary disable highlight until
-      -- https://github.com/nvim-treesitter/nvim-treesitter/issues/423
-      -- is fixed
-      enable = false,
+      enable = true,
       disable = {},
       custom_captures = {
         -- ["foo.bar"] = "Identifier"
