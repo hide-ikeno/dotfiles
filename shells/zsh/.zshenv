@@ -140,6 +140,8 @@ path=(
     ${HOME}/.poetry/bin(N-/)
     # Yarn bin dir (set by `yarn config set prefix $HOME/.yarn`)
     ${HOME}/.yarn/bin
+    # Nodejs npm
+    ${XDG_DATA_HOME}/npm/bin(N-/)
     # Ruby gem
     ${XDG_DATA_HOME}/gem/bin(N-/)
     # for OSX
@@ -304,6 +306,13 @@ jupyter_path=(
     /usr/share/jupyter(N-/)
     $jupyter_path[@]
 )
+
+##
+## npm
+##
+# export NPM_CONFIG_USERCONFIG=${XDG_CONFIG_HOME}/npm/npmrc
+export NPM_CONFIG_PREFIX=${XDG_DATA_HOME}/npm
+export NPM_CONFIG_CACHE=${XDG_CACHE_HOME}/npm
 
 ##
 ## RubyGems
