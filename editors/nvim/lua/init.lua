@@ -102,10 +102,11 @@ local function enable_truecolor()
     $COLORTERM environment variable set to 'truecolor' or '24bit' so we also
     checkt this variable.
   --]]
-  local colorterm = os.getenv("COLORTERM")
-  if vim.fn.has("termguicolors") and (colorterm == "truecolor" or colorterm == "24bit") then
-    vim.o.termguicolors = true
-  end
+  -- local colorterm = os.getenv("COLORTERM")
+  -- if vim.fn.has("termguicolors") and (colorterm == "truecolor" or colorterm == "24bit") then
+  --   vim.o.termguicolors = true
+  -- end
+  vim.o.termguicolors = true
 end
 
 --- Set nvim default global vars on startup {{{1
@@ -123,7 +124,7 @@ local function set_providers()
   vim.g.python3_host_prog = vim.env.HOME .. "/.asdf/shims/python3"
   vim.g.python_host_prog  = vim.env.HOME .. "/.asdf/shims/python2"
   -- Set Node.js provider
-  vim.g.node_host_prog = vim.env.HOME .. "/.yarn/bin/neovim-node-host"
+  vim.g.node_host_prog = vim.env.XDG_DATA_HOME .. "/npm/bin/neovim-node-host"
 end
 
 --- Set mapleader, localmapleader, and other prefix keys for keymap {{{2
@@ -165,8 +166,9 @@ local function disable_default_plugins()
   vim.g.loaded_vimballPlugin     = 1
   vim.g.loaded_zip               = 1
   vim.g.loaded_zipPlugin         = 1
-  -- Disable ruby support in neovim
-  -- vim.g.loaded_ruby_provider     = 1
+  -- Disable ruby/perl support in neovim
+  vim.g.loaded_ruby_provider = 0
+  vim.g.loaded_perl_provider = 0
 end
 
 
