@@ -160,6 +160,7 @@ return require("packer").startup{
     -- (DO)cument (GE)nerator
     use {
       "kkoomen/vim-doge",
+      run = { ":call doge#install()" },
       ft = {
         "python", "php", "javascript", "typescript", "coffee", "lua", "java",
         "groovy", "ruby", "scalar", "kotlin", "r", "c", "cpp", "sh"
@@ -293,6 +294,11 @@ return require("packer").startup{
 
     use {
       "nvim-treesitter/nvim-treesitter",
+      requires = {
+        -- nvim-treesitter plugins
+        "nvim-treesitter/nvim-treesitter-refactor",
+        "nvim-treesitter/nvim-treesitter-textobjects",
+      },
       config = "require('conf.nvim-treesitter').config()"
     }
 
@@ -340,32 +346,11 @@ return require("packer").startup{
       opt = false,
       requires = {
         "nvim-lua/plenary.nvim",
-        "nvim-lua/plenary.nvim",
         "nvim-lua/nvim-web-devicons",
       },
       setup = "require'conf.telescope'.setup()",
     }
-    -- use {
-    --   "junegunn/fzf",
-    --   run = "./install --all --xdg --no-update-rc"
-    -- }
-
-    -- use {
-    --   "yuki-ycino/fzf-preview.vim",
-    --   branch = "release",
-    --   run = ":UpdateRemotePlugins",
-    --   requires = {
-    --     {
-    --       "LeafCage/yankround.vim",
-    --       setup = "vim.g.yankround_dir = vim.fn.stdpath('cache') .. '/yankround'"
-    --     },
-    --     "ryanoasis/vim-devicons",
-    --     "lambdalisue/gina.vim",
-    --     "liuchengxu/vista.vim",
-    --   },
-    --   setup = "require'conf.fzf-preview'.setup()"
-    -- }
-
+    --
     -- }}}
   end
 }

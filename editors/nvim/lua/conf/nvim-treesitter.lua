@@ -82,7 +82,16 @@ function M.config()
           },
           -- ]]
         }
-      }
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          ["<Leader>s"] = "@parameter.inner",
+        },
+        swap_previous = {
+          ["<Leader>S"] = "@parameter.inner",
+        },
+      },
     },
     -- }}}
   }
