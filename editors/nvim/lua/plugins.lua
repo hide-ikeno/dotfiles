@@ -96,6 +96,13 @@ return require("packer").startup{
     -- Breakdown Vim's --startuptime output
     use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
 
+    -- statusline plugin
+    use {
+      "glepnir/galaxyline.nvim",
+      branch = "main",
+      opt = true,
+    }
+
     -- }}}
 
     -- [[ Editor ]] {{{
@@ -193,11 +200,13 @@ return require("packer").startup{
 
     -- [[ Syntax, filetype ]] {{{
 
-    -- A solid language pack for Vim
-    use {
-      "sheerun/vim-polyglot",
-      setup = "vim.g.polyglot_disable = {'json', 'markdown'}"
-    }
+    -- -- A solid language pack for Vim
+    -- use {
+    --   "sheerun/vim-polyglot",
+    --   setup = [[
+    --     vim.g.polyglot_disable = {'bash', 'c', 'c_sharp', 'cpp', 'css', 'json', 'markdown'}
+    --   ]]
+    -- }
 
     -- Vim help in japanese
     use "vim-jp/vimdoc-ja"
