@@ -175,18 +175,14 @@ return require("packer").startup{
       setup = "require'conf.vim-doge'.setup()"
     }
 
-    -- Syntax-aware code formatting
+    -- Format current buffer with external executables
     use {
-      "google/vim-codefmt",
-      requires = {
-        "google/vim-maktaba",
-        "google/vim-glaive"
-      },
-      cmd = {
-        "FormatLines", "FormatCode", "AutoFormatBuffer", "NoAutoFormatBuffer"
-      },
-      setup = "require'conf.vim-codefmt'.setup()"
+      "lukas-reineke/format.nvim",
+      cmd = { "Format", "FormatWrite" },
+      setup = "require'conf.format'.setup()",
+      config = "require'conf.format'.config()"
     }
+
     -- }}}
 
     -- [[ Colorscheme ]]
@@ -250,10 +246,13 @@ return require("packer").startup{
     -- Asynchronously control git repositories
     use { "lambdalisue/gina.vim", cmd = {"Gina"} }
 
-    -- Show difference with style
+    -- Git signs written in pure lua
     use {
-      "mhinz/vim-signify",
-      setup = "require'conf.vim-signify'.setup()"
+      "lewis6991/gitsigns.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+      },
+      config = "require'conf.gitsigns'.config()"
     }
 
     -- More pleasant editing on commit messsages
