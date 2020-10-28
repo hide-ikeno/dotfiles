@@ -43,6 +43,7 @@ local function set_envs()
       "~/.asdf/shims",
       "~/.local/bin",
       "~/.local/share/gem/bin",
+      "~/.local/share/npm/bin",
       "~/bin",
       "/Library/Tex/texbin",
       "/usr/local/bin",
@@ -191,19 +192,6 @@ require('options')
 
 -- Plugins
 require("plugins")
-
--- -- ftplugin, syntax
--- if vim.fn.has("vim_starting") and vim.fn.empty(vim.fn.argv()) == 0 then
---   vim.fn["vimrc#on_filetype"]()
--- end
---
--- -- autocmd
--- vim.cmd("augroup MuAutoCmd")
--- vim.cmd("autocmd!")
--- vim.cmd("autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *? call vimrc#on_filetype()")
--- vim.cmd("autocmd CursorHold *? syntax sync minlines=300")
--- vim.cmd("autocmd TextYankPost *  silent! lua require'vim.highlight'.on_yank('IncSearch', 1000)")
--- vim.cmd("augroup END")
 
 -- Key mappings
 require("mappings")
