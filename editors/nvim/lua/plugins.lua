@@ -91,17 +91,13 @@ return require("packer").startup{
     }
 
     -- A lua fork of vim-devicons
-    use 'kyazdani42/nvim-web-devicons'
+    use {
+      'kyazdani42/nvim-web-devicons',
+      config = "require'nvim-web-devicons'.setup{}"
+    }
 
     -- Breakdown Vim's --startuptime output
     use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
-
-    -- statusline plugin
-    use {
-      "glepnir/galaxyline.nvim",
-      branch = "main",
-      opt = true,
-    }
 
     -- }}}
 
@@ -249,6 +245,7 @@ return require("packer").startup{
     -- Git signs written in pure lua
     use {
       "lewis6991/gitsigns.nvim",
+      branch = "main",
       requires = {
         "nvim-lua/plenary.nvim",
       },
