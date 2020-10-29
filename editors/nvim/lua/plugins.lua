@@ -112,7 +112,6 @@ return require("packer").startup{
       setup = "require'conf.vim-operator-replace'.setup()"
     }
 
-
     use {
       "machakann/vim-sandwich",
       setup = "require'conf.vim-sandwich'.setup()",
@@ -120,6 +119,12 @@ return require("packer").startup{
     }
 
     use "tpope/vim-repeat"
+
+    -- Enhanced f/t
+    use {
+      "hrsh7th/vim-eft",
+      setup = "require'conf.vim-eft'.setup()"
+    }
 
     -- Smart commenter
     use {
