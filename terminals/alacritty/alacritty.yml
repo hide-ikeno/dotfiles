@@ -11,6 +11,7 @@ env:
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
   # TERM: xterm-256color
+  TERM: alacritty-direct
 
   # Terminal program name
   TERM_PROGRAM: alacritty
@@ -107,8 +108,8 @@ font:
     #   - (Windows) Consolas
     # family: Hack Nerd Font
     # style: Regular
-    family: Monofur Nerd Font
-    style: Book
+    family: mononoki Nerd Font
+    style: Regular
 
     # The `style` can be specified to pick a specific face.
 
@@ -119,10 +120,10 @@ font:
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
     # family: Hack Nerd Font
-    family: Monofur Nerd Font
+    family: mononoki Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Book
+    style: Bold
 
   # Italic font face
   italic:
@@ -131,10 +132,10 @@ font:
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
     # family: Hack Nerd Font
-    family: Monofur Nerd Font
+    family: mononoki Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Book
+    style: Italic
 
     # Bold italic font face
     bold_italic:
@@ -144,10 +145,11 @@ font:
       # value specified for the normal font.
       # family: monospace
       # family: Hack Nerd Font
-      family: Monofur Nerd Font
+      family: mononoki Nerd Font
+      # family: Monofur Nerd Font
 
       # The `style` can be specified to pick a specific face.
-      style: Book
+      style: Bold Italic
 
   # Point size
   size: 18.0
