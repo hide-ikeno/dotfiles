@@ -105,12 +105,12 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    # family: SF Mono Square
-    family: Hack Nerd Font
-    # family: HackGenNerd
+    # family: Hack Nerd Font
+    # style: Regular
+    family: Monofur Nerd Font
+    style: Book
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
 
   # Bold font face
   bold:
@@ -118,12 +118,11 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    # family: SF Mono Square
-    family: Hack Nerd Font
-    # family: HackGenNerd
+    # family: Hack Nerd Font
+    family: Monofur Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Bold
+    style: Book
 
   # Italic font face
   italic:
@@ -131,28 +130,27 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    # family: SF Mono Square
-    family: Hack Nerd Font
-    # family: HackGenNerd
+    # family: Hack Nerd Font
+    family: Monofur Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Italic
+    style: Book
 
-  # Bold italic font face
-  bold_italic:
-    # Font family
-    #
-    # If the bold italic family is not specified, it will fall back to the
-    # value specified for the normal font.
-    # family: monospace
-    family: Hack Nerd Font
-    # family: HackGenNerd
+    # Bold italic font face
+    bold_italic:
+      # Font family
+      #
+      # If the bold italic family is not specified, it will fall back to the
+      # value specified for the normal font.
+      # family: monospace
+      # family: Hack Nerd Font
+      family: Monofur Nerd Font
 
-    # The `style` can be specified to pick a specific face.
-    style: Bold Italic
+      # The `style` can be specified to pick a specific face.
+      style: Book
 
   # Point size
-  size: 16.0
+  size: 18.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
