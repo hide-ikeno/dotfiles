@@ -31,18 +31,6 @@ return require("packer").startup{
     -- Enable configuration file in each directory
     use "thinca/vim-localrc"
 
-    -- EditorConfig
-    use {
-      "editorconfig/editorconfig-vim",
-      setup = "vim.g.EditorConfig_exclude_patterns = {'scp://.*', 'term://.*'}"
-    }
-
-    -- Seemless navigation between Tmux and (Neo)Vim
-    use {
-      "christoomey/vim-tmux-navigator",
-      setup = "require'conf.vim-tmux-navigator'.setup()"
-    }
-
     -- Lua plugin dependencies
     use "nvim-lua/plenary.nvim"
     use "nvim-lua/popup.nvim"
@@ -51,6 +39,11 @@ return require("packer").startup{
 
     -- [[ Interfaces ]] {{{
 
+    -- Seemless navigation between Tmux and (Neo)Vim
+    use {
+      "christoomey/vim-tmux-navigator",
+      setup = "require'conf.vim-tmux-navigator'.setup()"
+    }
     -- Visually displaying indent levels in code
     use {
       "nathanaelkane/vim-indent-guides",
@@ -103,6 +96,13 @@ return require("packer").startup{
 
     -- [[ Editor ]] {{{
 
+    -- EditorConfig
+    use {
+      "editorconfig/editorconfig-vim",
+      setup = "vim.g.EditorConfig_exclude_patterns = {'scp://.*', 'term://.*'}"
+    }
+
+    -- Text objects & operators
     use "kana/vim-operator-user"
     use "kana/vim-textobj-user"
 
@@ -126,17 +126,12 @@ return require("packer").startup{
       setup = "require'conf.vim-eft'.setup()"
     }
 
-    -- Smart commenter
+    -- comment plugin
     use {
-      "tpope/vim-commentary",
+      "tyru/caw.vim",
       event = "CursorMoved *",
+      setup = "require'conf.caw'.setup()",
     }
-    -- *** caw.vim conflicts with nvim-treesitter
-    -- use {
-    --   "tyru/caw.vim",
-    --   event = "CursorMoved *",
-    --   setup = "require'conf.caw'.setup()",
-    -- }
 
     -- Smart align
     use {
@@ -226,6 +221,10 @@ return require("packer").startup{
     }
 
     use { "tmhedberg/SimpylFold", ft = {"python"} }
+
+    -- Lua
+    use { "tjdevries/nlua.nvim", ft = {"lua"} }
+    use "tjdevries/manillua.nvim"
 
     -- Markdown
     use "rcmdnk/vim-markdown"
