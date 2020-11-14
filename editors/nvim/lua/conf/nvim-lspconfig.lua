@@ -30,7 +30,7 @@ local function make_on_attach(config)
 
     -- formatting
     if client.resolved_capabilities.document_formatting then
-      vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.formatting()<cr>",       opts)
+      vim.api.nvim_buf_set_keymap(0, "n", "mF", "<cmd>lua vim.lsp.buf.formatting()<cr>",       opts)
     end
     if client.resolved_capabilities.document_range_formatting then
       vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
