@@ -27,9 +27,6 @@ return require("packer").startup{
 
     -- [[ Fundamentals ]] {{{
 
-    -- Enable configuration file in each directory
-    use "thinca/vim-localrc"
-
     -- Lua plugin dependencies
     use "nvim-lua/plenary.nvim"
     use "nvim-lua/popup.nvim"
@@ -50,13 +47,14 @@ return require("packer").startup{
     -- Visually displaying indent levels in code
     use {
       "nathanaelkane/vim-indent-guides",
-      cmd = {"IndentGuidesEnable", "IndentGuidesDisable", "IndentGuidesToggle"},
+      event = {"BufNewFile *", "BufRead"},
       setup = "require'conf.vim-indent-guides'.setup()"
     }
 
     -- Better whitespace highlighting
     use {
       "ntpeters/vim-better-whitespace",
+      event = {"BufNewFile *", "BufRead"},
       setup = "require'conf.vim-better-whitespace'.setup()"
     }
 
@@ -103,6 +101,7 @@ return require("packer").startup{
     -- EditorConfig
     use {
       "editorconfig/editorconfig-vim",
+      event = {"BufNewFile *", "BufRead"},
       setup = "vim.g.EditorConfig_exclude_patterns = {'scp://.*', 'term://.*'}"
     }
 
@@ -232,7 +231,12 @@ return require("packer").startup{
 
     -- Markdown
     use "rcmdnk/vim-markdown"
-    use "rhysd/vim-gfm-syntax"
+    use { "rhysd/vim-gfm-syntax", ft = {"markdown"} }
+    use {
+      "mattn/vim-maketable",
+      ft = {"markdown"},
+      cmd = {"MakeTable", "UnmakeTable"}
+    }
 
     -- Zsh
     use "chrisbra/vim-zsh"
@@ -269,17 +273,12 @@ return require("packer").startup{
 
     use {
       "f-person/git-blame.nvim",
+      event = {"BufRead *", "BufNewFile *"},
     }
 
     use {
       "pwntester/octo.nvim",
     }
-    -- -- Reveal the commit messages under the cursor
-    -- use {
-    --   "rhysd/git-messenger.vim",
-    --   cmd = {"GitMessenger"},
-    --   setup = "require'conf.git-messenger'.setup()"
-    -- }
 
     -- }}}
 
