@@ -5,50 +5,45 @@ local function make_on_attach(config)
     if config.before then
       config.before(client)
     end
-    --
-    -- Omni completion source
+
+    -- omni completion source
     vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    -- Setup extensions
-    -- if client.resolved_capabilities.document_symbol then
-    --   require'lsp-status'.on_attach(client)
-    -- end
-    require'diagnostic'.on_attach()
-
-    -- Key mappings
+    -- key mappings
     local opts = {noremap = true, silent = true}
-    vim.api.nvim_buf_set_keymap(0, "n", "mA", "<cmd>lua vim.lsp.buf.code_action()<CR>",            opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>lua vim.lsp.buf.definition()<CR>",             opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>",            opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "me", "<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>",         opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>",        opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>",             opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mp", "<cmd>lua vim.lsp.buf.peek_definition()<CR>",        opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mR", "<cmd>lua vim.lsp.buf.rename()<CR>",                 opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>lua vim.lsp.buf.hover()<CR>",                  opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mH", "<cmd>lua vim.lsp.buf.signature_help()<CR>",         opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<CR>",        opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "ma", "<cmd>lua vim.lsp.buf.code_action()<cr>",     opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>lua vim.lsp.buf.definition()<cr>",      opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>lua vim.lsp.buf.declaration()<cr>",     opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mi", "<cmd>lua vim.lsp.buf.implementation()<cr>",  opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.references()<cr>",      opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mp", "<cmd>lua vim.lsp.buf.peek_definition()<cr>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.rename()<cr>",          opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>lua vim.lsp.buf.hover()<cr>",           opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>lua vim.lsp.buf.signature_help()<cr>",  opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opts)
+    -- diagnostics
+    vim.api.nvim_buf_set_keymap(0, "n", "m]", "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",             opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "m[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",             opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "me", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", opts)
+    vim.api.nvim_buf_set_keymap(0, "n", "mq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",           opts)
 
+    -- formatting
     if client.resolved_capabilities.document_formatting then
-      vim.api.nvim_buf_set_keymap(0, "n", "mF", "<cmd>lua vim.lsp.buf.formatting()<CR>",       opts)
+      vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.formatting()<cr>",       opts)
     end
     if client.resolved_capabilities.document_range_formatting then
-      vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-      vim.api.nvim_buf_set_keymap(0, "x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+      vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
+      vim.api.nvim_buf_set_keymap(0, "x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
     end
-    -- diagnostics-lsp
-    vim.api.nvim_buf_set_keymap(0, "n", "m]", "<cmd>NextDiagnosticCycle<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "m[", "<cmd>PrevDiagnosticCycle<CR>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mq", "<cmd>OpenDiagnostic<CR>",      opts)
 
     -- automatic highlight
     if client.resolved_capabilities.document_highlight then
       vim.cmd[[augroup nvim_lsp_user_autocmds]]
       vim.cmd[[autocmd!]]
-      vim.cmd[[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-      vim.cmd[[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
-      vim.cmd[[augroup END]]
+      vim.cmd[[autocmd cursorhold  <buffer> lua vim.lsp.buf.document_highlight()]]
+      vim.cmd[[autocmd cursormoved <buffer> lua vim.lsp.buf.clear_references()]]
+      vim.cmd[[augroup end]]
     end
     if config.after then
       config.after(client)
@@ -165,6 +160,17 @@ function M.config()
 
     nvim_lsp[server].setup(config)
   end
+
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = true,
+      virtual_text = true,
+      signs = {
+        priority = 20
+      },
+      update_in_insert = false,
+    }
+  )
 
 end
 

@@ -278,7 +278,6 @@ return require("packer").startup{
       "neovim/nvim-lspconfig",
       event = {"BufNewFile *", "BufRead *"},
       requires = {
-        "nvim-lua/diagnostic-nvim",
         "nvim-lua/lsp-status.nvim",
       },
       setup = "require'conf.nvim-lspconfig'.setup()",
