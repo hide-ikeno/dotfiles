@@ -5,7 +5,6 @@ if not packer_exists then
   if vim.fn.input("Download Packer? (y for yes)") ~= "y" then
     return
   end
-
   local dir  = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
   local repo = "https://github.com/wbthomason/packer.nvim"
 
@@ -42,11 +41,16 @@ return require("packer").startup{
     -- Seemless navigation between Tmux and (Neo)Vim
     use {
       "christoomey/vim-tmux-navigator",
+      cmd = {
+        "TmuxNavigateLeft", "TmuxNavigateDown", "TmuxNavigateUp",
+        "TmuxNavigateRight", "TmuxNavigatePrevious"
+      },
       setup = "require'conf.vim-tmux-navigator'.setup()"
     }
     -- Visually displaying indent levels in code
     use {
       "nathanaelkane/vim-indent-guides",
+      cmd = {"IndentGuidesEnable", "IndentGuidesDisable", "IndentGuidesToggle"},
       setup = "require'conf.vim-indent-guides'.setup()"
     }
 
@@ -246,6 +250,13 @@ return require("packer").startup{
     -- Asynchronously control git repositories
     use { "lambdalisue/gina.vim", cmd = {"Gina"} }
 
+    -- More pleasant editing on commit messsages
+    use {
+      "rhysd/committia.vim",
+      event = {"BufEnter COMMIT_EDITMSG"},
+      setup = "vim.g.committia_min_window_width = 100"
+    }
+
     -- Git signs written in pure lua
     use {
       "lewis6991/gitsigns.nvim",
@@ -256,19 +267,20 @@ return require("packer").startup{
       config = "require'conf.gitsigns'.config()"
     }
 
-    -- More pleasant editing on commit messsages
     use {
-      "rhysd/committia.vim",
-      event = {"BufEnter COMMIT_EDITMSG"},
-      setup = "vim.g.committia_min_window_width = 100"
+      "f-person/git-blame.nvim",
     }
 
-    -- Reveal the commit messages under the cursor
     use {
-      "rhysd/git-messenger.vim",
-      cmd = {"GitMessenger"},
-      setup = "require'conf.git-messenger'.setup()"
+      "pwntester/octo.nvim",
     }
+    -- -- Reveal the commit messages under the cursor
+    -- use {
+    --   "rhysd/git-messenger.vim",
+    --   cmd = {"GitMessenger"},
+    --   setup = "require'conf.git-messenger'.setup()"
+    -- }
+
     -- }}}
 
     -- [[ LSP, Tag jumps ]] {{{
@@ -302,10 +314,11 @@ return require("packer").startup{
 
     use {
       "nvim-treesitter/nvim-treesitter",
+      event = "BufRead *",
       requires = {
         -- nvim-treesitter plugins
-        "nvim-treesitter/nvim-treesitter-refactor",
-        "nvim-treesitter/nvim-treesitter-textobjects",
+        {"nvim-treesitter/nvim-treesitter-refactor", after="nvim-treesitter"},
+        {"nvim-treesitter/nvim-treesitter-textobjects", after="nvim-treesitter"},
       },
       config = "require('conf.nvim-treesitter').config()"
     }
