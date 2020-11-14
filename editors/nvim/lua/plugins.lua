@@ -101,7 +101,6 @@ return require("packer").startup{
     -- EditorConfig
     use {
       "editorconfig/editorconfig-vim",
-      event = {"BufNewFile *", "BufRead"},
       setup = "vim.g.EditorConfig_exclude_patterns = {'scp://.*', 'term://.*'}"
     }
 
@@ -344,6 +343,10 @@ return require("packer").startup{
       requires = {
         "vim-vsnip",
         "vim-vsnip-integ",
+        {
+          "steelsojka/completion-buffers",
+          after = { "completion-nvim" }
+        },
         {
           "nvim-treesitter/completion-treesitter",
           after = { "completion-nvim", "nvim-treesitter" }

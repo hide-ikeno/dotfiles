@@ -8,6 +8,7 @@ function M.setup()
     default = {
       default = {
         {complete_items = {"lsp", "snippet"}},
+        {complete_items = {"buffer"}},
         {mode = "<C-p>"},
         {mode = "<C-n>"}
       },
@@ -19,6 +20,7 @@ function M.setup()
     cpp = {
       default = {
         {complete_items = {"ts", "lsp"}},
+        {complete_items = {"buffer"}},
         {mode = "<C-p>"},
         {mode = "<C-n>"}
       },
@@ -31,6 +33,7 @@ function M.setup()
       default = {
         {complete_items = {"ts"}},
         {complete_items = {"lsp", "snippet"}},
+        {complete_items = {"buffer"}},
         {mode = "<C-p>"},
         {mode = "<C-n>"}
       },
