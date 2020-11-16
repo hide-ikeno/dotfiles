@@ -39,7 +39,7 @@ local function make_on_attach(config)
 
     -- automatic highlight
     if client.resolved_capabilities.document_highlight then
-      vim.cmd[[augroup nvim_lsp_user_autocmds]]
+      vim.cmd[[augroup nvim_lspconfig_user_autocmds]]
       vim.cmd[[autocmd!]]
       vim.cmd[[autocmd cursorhold  <buffer> lua vim.lsp.buf.document_highlight()]]
       vim.cmd[[autocmd cursormoved <buffer> lua vim.lsp.buf.clear_references()]]
@@ -53,7 +53,6 @@ end
 
 function M.setup()
   -- Variables
-  vim.g.enable_nvim_lsp_diagnostics   = true
   vim.fn.sign_define("LspDiagnosticsErrorSign",       { text = "", texthl = "LspDiagnosticError"      })
   vim.fn.sign_define("LspDiagnosticsWarningSign",     { text = "", texthl = "LspDiagnosticWarning"    })
   vim.fn.sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
@@ -64,7 +63,7 @@ function M.setup()
 end
 
 function M.config()
-  local nvim_lsp   = require("nvim_lsp")
+  local lspconfig   = require("lspconfig")
   local lsp_status = require("lsp-status")
 
   -- Setup language servers
@@ -86,7 +85,7 @@ function M.config()
     cmake = {},
     cssls = {
       filetypes = {"css", "scss", "less", "sass"},
-      root_dir = nvim_lsp.util.root_pattern("package.json", ".git")
+      root_dir = lspconfig.util.root_pattern("package.json", ".git")
     },
     efm = {
       filetypes = {
@@ -117,10 +116,10 @@ function M.config()
         }
       },
       root_dir = function(fname)
-        return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+        return lspconfig.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
           'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
           '.gitignore')(fname)
-        or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+        or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
       end
     },
     rust_analyzer = {},
@@ -158,7 +157,7 @@ function M.config()
       "keep", config.capabilities or {}, lsp_status.capabilities, snippet_capabilities
       )
 
-    nvim_lsp[server].setup(config)
+    lspconfig[server].setup(config)
   end
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

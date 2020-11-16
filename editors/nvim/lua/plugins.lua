@@ -46,9 +46,8 @@ return require("packer").startup{
     }
     -- Visually displaying indent levels in code
     use {
-      "nathanaelkane/vim-indent-guides",
-      event = {"BufNewFile *", "BufRead"},
-      setup = "require'conf.vim-indent-guides'.setup()"
+      "glepnir/indent-guides.nvim",
+      config = "require'conf.indent-guides'.config()"
     }
 
     -- Better whitespace highlighting

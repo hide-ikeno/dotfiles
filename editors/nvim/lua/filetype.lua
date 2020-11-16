@@ -35,6 +35,9 @@ function M.setup()
   vim.g.tex_isk     = "48-57,a-z,A-Z,192-255,:"
   vim.g.tex_fold_enabled = 1
 
+  -- Vim
+  vim.g.vimsyn_embed = 'l'
+
   -- XML
   vim.g.xml_syntax_folding = 1
 
