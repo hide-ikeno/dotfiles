@@ -28,9 +28,12 @@ local function make_on_attach(config)
     vim.api.nvim_buf_set_keymap(0, "n", "me", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", opts)
     vim.api.nvim_buf_set_keymap(0, "n", "mq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",           opts)
 
+    vim.cmd[[augroup nvim_lspconfig_user_autocmds]]
+    vim.cmd[[autocmd! * <buffer>]]
+    vim.cmd[[augroup end]]
     -- formatting
     if client.resolved_capabilities.document_formatting then
-      vim.api.nvim_buf_set_keymap(0, "n", "mF", "<cmd>lua vim.lsp.buf.formatting()<cr>",       opts)
+      vim.cmd[[autocmd nvim_lspconfig_user_autocmds BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
     end
     if client.resolved_capabilities.document_range_formatting then
       vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
@@ -39,11 +42,8 @@ local function make_on_attach(config)
 
     -- automatic highlight
     if client.resolved_capabilities.document_highlight then
-      vim.cmd[[augroup nvim_lspconfig_user_autocmds]]
-      vim.cmd[[autocmd!]]
-      vim.cmd[[autocmd cursorhold  <buffer> lua vim.lsp.buf.document_highlight()]]
-      vim.cmd[[autocmd cursormoved <buffer> lua vim.lsp.buf.clear_references()]]
-      vim.cmd[[augroup end]]
+      vim.cmd[[autocmd nvim_lspconfig_user_autocmds cursorhold  <buffer> lua vim.lsp.buf.document_highlight()]]
+      vim.cmd[[autocmd nvim_lspconfig_user_autocmds cursormoved <buffer> lua vim.lsp.buf.clear_references()]]
     end
     if config.after then
       config.after(client)
@@ -58,12 +58,36 @@ function M.setup()
   vim.fn.sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
   vim.fn.sign_define("LspDiagnosticsHintSign",        { text = "", texthl = "LspDiagnosticHint"       })
 
-  -- Debug mode
+  -- Configure built in LSP
   --vim.lsp.set_log_level("debug")
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = true,
+      virtual_text = true,
+      signs = {
+        priority = 20
+      },
+      update_in_insert = false,
+    }
+  )
+
+  vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
+    if err ~= nil or result == nil then
+      return
+    end
+    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+      local view = vim.fn.winsaveview()
+      vim.lsp.util.apply_text_edits(result, bufnr)
+      vim.fn.winrestview(view)
+      if bufnr == vim.api.nvim_get_current_buf() then
+        vim.api.nvim_command("noautocmd :update")
+      end
+    end
+  end
 end
 
 function M.config()
-  local lspconfig   = require("lspconfig")
+  local lspconfig  = require("lspconfig")
   local lsp_status = require("lsp-status")
 
   -- Setup language servers
@@ -89,7 +113,7 @@ function M.config()
     },
     efm = {
       filetypes = {
-        "csv", "eruby", "json", "make", "markdown", "rst"
+        "csv", "dockerfile", "eruby", "json", "lua", "make", "markdown", "python", "rst", "sh", "yaml",
       },
     },
     fortls = {},
@@ -159,17 +183,6 @@ function M.config()
 
     lspconfig[server].setup(config)
   end
-
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = true,
-      virtual_text = true,
-      signs = {
-        priority = 20
-      },
-      update_in_insert = false,
-    }
-  )
 
 end
 

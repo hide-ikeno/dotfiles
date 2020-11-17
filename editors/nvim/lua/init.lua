@@ -39,6 +39,7 @@ local function set_envs()
       "~/.poetry/bin",
       "~/.yarn/bin",
       "~/.cargo/bin",
+      "~/.luarock/bin",
       "~/.asdf/bin",
       "~/.asdf/shims",
       "~/.local/bin",

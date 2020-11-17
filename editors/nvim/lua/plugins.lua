@@ -26,7 +26,6 @@ return require("packer").startup{
     use { "wbthomason/packer.nvim", opt = true }
 
     -- [[ Fundamentals ]] {{{
-
     -- Lua plugin dependencies
     use "nvim-lua/plenary.nvim"
     use "nvim-lua/popup.nvim"
@@ -170,14 +169,6 @@ return require("packer").startup{
         "groovy", "ruby", "scalar", "kotlin", "r", "c", "cpp", "sh"
       },
       setup = "require'conf.vim-doge'.setup()"
-    }
-
-    -- Format current buffer with external executables
-    use {
-      "lukas-reineke/format.nvim",
-      cmd = { "Format", "FormatWrite" },
-      setup = "require'conf.format'.setup()",
-      config = "require'conf.format'.config()"
     }
 
     -- }}}
