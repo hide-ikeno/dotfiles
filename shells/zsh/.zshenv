@@ -140,6 +140,8 @@ path=(
     ${HOME}/.poetry/bin(N-/)
     # Yarn bin dir (set by `yarn config set prefix $HOME/.yarn`)
     ${HOME}/.yarn/bin
+    # LuaRocks bin dir
+    ${HOME}/.luarocks/bin
     # Nodejs npm
     ${XDG_DATA_HOME}/npm/bin(N-/)
     # Ruby gem
@@ -227,7 +229,6 @@ pkg_config_path=(
 typeset -U ld_library_path
 ld_library_path=(
     ${HOME}/lib(N-/)
-    ${HOME}/opt/oski/lib/oski(N-/)
     ${HOME}/opt/lib(N-/)
     ${XDG_LIB_HOME}(N-/)
     /opt/gotoblas(N-/)
