@@ -58,6 +58,9 @@ tools:
   python-black: &python-black
     format-command: 'black'
 
+  python-isort: &python-isort
+    format-command: 'isort'
+
   dockerfile-hadolint: &dockerfile-hadolint
     lint-command: 'hadolint'
     lint-formats:
@@ -106,6 +109,10 @@ tools:
   csv-csvlint: &csv-csvlint
     lint-command: 'csvlint'
 
+  lua-lua-format: &lua-lua-format
+    format-command: 'lua-format -i'
+    format-stdin: true
+
   any-excitetranslate: &any-excitetranslate
     hover-command: 'excitetranslate'
     hover-stdin: true
@@ -132,9 +139,9 @@ languages:
     - <<: *yaml-yamllint
 
   python:
-    - <<: *python-flake8
     - <<: *python-mypy
     - <<: *python-black
+    - <<: *python-isort
 
   dockerfile:
     - <<: *dockerfile-hadolint
@@ -163,6 +170,9 @@ languages:
 
   csv:
     - <<: *csv-csvlint
+
+  lua:
+    - <<: *lua-lua-format
 
   # _:
   #   - <<: *any-excitetranslate
