@@ -243,6 +243,13 @@ return require("packer").startup{
     -- Asynchronously control git repositories
     use { "lambdalisue/gina.vim", cmd = {"Gina"} }
 
+    -- Calling LazyGit from within neovim
+    use {
+      "kdheepak/lazygit.nvim",
+      cmd = {"LazyGit", "LazyGitConfig"},
+      setup = "require'conf.lazygit'.setup()"
+    }
+
     -- More pleasant editing on commit messsages
     use {
       "rhysd/committia.vim",
