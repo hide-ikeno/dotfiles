@@ -55,6 +55,18 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "<Space>/", "<cmd>lua require'telescope.builtin'.live_grep{ shorten_path = true }<CR>", opts)
   vim.api.nvim_set_keymap("n", "<Space>G", "<cmd>lua require'telescope.builtin'.grep_string{ shorten_path = true }<CR>", opts)
   vim.api.nvim_set_keymap("n", "<Space>l", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", opts)
+
+end
+
+function M.config()
+  require("telescope").setup {
+    extensions = {
+      fzy_native = {
+        override_generic_sorter = false,
+        override_file_sorter = true,
+      }
+    }
+  }
 end
 
 return M

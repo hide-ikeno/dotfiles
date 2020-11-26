@@ -163,7 +163,7 @@ return require("packer").startup{
     -- (DO)cument (GE)nerator
     use {
       "kkoomen/vim-doge",
-      run = { ":call doge#install()" },
+      run =  ":call doge#install()",
       ft = {
         "python", "php", "javascript", "typescript", "coffee", "lua", "java",
         "groovy", "ruby", "scalar", "kotlin", "r", "c", "cpp", "sh"
@@ -246,7 +246,7 @@ return require("packer").startup{
     -- Calling LazyGit from within neovim
     use {
       "kdheepak/lazygit.nvim",
-      cmd = {"LazyGit", "LazyGitConfig"},
+      cmd = { "LazyGit", "LazyGitFilter", "LazyGitConfig" },
       setup = "require'conf.lazygit'.setup()"
     }
 
@@ -362,13 +362,15 @@ return require("packer").startup{
 
     -- [[ Fuzzy finder ]] {{{
     use {
-      "nvim-lua/telescope.nvim",
+      "nvim-telescope/telescope.nvim",
       opt = false,
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-lua/nvim-web-devicons",
+        "nvim-telescope/telescope-fzy-native.nvim",
       },
       setup = "require'conf.telescope'.setup()",
+      config = "require'conf.telescope'.config()",
     }
     --
     -- }}}
