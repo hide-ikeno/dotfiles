@@ -56,10 +56,18 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "<Space>G", "<cmd>lua require'telescope.builtin'.grep_string{ shorten_path = true }<CR>", opts)
   vim.api.nvim_set_keymap("n", "<Space>l", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", opts)
 
+  -- github CLI integlation
+  vim.api.nvim_set_keymap("n", "<Space>ghi", "<cmd>lua require'telescope.builtin'.gh_issues()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>ghp", "<cmd>lua require'telescope.builtin'.gh_pull_request()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>ghg", "<cmd>lua require'telescope.builtin'.gh_gist()<CR>", opts)
+
+  -- packer.nvim
+  vim.api.nvim_set_keymap("n", "<Space>P", "<cmd>lua require'telescope'.extensions.packer.plugins()<CR>", opts)
 end
 
 function M.config()
-  require("telescope").setup {
+  local telescope = require("telescope")
+  telescope.setup {
     extensions = {
       fzy_native = {
         override_generic_sorter = false,
@@ -67,6 +75,7 @@ function M.config()
       }
     }
   }
+  telescope.load_extension("ghcli")
 end
 
 return M

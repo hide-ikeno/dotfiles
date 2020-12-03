@@ -272,10 +272,6 @@ return require("packer").startup{
       event = {"BufRead *", "BufNewFile *"},
     }
 
-    use {
-      "pwntester/octo.nvim",
-    }
-
     -- }}}
 
     -- [[ LSP, Tag jumps ]] {{{
@@ -368,11 +364,12 @@ return require("packer").startup{
         "nvim-lua/plenary.nvim",
         "nvim-lua/nvim-web-devicons",
         "nvim-telescope/telescope-fzy-native.nvim",
+        "nvim-telescope/telescope-packer.nvim",
+        "nvim-telescope/telescope-github.nvim",
       },
       setup = "require'conf.telescope'.setup()",
       config = "require'conf.telescope'.config()",
     }
-    --
     -- }}}
   end
 }
