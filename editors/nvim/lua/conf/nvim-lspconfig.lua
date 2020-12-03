@@ -124,28 +124,29 @@ function M.config()
       };
     },
     html = {},
+    jedi_language_server = {},
     jsonls = {},
     julials = {},
-    pyls_ms = {
-      callbacks = lsp_status.extensions.pyls_ms.setup(),
-      settings = {
-        python = {
-          jediEnabled = false,
-          analysis = {
-            cachingLevel = 'Library'
-          },
-          workspaceSymbols = {
-            enabled = true
-          }
-        }
-      },
-      root_dir = function(fname)
-        return lspconfig.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-          'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-          '.gitignore')(fname)
-        or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end
-    },
+    -- pyls_ms = {
+    --   callbacks = lsp_status.extensions.pyls_ms.setup(),
+    --   settings = {
+    --     python = {
+    --       jediEnabled = false,
+    --       analysis = {
+    --         cachingLevel = 'Library'
+    --       },
+    --       workspaceSymbols = {
+    --         enabled = true
+    --       }
+    --     }
+    --   },
+    --   root_dir = function(fname)
+    --     return lspconfig.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+    --       'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
+    --       '.gitignore')(fname)
+    --     or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+    --   end
+    -- },
     rust_analyzer = {},
     solargraph = {},
     sumneko_lua = {
