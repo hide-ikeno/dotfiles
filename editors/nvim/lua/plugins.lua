@@ -37,10 +37,6 @@ return require("packer").startup{
     -- Seemless navigation between Tmux and (Neo)Vim
     use {
       "christoomey/vim-tmux-navigator",
-      cmd = {
-        "TmuxNavigateLeft", "TmuxNavigateDown", "TmuxNavigateUp",
-        "TmuxNavigateRight", "TmuxNavigatePrevious"
-      },
       setup = "require'conf.vim-tmux-navigator'.setup()"
     }
     -- Visually displaying indent levels in code
