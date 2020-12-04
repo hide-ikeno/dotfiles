@@ -17,6 +17,8 @@ if not packer_exists then
   print(out)
   print("Downloading packer.nvim...")
 
+  vim.cmd('packadd packer.nvim')
+
   return
 end
 
@@ -24,13 +26,6 @@ return require("packer").startup{
   function(use)
     -- Packer can manage itself as an optional plugin
     use { "wbthomason/packer.nvim", opt = true }
-
-    -- [[ Fundamentals ]] {{{
-    -- Lua plugin dependencies
-    use "nvim-lua/plenary.nvim"
-    use "nvim-lua/popup.nvim"
-
-    -- }}}
 
     -- [[ Interfaces ]] {{{
 
@@ -314,24 +309,18 @@ return require("packer").startup{
 
     -- [[ Auto completion ]] {{{
 
-    -- Snippet plugin for (Neo)Vim that supports LSP/VSCode's snippet format
+    -- Snippets plugin written in Lua
     use {
-      "hrsh7th/vim-vsnip",
-      event = "InsertEnter *",
-      setup = "require('conf.vim-vsnip').setup()",
-    }
-    use {
-      "hrsh7th/vim-vsnip-integ",
-      -- opt = true,
-      after = {"vim-vsnip"}
+      "norcalli/snippets.nvim",
+      config = "require'conf.snippets'.config()"
     }
 
+    -- Auto completion framework
     use {
       "nvim-lua/completion-nvim",
       event = "InsertEnter *",
       requires = {
-        "vim-vsnip",
-        "vim-vsnip-integ",
+        "norcalli/snippets.nvim",
         {
           "steelsojka/completion-buffers",
           after = { "completion-nvim" }
@@ -357,6 +346,7 @@ return require("packer").startup{
       "nvim-telescope/telescope.nvim",
       opt = false,
       requires = {
+        "nvim-lua/popup.nvim",
         "nvim-lua/plenary.nvim",
         "nvim-lua/nvim-web-devicons",
         "nvim-telescope/telescope-fzy-native.nvim",

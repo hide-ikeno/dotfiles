@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  vim.g.completion_enable_snippet = "vim-vsnip"
+  vim.g.completion_enable_snippet = "snippets.nvim"
   vim.g.completion_auto_change_source = 1
 
   vim.g.completion_chain_complete_list = {
