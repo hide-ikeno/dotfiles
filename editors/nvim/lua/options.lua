@@ -1,5 +1,6 @@
 --- ~/.config/nvim/lua/options.lua
 --- Set global options
+local core  = require('core')
 local utils = require('utils')
 
 local cache_dir = vim.fn.stdpath("cache")
@@ -12,10 +13,10 @@ vim.o.undofile    = true
 vim.o.swapfile    = true
 
 -- Directories to store backup, swap, view, and shada files
-vim.o.backupdir = table.concat({cache_dir .. "/backup", "~/tmp", "/tmp"}, ",")
-vim.o.directory = table.concat({cache_dir .. "/swap",   "~/tmp", "/tmp"}, ",")
-vim.o.undodir   = table.concat({cache_dir .. "/undo",   "~/tmp", "/tmp"}, ",")
-vim.o.viewdir   = table.concat({cache_dir .. "/view",   "~/tmp", "/tmp"}, ",")
+vim.o.backupdir = core.nvim_dir.backup
+vim.o.directory = core.nvim_dir.swap
+vim.o.undodir   = core.nvim_dir.undo
+vim.o.viewdir   = core.nvim_dir.view
 
 -- Customize shada files entries.
 -- Shada files are stored to $XDG_DATA_HOME/nvim/shada/main.shada by default

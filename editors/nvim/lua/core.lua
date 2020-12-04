@@ -1,20 +1,32 @@
 --- ~/.config/nvim/lua/core.lua
 local utils = require('utils')
 
+-- Directories to store nvim data
+local config_dir = vim.fn.stdpath("config")
+local cache_dir = vim.fn.stdpath("cache")
+local data_dir = vim.fn.stdpath("data")
+
+local nvim_dir = {
+  config = config_dir,
+  cache = cache_dir,
+  data = data_dir,
+  backup = utils.path.join(data_dir, "backup"),
+  swap = utils.path.join(data_dir, "swap"),
+  undo = utils.path.join(data_dir, "undo"),
+  view = utils.path.join(data_dir, "view"),
+  site_packages = utils.path.join(data_dir, "site"),
+}
+
 --- Ensure cache and data directories exist {{{1
 local function ensure_nvim_dirs()
   -- NOTE: this function must be called after setting ENVS
-  local cache_dir = vim.fn.stdpath("cache")
-  local data_dir  = vim.fn.stdpath("data")
-  vim.fn.mkdir(cache_dir .. "/backup",  "p")
-  vim.fn.mkdir(cache_dir .. "/swap",    "p")
-  vim.fn.mkdir(cache_dir .. "/undo",    "p")
-  vim.fn.mkdir(cache_dir .. "/view",    "p")
-  vim.fn.mkdir(cache_dir .. "/session", "p")
-  vim.fn.mkdir(data_dir  .. "/spell",   "p")
-  vim.fn.mkdir(data_dir  .. "/site",    "p")
+  vim.fn.mkdir(nvim_dir.backup, "p")
+  vim.fn.mkdir(nvim_dir.swap, "p")
+  vim.fn.mkdir(nvim_dir.undo, "p")
+  vim.fn.mkdir(nvim_dir.view, "p")
+  vim.fn.mkdir(nvim_dir.site_packages, "p")
 
-  vim.o.packpath = utils.path.join(data_dir, "site")
+  vim.o.packpath = nvim_dir.site_packages
 end
 
 --- Set nvim built-in global options on startup {{{1
@@ -111,9 +123,7 @@ end
 
 
 --- Initialize {{{1
-
-local M = {}
-function M.setup()
+local function on_vim_starting()
   if vim.fn.has("vim_starting") then
     ensure_nvim_dirs()
     set_encodings()
@@ -124,4 +134,7 @@ function M.setup()
   end
 end
 
-return M
+return {
+  setup = on_vim_starting,
+  nvim_dir = nvim_dir
+}

@@ -1,8 +1,10 @@
+-- ~/.config/nvim/init.lua -- NeoVim configuration
+
+-- Set envs
 require('envs').setup()
 
+-- Nvim core settings
 require('core').setup()
-
--- Global options (Nvim core)
 require('options')
 
 -- Plugins
