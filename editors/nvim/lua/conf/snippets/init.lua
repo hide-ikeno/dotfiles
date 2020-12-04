@@ -1,5 +1,17 @@
 local M = {}
 
+local function from_file(fname)
+  return function()
+    local file = io.open(fname)
+    local data = "FAILED TO LOAD "..fname
+    if file then
+      data = file:read "*a"
+      file:close()
+    end
+    return data
+  end
+end
+
 function M.custom_advance(offset)
   local snip_plug = require("snippets")
   local _, expanded = snip_plug.lookup_snippet_at_cursor()
@@ -16,17 +28,20 @@ end
 
 function M.config()
   local snip_plug = require("snippets")
-  local indent = require("snippets.utils").match_indentation
   local force_comment = require("snippets.utils").force_comment
 
   local snips = {}
 
   -- TODO (H. Ikeno):  add more snippets
   snips._global = {
-    ["todo"] = "TODO (H. Ikeno): ",
-    ["date"] = [[${=os.date("%Y-%m-%d")}]],
-    ["uname"] = function() return vim.loop.os_uname() end,
+    todo = "TODO (H. Ikeno): ",
+    date = [[${=os.date("%Y-%m-%d")}]],
+    uname = function() return vim.loop.os_uname().sysname end,
+    copyright = force_comment[[Copyright (C) Hidekazu Ikeno ${=os.date("%Y")}]],
   }
+
+  snips.lua = require("conf.snippets.lua").get_snippets()
+  snips.python = require("conf.snippets.python").get_snippets()
 
   snip_plug.snippets = snips
 
@@ -34,7 +49,7 @@ function M.config()
   snip_plug.set_ux(require'snippets.inserters.floaty')
 
   -- Key mappings
-  opts = {noremap = true, silent = true}
+  local opts = {noremap = true, silent = true}
   vim.api.nvim_set_keymap("i", "<C-f>", "<cmd>lua require'conf.snippets'.custom_advance(1)<CR>",  opts)
   vim.api.nvim_set_keymap("i", "<C-b>", "<cmd>lua require'conf.snippets'.custom_advance(-1)<CR>", opts)
 end
