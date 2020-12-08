@@ -267,7 +267,7 @@ return require("packer").startup{
 
     -- }}}
 
-    -- [[ LSP, Tag jumps ]] {{{
+    -- [[ LSP, DAP, Tag jumps ]] {{{
 
     -- Collection of common configurations for Nvim LSP client
     use {
@@ -278,6 +278,18 @@ return require("packer").startup{
       },
       setup = "require'conf.nvim-lspconfig'.setup()",
       config = "require'conf.nvim-lspconfig'.config()"
+    }
+
+    -- Debug Adapter Protocol client implementation for Neovim
+    use {
+      "mfussenegger/nvim-dap",
+      opt = false,
+      requires = {
+        "mfussenegger/nvim-dap-python",
+        "theHamsta/nvim-dap-virtual-text",
+      },
+      setup = "require'conf.nvim-dap'.setup()",
+      config = "require'conf.nvim-dap'.config()"
     }
 
     -- Manage tag files
@@ -352,8 +364,9 @@ return require("packer").startup{
         "nvim-lua/plenary.nvim",
         "nvim-lua/nvim-web-devicons",
         "nvim-telescope/telescope-fzy-native.nvim",
-        "nvim-telescope/telescope-packer.nvim",
         "nvim-telescope/telescope-github.nvim",
+        "nvim-telescope/telescope-packer.nvim",
+        "nvim-telescope/telescope-dap.nvim",
       },
       setup = "require'conf.telescope'.setup()",
       config = "require'conf.telescope'.config()",

@@ -63,6 +63,12 @@ function M.setup()
 
   -- packer.nvim
   vim.api.nvim_set_keymap("n", "<Space>P", "<cmd>lua require'telescope'.extensions.packer.plugins()<CR>", opts)
+
+  -- nvim-dap integration
+  vim.api.nvim_set_keymap("n", "<Space>dc", "<cmd>lua require'telescope'.extensions.dap.commends()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>dC", "<cmd>lua require'telescope'.extensions.dap.configurations()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>dl", "<cmd>lua require'telescope'.extensions.dap.list_breakpoints()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Space>dv", "<cmd>lua require'telescope'.extensions.dap.variables()<CR>", opts)
 end
 
 function M.config()
@@ -76,6 +82,7 @@ function M.config()
     }
   }
   telescope.load_extension("ghcli")
+  telescope.load_extension("dap")
 end
 
 return M
