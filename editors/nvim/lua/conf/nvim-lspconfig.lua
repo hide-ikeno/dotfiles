@@ -42,8 +42,8 @@ local function make_on_attach(config)
 
     -- automatic highlight
     if client.resolved_capabilities.document_highlight then
-      vim.cmd[[autocmd nvim_lspconfig_user_autocmds cursorhold  <buffer> lua vim.lsp.buf.document_highlight()]]
-      vim.cmd[[autocmd nvim_lspconfig_user_autocmds cursormoved <buffer> lua vim.lsp.buf.clear_references()]]
+      vim.cmd[[autocmd nvim_lspconfig_user_autocmds CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
+      vim.cmd[[autocmd nvim_lspconfig_user_autocmds CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
     end
     if config.after then
       config.after(client)
@@ -89,8 +89,7 @@ end
 function M.config()
   local lspconfig  = require("lspconfig")
   local lsp_status = require("lsp-status")
-
-  -- Setup language servers
+-- Setup language servers
   local servers = {
     bashls = {},
     clangd = {
@@ -124,29 +123,25 @@ function M.config()
       };
     },
     html = {},
-    jedi_language_server = {},
     jsonls = {},
     julials = {},
-    -- pyls_ms = {
-    --   callbacks = lsp_status.extensions.pyls_ms.setup(),
-    --   settings = {
-    --     python = {
-    --       jediEnabled = false,
-    --       analysis = {
-    --         cachingLevel = 'Library'
-    --       },
-    --       workspaceSymbols = {
-    --         enabled = true
-    --       }
-    --     }
-    --   },
-    --   root_dir = function(fname)
-    --     return lspconfig.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-    --       'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-    --       '.gitignore')(fname)
-    --     or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-    --   end
-    -- },
+    pyright = {
+      handlers = {
+        -- place holder to ignore the registerCapability messages.
+        -- See https://github.com/neovim/neovim/issues/13448
+        ['client/registerCapability'] = function(_, _, _, _)
+          return {
+            result = nil;
+            error = nil;
+          }
+        end
+      },
+      settings = {
+        python = {
+          formatting = { provider = 'black' }
+        }
+      },
+    },
     rust_analyzer = {},
     solargraph = {},
     sumneko_lua = {
