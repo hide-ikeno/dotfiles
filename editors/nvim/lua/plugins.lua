@@ -258,8 +258,10 @@ return require("packer").startup{
       config = "require'conf.gitsigns'.config()"
     }
 
+    -- disabled until https://github.com/f-person/git-blame.nvim/issues/11 is solved
     use {
       "f-person/git-blame.nvim",
+      disable = true,
       event = {"BufRead *", "BufNewFile *"},
     }
 
