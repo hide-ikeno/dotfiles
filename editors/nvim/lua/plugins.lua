@@ -286,16 +286,10 @@ return require("packer").startup{
       opt = false,
       requires = {
         "mfussenegger/nvim-dap-python",
-        "theHamsta/nvim-dap-virtual-text",
+        {"theHamsta/nvim-dap-virtual-text", after = "nvim-treesitter"}
       },
       setup = "require'conf.nvim-dap'.setup()",
       config = "require'conf.nvim-dap'.config()"
-    }
-
-    -- Manage tag files
-    use {
-      "ludovicchabant/vim-gutentags",
-      setup = "require'conf.vim-gutentags'.setup()"
     }
 
     -- View and search LSP symbols and tags in (Neo)Vim
@@ -313,7 +307,7 @@ return require("packer").startup{
       event = "BufRead *",
       requires = {
         -- nvim-treesitter plugins
-        {"nvim-treesitter/nvim-treesitter-refactor", after="nvim-treesitter"},
+        {"nvim-treesitter/nvim-treesitter-refactor",    after="nvim-treesitter"},
         {"nvim-treesitter/nvim-treesitter-textobjects", after="nvim-treesitter"},
       },
       config = "require('conf.nvim-treesitter').config()"
@@ -347,11 +341,6 @@ return require("packer").startup{
       setup = "require'conf.completion-nvim'.setup()",
       config = "require'conf.completion-nvim'.config()"
     }
-
-    -- VSCode extensions for snippets
-    use "krvajal/vscode-fortran-support"
-    use "microsoft/vscode-go"
-    use "rust-lang/vscode-rust"
 
     -- }}}
 
