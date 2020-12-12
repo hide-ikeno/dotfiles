@@ -6,7 +6,6 @@ ipython
 latexmk
 nvim
 python
-uncrustify
 vim
 zsh
 tmux
