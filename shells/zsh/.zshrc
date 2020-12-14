@@ -32,82 +32,18 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 ##============================================================================
-## Plugins
+## Load configurations
 ##============================================================================
-##
-## Zgen plugin manager
-##
-export ZGEN_DIR="${ZDOTDIR}/.zgen"
-export ZGEN_INIT="${ZGEN_DIR}/init.zsh"
-#export ZGEN_CUSTOM_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump"
-# compinit is called manually.
-export ZGEN_AUTOLOAD_COMPINIT=0
+source "${ZDOTDIR}/plugins.zsh"
 
-# Load zgen only if a user types a zgen command
-zgen () {
-    unset -f zgen
-    if [[ ! -s "${ZGEN_DIR}/zgen.zsh" ]]; then
-        git clone --recursive https://github.com/tarjoilija/zgen.git "${ZGEN_DIR}"
-    fi
-    source "${ZGEN_DIR}/zgen.zsh"
-    zgen "$@"
-}
-
-# Compile zsh configurations and scripts
-zsh_compile_all() {
-    zcompare "${ZDOTDIR}/.zshenv"
-    zcompare "${ZDOTDIR}/.zshrc"
-
-    if [[ -n "${ZGEN_CUSTOM_COMPDUMP}" ]]; then
-        zcompare "${ZGEN_CUSTOM_COMPDUMP}"
-    else
-        zcompare "${ZDOTDIR:-$HOME}/.zcompdump"
-    fi
-
-    for f in ${ZDOTDIR}/rc/*.zsh; do
-        zcompare "$f"
-    done
-
-    # Compile plugin files managed by Zgen
-    for f in ${ZGEN_DIR}/**/*.zsh; do
-        zcompare "$f"
-    done
-
-    if [[ -d "${ZGEN_DIR}/zdharma/fast-syntax-highlighting-master" ]]; then
-        for f in fast-highlight fast-read-ini-file fast-string-highlight; do
-            zcompare "${ZGEN_DIR}/zdharma/fast-syntax-highlighting-master/${f}"
-        done
-    fi
-}
-
-# Generate zgen init script (cache) if needed
-if [[ ! -s "${ZGEN_DIR}/init.zsh" ]]; then
-    # plugins
-    zgen load "greymd/tmux-xpanes"
-    # zgen load "mollifier/anyframe"
-    # zgen load "junegunn/fzf"  "shell/key-bindings.zsh"
-    # zgen load "junegunn/fzf"  "shell/completion.zsh"
-    zgen load "zsh-users/zsh-completions"
-    zgen load "zsh-users/zsh-autosuggestions"
-    zgen load "zdharma/fast-syntax-highlighting"
-    zgen load "zsh-users/zsh-history-substring-search"
-
-    # Load local configuration file.
-    for f in ${ZDOTDIR}/rc/[0-9][0-9]_*.zsh; do
-        zgen load "$f"
-    done
-
-    # zgen load "denysdovhan/spaceship-prompt" "spaceship"
-    zgen load "romkatv/powerlevel10k" "powerlevel10k"
-
-    # generate $ZGEN_INIT file
-    zgen save
-
-    # Compile files if necessary
-    zsh_compile_all
-fi
-
-source "${ZGEN_INIT}"
+source "${ZDOTDIR}/rc/10_functions.zsh"
+source "${ZDOTDIR}/rc/20_autoload.zsh"
+source "${ZDOTDIR}/rc/30_options.zsh"
+source "${ZDOTDIR}/rc/40_zstyle.zsh"
+source "${ZDOTDIR}/rc/50_completions.zsh"
+source "${ZDOTDIR}/rc/50_variables.zsh"
+source "${ZDOTDIR}/rc/60_alias.zsh"
+source "${ZDOTDIR}/rc/70_keybindings.zsh"
 
 ##===========================================================================
 ## Machine local settings
@@ -132,5 +68,5 @@ fi
 # ----- End of zshrc -----
 # vim: foldmethod=marker
 
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
+# # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+# [[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh

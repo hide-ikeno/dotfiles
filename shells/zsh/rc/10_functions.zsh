@@ -21,6 +21,17 @@ function loadlib() {
     fi
 }
 
+# Compile zsh configurations and scripts
+zsh_compile_all() {
+    zcompare "${ZDOTDIR}/.zshenv"
+    zcompare "${ZDOTDIR}/.zshrc"
+    zcompare "${ZDOTDIR:-$HOME}/.zcompdump"
+
+    for f in ${ZDOTDIR}/rc/*.zsh; do
+        zcompare "$f"
+    done
+}
+
 # Show options set on current Zsh session
 function showoptions() {
     set -o | sed -e 's/^no\(.*\)on$/\1  off/' -e 's/^no\(.*\)off$/\1  on/'
