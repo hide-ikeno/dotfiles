@@ -4,6 +4,7 @@ git
 tig
 ipython
 latexmk
+luaformatter
 nvim
 python
 uncrustify
