@@ -8,7 +8,6 @@ latexmk
 luaformatter
 nvim
 python
-uncrustify
 vim
 zsh
 alacritty

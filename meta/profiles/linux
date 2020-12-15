@@ -7,7 +7,6 @@ latexmk
 luaformatter
 nvim
 python
-uncrustify
 vim
 zsh
 tmux
