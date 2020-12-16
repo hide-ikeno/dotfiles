@@ -47,13 +47,6 @@ return require("packer").startup{
       setup = "require'conf.vim-better-whitespace'.setup()"
     }
 
-    -- Even better % navigation and highlight mathching words
-    use {
-      "andymass/vim-matchup",
-      opt = true,
-      event = "CursorHold *"
-    }
-
     -- Improve `foldtext` for better looks
     use "lambdalisue/readablefold.vim"
 
@@ -85,6 +78,38 @@ return require("packer").startup{
 
     -- }}}
 
+    -- [[ Enhanced ]] {{{
+
+    -- Enable repeating supported plugin maps with "."
+    use "tpope/vim-repeat"
+
+    -- Even better % navigation and highlight mathching words
+    use {
+      "andymass/vim-matchup",
+      opt = true,
+      event = "CursorHold *"
+    }
+
+    -- Enhanced f/t
+    use {
+      "hrsh7th/vim-eft",
+      setup = "require'conf.vim-eft'.setup()"
+    }
+
+    -- Accelerate up-down moving
+    use {
+      "rhysd/accelerated-jk",
+      setup = "require'conf.accelerated-jk'.setup()"
+    }
+
+    -- Smart line join
+    use {
+      "osyo-manga/vim-jplus",
+      setup = "require'conf.vim-jplus'.setup()"
+    }
+
+    -- }}}
+
     -- [[ Editor ]] {{{
 
     -- EditorConfig
@@ -109,17 +134,14 @@ return require("packer").startup{
       config = "require'conf.vim-sandwich'.config()",
     }
 
-    use "tpope/vim-repeat"
-
-    -- Enhanced f/t
-    use {
-      "hrsh7th/vim-eft",
-      setup = "require'conf.vim-eft'.setup()"
-    }
-
-    -- comment plugin
+    -- Comment plugin
     use {
       "tyru/caw.vim",
+      requires = {
+        "context_filetype.vim",
+        "vim-repeat",
+        "vim-operator-user",
+      },
       event = "CursorMoved *",
       setup = "require'conf.caw'.setup()",
     }
@@ -143,12 +165,7 @@ return require("packer").startup{
     use {
       "thinca/vim-qfreplace",
       ft = {"qf"},
-      config = function()
-        vim.cmd("augroup qfreplace_setup")
-        vim.cmd("autocmd!")
-        vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", {noremap = true})
-        vim.cmd("augroup END")
-      end
+      config = "require'conf.vim-qfreplace'.config()",
     }
 
     -- (DO)cument (GE)nerator
@@ -186,14 +203,6 @@ return require("packer").startup{
     -- }}}
 
     -- [[ Syntax, filetype ]] {{{
-
-    -- -- A solid language pack for Vim
-    -- use {
-    --   "sheerun/vim-polyglot",
-    --   setup = [[
-    --     vim.g.polyglot_disable = {'bash', 'c', 'c_sharp', 'cpp', 'css', 'json', 'markdown'}
-    --   ]]
-    -- }
 
     -- Vim help in japanese
     use "vim-jp/vimdoc-ja"
