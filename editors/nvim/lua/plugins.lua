@@ -164,14 +164,26 @@ return require("packer").startup{
 
     -- }}}
 
-    -- [[ Colorscheme ]]
+    -- [[ Colorscheme ]] {{{
 
     use { "sainnhe/edge", opt = true }
     use { "sainnhe/forest-night", opt = true }
     use { "sainnhe/gruvbox-material", opt = true }
 
-    -- A color scheme template
-    -- use "Iron-E/nvim-highlite"
+    use {
+      "akinsho/nvim-bufferline.lua",
+      requires = { "nvim-lua/nvim-web-devicons" },
+      config = function()
+        require("bufferline").setup{
+          options = {
+            mappings = true,
+            always_show_bufferline = false,
+          }
+        }
+      end
+    }
+
+    -- }}}
 
     -- [[ Syntax, filetype ]] {{{
 

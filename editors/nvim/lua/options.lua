@@ -3,9 +3,6 @@
 local core  = require('core')
 local utils = require('utils')
 
-local cache_dir = vim.fn.stdpath("cache")
-local data_dir  = vim.fn.stdpath("data")
-
 --- Vim files & directories {{{
 vim.o.backup      = false
 vim.o.writebackup = false
@@ -27,7 +24,7 @@ vim.o.shada = [['1000,<50,@100,s10,h]]
 -- prefer english help
 vim.o.helplang  = "en,ja";
 -- The words list file where words are added by `zw` and `zg` command
-vim.o.spellfile = data_dir .. "/spell/en.utf-8.add";
+vim.o.spellfile = core.nvim_dir.data .. "/spell/en.utf-8.add";
 -- spell check (ignore on check on Asian characters (China, Japan, Korea))
 vim.o.spelllang = "en_us,cjk";
 vim.o.spell     = false;
