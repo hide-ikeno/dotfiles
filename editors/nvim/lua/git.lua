@@ -1,7 +1,4 @@
---  This code is taken from https://github.com/wbthomason/dotfiles/wbthomason/dotfiles
-
--- Adapted from https://github.com/itchyny/vim-gitbranch and
--- https://github.com/mhinz/vim-signify
+-- Adapted from https://github.com/itchyny/vim-gitbranch and https://github.com/mhinz/vim-signify
 local function get_path_dir(path)
   local dir = path
   local prev = ''
@@ -55,12 +52,10 @@ local function init_git_info(path)
   vim.cmd [[augroup mygit]]
   vim.cmd(string.format('au! * <buffer=%d>', buf))
   for _, event in ipairs({
-      'BufEnter', 'WinEnter', 'BufWritePost', 'CursorHold', 'CursorHoldI', 'FocusGained',
-      'ShellCmdPost', 'VimResume'
-    }) do
-    -- vim.cmd(string.format('au %s <buffer=%d> call git#update_changes("%s")', event, buf, path))
-    vim.cmd(string.format('au %s <buffer=%d> lua require("git").update("%s")', event, buf, path))
-  end
+    'BufEnter', 'WinEnter', 'BufWritePost', 'CursorHold', 'CursorHoldI', 'FocusGained',
+    'ShellCmdPost', 'VimResume'
+  }) do vim.cmd(string.format('au %s <buffer=%d> lua require("git").update("%s")', event, buf, path)) end
+  -- }) do vim.cmd(string.format('au %s <buffer=%d> call git#update_changes("%s")', event, buf, path)) end
   vim.cmd [[augroup END]]
   return true
 end
@@ -74,7 +69,7 @@ local function get_branch(path)
     local branch = vim.fn.readfile(branch_path)[1] or ''
     if string.find(branch, '^ref: ') then
       result = vim.fn.substitute(branch, [[^ref: \%(refs/\%(heads/\|remotes/\|tags/\)\=\)\=]], '',
-        '')
+                                 '')
     elseif vim.fn.match(branch, [[^\x\{20\}]]) >= 0 then
       result = string.sub(branch, 1, 6)
     end
@@ -152,97 +147,92 @@ local function make_callback(pipe, err_tbl, output_tbl)
 end
 
 local function update_changes(path)
-  -- TODO: uncomment when fs_mkstemp is available
-  -- if git_info[path] and git_info[path].updating then
-  --   return git_info[path]
-  -- end
-  -- if git_info[path] then
-  --   if git_info[path].disabled then
-  --     return git_info[path]
-  --   end
-  --   git_info[path].updating = true
-  -- else
-  --   if not init_git_info(path) then
-  --     return
-  --   end
-  --   git_info[path].updating = true
-  -- end
-  --
-  -- local job
-  -- local ctx = {}
-  -- local buf_file_name = vim.fn.shellescape(vim.fn.fnamemodify(path, ':t'))
-  -- local buf = vim.fn.bufnr(path)
-  -- local buf_file_dir = vim.fn.fnamemodify(path, ':p:h')
-  -- if vim.fn.getbufvar(buf, '&modified', false) == 1 then
-  --   local temp_buf_file_fd, temp_buf_file_name = vim.loop.fs_mkstemp(
-  --     string.format('/tmp/nvim-git-buf%dXXXXXX', buf)
-  --     )
-  --   ctx.temp_buf_file_name = temp_buf_file_name
-  --   ctx.temp_buf_file_fd = temp_buf_file_fd
-  --   local buf_contents = vim.fn.getbufline(buf, 1, '$')
-  --   if #buf_contents >= 1 or (buf_contents[1] and buf_contents[1] ~= '') or vim.fn.line2byte(1) ~= -1 then
-  --     if vim.fn.getbufvar(buf, '&bomb', false) == 1 then
-  --       buf_contents[1] = '' .. buf_contents[1]
-  --     end
-  --     local temp_file = io.open(temp_buf_file_name, 'w')
-  --     temp_file:write(unpack(buf_contents))
-  --     temp_file:close()
-  --   end
-  --
-  --   local temp_base_file_fd, temp_base_file_name = vim.loop.fs_mkstemp(
-  --     string.format('/tmp/nvim-git-buf%d-baseXXXXXX', buf)
-  --     )
-  --   ctx.temp_base_file_name = temp_base_file_name
-  --   ctx.temp_base_file_fd = temp_base_file_fd
-  --   temp_base_file_name = vim.fn.fnameescape(temp_base_file_name)
-  --   temp_buf_file_name = vim.fn.fnameescape(temp_buf_file_name)
-  --   job = {
-  --     'sh', '-c',
-  --     string.format('git show HEAD:./%s > %s && diff -U0 %s %s', buf_file_name, temp_base_file_name,
-  --       temp_base_file_name, temp_buf_file_name)
-  --   }
-  --   ctx.exit_code = {[1] = true, [0] = true}
-  --   ctx.split = true
-  -- else
-  --   job = {
-  --     'sh', '-c',
-  --     string.format('git -C %s --no-pager diff --no-color --no-ext-diff -U0 -- %s', buf_file_dir,
-  --       buf_file_name)
-  --   }
-  --   ctx.exit_code = {[0] = true}
-  --   ctx.split = true
-  -- end
-  --
-  -- local err_log = {}
-  -- local output_log = {}
-  -- local stdout = vim.loop.new_pipe(false)
-  -- local stderr = vim.loop.new_pipe(false)
-  --
-  -- local cmd = job[1]
-  -- local options = {args = {unpack(job, 2)}, stdio = {nil, stdout, stderr}}
-  --
-  -- local handle = nil
-  -- handle = vim.loop.spawn(cmd, options, function(exit_code, _)
-  --   handle:close()
-  --   local check = vim.loop.new_check()
-  --   vim.loop.check_start(check, function()
-  --     for _, pipe in pairs({stdout, stderr}) do
-  --       if not vim.loop.is_closing(pipe) then return end
-  --     end
-  --
-  --     vim.loop.check_stop(check)
-  --     process_diff(ctx.exit_code[exit_code] ~= nil, path, ctx, output_log, err_log)
-  --   end)
-  -- end)
-  --
-  -- vim.loop.read_start(stdout, make_callback(stdout, err_log, output_log))
-  -- vim.loop.read_start(stderr, make_callback(stderr, err_log, output_log))
+  if git_info[path] and git_info[path].updating then return git_info[path] end
+  if git_info[path] then
+    if git_info[path].disabled then return git_info[path] end
+    git_info[path].updating = true
+  else
+    if not init_git_info(path) then return end
+    git_info[path].updating = true
+  end
+
+  local job
+  local ctx = {}
+  local buf_file_name = vim.fn.shellescape(vim.fn.fnamemodify(path, ':t'))
+  local buf = vim.fn.bufnr(path)
+  local buf_file_dir = vim.fn.fnamemodify(path, ':p:h')
+  if vim.fn.getbufvar(buf, '&modified', false) == 1 then
+    local temp_buf_file_fd, temp_buf_file_name = vim.loop.fs_mkstemp(
+                                                   string.format('/tmp/nvim-git-buf%dXXXXXX', buf))
+    ctx.temp_buf_file_name = temp_buf_file_name
+    ctx.temp_buf_file_fd = temp_buf_file_fd
+    local buf_contents = vim.fn.getbufline(buf, 1, '$')
+    if #buf_contents >= 1 or (buf_contents[1] and buf_contents[1] ~= '') or vim.fn.line2byte(1) ~= -1 then
+      if vim.fn.getbufvar(buf, '&bomb', false) == 1 then
+        buf_contents[1] = '' .. buf_contents[1]
+      end
+
+      for idx, _ in ipairs(buf_contents) do
+        buf_contents[idx] = buf_contents[idx] .. '\n'
+      end
+
+      local temp_file = io.open(temp_buf_file_name, 'w')
+      temp_file:write(unpack(buf_contents))
+      temp_file:close()
+    end
+
+    local temp_base_file_fd, temp_base_file_name =
+      vim.loop.fs_mkstemp(string.format('/tmp/nvim-git-buf%d-baseXXXXXX', buf))
+    ctx.temp_base_file_name = temp_base_file_name
+    ctx.temp_base_file_fd = temp_base_file_fd
+    temp_base_file_name = vim.fn.fnameescape(temp_base_file_name)
+    temp_buf_file_name = vim.fn.fnameescape(temp_buf_file_name)
+    job = {
+      'sh', '-c',
+      string.format('git -C %s show HEAD:./%s > %s && diff -U0 %s %s', buf_file_dir, buf_file_name, temp_base_file_name,
+                    temp_base_file_name, temp_buf_file_name)
+    }
+    ctx.exit_code = {[1] = true, [0] = true}
+    ctx.split = true
+  else
+    job = {
+      'sh', '-c',
+      string.format('git -C %s --no-pager diff --no-color --no-ext-diff -U0 -- %s', buf_file_dir,
+                    buf_file_name)
+    }
+    ctx.exit_code = {[0] = true}
+    ctx.split = true
+  end
+
+  local err_log = {}
+  local output_log = {}
+  local stdout = vim.loop.new_pipe(false)
+  local stderr = vim.loop.new_pipe(false)
+
+  local cmd = job[1]
+  local options = {args = {unpack(job, 2)}, stdio = {nil, stdout, stderr}}
+
+  local handle = nil
+  handle = vim.loop.spawn(cmd, options, function(exit_code, _)
+    handle:close()
+    local check = vim.loop.new_check()
+    vim.loop.check_start(check, function()
+      for _, pipe in pairs({stdout, stderr}) do
+        if not vim.loop.is_closing(pipe) then return end
+      end
+
+      vim.loop.check_stop(check)
+      process_diff(ctx.exit_code[exit_code] ~= nil, path, ctx, output_log, err_log)
+    end)
+  end)
+
+  vim.loop.read_start(stdout, make_callback(stdout, err_log, output_log))
+  vim.loop.read_start(stderr, make_callback(stderr, err_log, output_log))
 end
 
 local function get_info(path)
   if not git_info[path] then
     if not init_git_info(path) then return nil end
-
     git_info[path].branch = get_branch(path)
     update_changes(path)
   end
@@ -273,4 +263,3 @@ local M = {
 }
 
 return M
-

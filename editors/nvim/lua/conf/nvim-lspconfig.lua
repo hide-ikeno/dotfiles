@@ -89,6 +89,7 @@ end
 function M.config()
   local lspconfig  = require("lspconfig")
   local lsp_status = require("lsp-status")
+  lsp_status.register_progress()
 -- Setup language servers
   local servers = {
     bashls = {},
@@ -98,7 +99,7 @@ function M.config()
         '--clang-tidy', '--completion-style=bundled', '--header-insertion=iwyu',
         '--suggest-missing-includes', '--cross-file-rename'
       },
-      callbacks = lsp_status.extensions.clangd.setup(),
+      handlers = lsp_status.extensions.clangd.setup(),
       init_options = {
         clangdFileStatus = true,
         usePlaceholders = true,

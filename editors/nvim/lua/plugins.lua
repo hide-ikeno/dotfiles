@@ -181,7 +181,7 @@ return require("packer").startup{
 
     -- }}}
 
-    -- [[ Colorscheme ]] {{{
+    -- [[ Appearance ]] {{{
 
     use { "sainnhe/edge", opt = true }
     use { "sainnhe/forest-night", opt = true }
