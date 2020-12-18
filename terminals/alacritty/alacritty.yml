@@ -107,7 +107,6 @@ font:
     #   - (Linux) monospace
     #   - (Windows) Consolas
     # family: Hack Nerd Font
-    # style: Regular
     family: mononoki Nerd Font
     style: Regular
 
@@ -137,19 +136,19 @@ font:
     # The `style` can be specified to pick a specific face.
     style: Italic
 
-    # Bold italic font face
-    bold_italic:
-      # Font family
-      #
-      # If the bold italic family is not specified, it will fall back to the
-      # value specified for the normal font.
-      # family: monospace
-      # family: Hack Nerd Font
-      family: mononoki Nerd Font
-      # family: Monofur Nerd Font
+  # Bold italic font face
+  bold_italic:
+    # Font family
+    #
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    # family: monospace
+    # family: Hack Nerd Font
+    family: mononoki Nerd Font
+    # family: Monofur Nerd Font
 
-      # The `style` can be specified to pick a specific face.
-      style: Bold Italic
+    # The `style` can be specified to pick a specific face.
+    style: Bold Italic
 
   # Point size
   size: 18.0
@@ -192,7 +191,7 @@ draw_bold_text_with_bright_colors: true
 # You can define multiple color schemes and use anchors to choose which one
 # Alacritty will use.
 #
-schemes:
+color_schemes:
   ### Edge (Light variant)
   edge_light: &edge_light
     primary:
@@ -297,6 +296,55 @@ schemes:
       cyan: "#5dbbc1"
       white: "#c5cdd9"
 
+  ### Forest Night
+  forest_night: &forest_night
+    primary:
+      background: "#323d43"
+      foreground: "#d8caac"
+
+    normal:
+      black: "#505a60"
+      red: "#e68183"
+      green: "#a7c080"
+      yellow: "#d9bb80"
+      blue: "#83b6af"
+      magenta: "#d49bb6"
+      cyan: "#87c095"
+      white: "#d8caac"
+
+    bright:
+      black: "#505a60"
+      red: "#e68183"
+      green: "#a7c080"
+      yellow: "#d9bb80"
+      blue: "#83b6af"
+      magenta: "#d49bb6"
+      cyan: "#87c095"
+      white: "#d8caac"
+
+        # 'bg0':        ['#323d43',   '235',  'Black'],
+        # 'bg1':        ['#3c474d',   '236',  'DarkGrey'],
+        # 'bg2':        ['#465258',   '237',  'DarkGrey'],
+        # 'bg3':        ['#505a60',   '238',  'DarkGrey'],
+        # 'bg4':        ['#576268',   '239',  'DarkGrey'],
+        # 'bg_visual':  ['#5d4251',   '52',   'DarkRed'],
+        # 'bg_red':     ['#614b51',   '52',   'DarkRed'],
+        # 'bg_green':   ['#4e6053',   '22',   'DarkGreen'],
+        # 'bg_blue':    ['#415c6d',   '17',   'DarkBlue'],
+        # 'bg_yellow':  ['#5d5c50',   '136',  'DarkBlue'],
+        # 'fg':         ['#d8caac',   '223',  'White'],
+        # 'red':        ['#e68183',   '167',  'Red'],
+        # 'orange':     ['#e39b7b',   '208',  'Red'],
+        # 'yellow':     ['#d9bb80',   '214',  'Yellow'],
+        # 'green':      ['#a7c080',   '142',  'Green'],
+        # 'aqua':       ['#87c095',   '108',  'Cyan'],
+        # 'blue':       ['#83b6af',   '109',  'Blue'],
+        # 'purple':     ['#d39bb6',   '175',  'Magenta'],
+        # 'grey0':      ['#7c8377',   '243',  'DarkGrey'],
+        # 'grey1':      ['#868d80',   '245',  'Grey'],
+        # 'grey2':      ['#999f93',   '247',  'LightGrey'],
+        # 'none':       ['NONE',      'NONE', 'NONE']
+
   ### Iceberg (dark)
   iceberg_dark: &iceberg_dark
     primary:
@@ -350,7 +398,7 @@ schemes:
       white: "#262a3f"
 
 # Colors (Edge Aura Dark)
-colors: *edge_dark_aura
+colors: *forest_night
 
 # Bell
 #
