@@ -96,6 +96,9 @@ return require("packer").startup{
       setup = "require'conf.vim-eft'.setup()"
     }
 
+    -- Make blockwise visual mode more useful
+    use "kana/vim-niceblock"
+
     -- Accelerate up-down moving
     use {
       "rhysd/accelerated-jk",
@@ -282,7 +285,6 @@ return require("packer").startup{
     -- disabled until https://github.com/f-person/git-blame.nvim/issues/11 is solved
     use {
       "f-person/git-blame.nvim",
-      disable = true,
       event = {"BufRead *", "BufNewFile *"},
     }
 
