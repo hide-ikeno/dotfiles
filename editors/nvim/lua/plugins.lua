@@ -111,6 +111,13 @@ return require("packer").startup{
       setup = "require'conf.vim-jplus'.setup()"
     }
 
+    -- The killring-alike plugin with no default mappings.
+    -- (Use this plugin until https://github.com/neovim/neovim/issues/1822 is fixed)
+    use {
+      "bfredl/nvim-miniyank",
+      setup = "require'conf.nvim-miniyank'.setup()"
+    }
+
     -- }}}
 
     -- [[ Editor ]] {{{
