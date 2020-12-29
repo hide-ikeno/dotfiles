@@ -17,4 +17,5 @@ require("mappings")
 require("filetype").setup()
 
 -- Appearance
-require("style")
+-- require("style")
+require("appearance")
