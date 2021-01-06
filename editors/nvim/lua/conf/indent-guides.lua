@@ -10,8 +10,9 @@ function M.config()
     indent_pretty_guides = false;
     indent_soft_pattern = '\\s';
     exclude_filetypes = {
-      "help", "denite", "denite-filter", "startify", "vista", "vista_kind", "tagbar"
-    }
+      "help", "denite", "denite-filter", "LuaTree",
+      "startify", "vista", "vista_kind", "tagbar"
+    },
   }
 end
 

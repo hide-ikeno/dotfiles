@@ -67,12 +67,6 @@ return require("packer").startup{
       config = "require'colorizer'.setup()"
     }
 
-    -- A lua fork of vim-devicons
-    use {
-      'kyazdani42/nvim-web-devicons',
-      config = "require'nvim-web-devicons'.setup{}"
-    }
-
     -- Breakdown Vim's --startuptime output
     use { "tweekmonster/startuptime.vim", cmd = "StartupTime" }
 
@@ -193,13 +187,20 @@ return require("packer").startup{
 
     -- [[ Appearance ]] {{{
 
+    -- A lua fork of vim-devicons
+    use {
+      "kyazdani42/nvim-web-devicons",
+      config = "require'nvim-web-devicons'.setup{}"
+    }
+
     use { "sainnhe/edge", opt = true }
     use { "sainnhe/forest-night", opt = true }
     use { "sainnhe/gruvbox-material", opt = true }
 
+    -- A snazzy bufferline for Neovim
     use {
       "akinsho/nvim-bufferline.lua",
-      requires = { "nvim-lua/nvim-web-devicons" },
+      requires = { "kyazdani42/nvim-web-devicons" },
       config = function()
         require("bufferline").setup{
           options = {
@@ -210,7 +211,21 @@ return require("packer").startup{
       end
     }
 
+    -- neovim status line plugin writtein in lua
+    use {
+      "glepnir/galaxyline.nvim",
+      requires = { "kyazdani42/nvim-web-devicons" },
+    }
+
     -- }}}
+
+    -- [[ Filer ]] {{{
+    use {
+      "kyazdani42/nvim-tree.lua",
+      requires = { "kyazdani42/nvim-web-devicons" },
+      setup = "require'conf.nvim-tree'.setup()"
+    }
+   -- }}}
 
     -- [[ Syntax, filetype ]] {{{
 
@@ -381,7 +396,7 @@ return require("packer").startup{
       requires = {
         "nvim-lua/popup.nvim",
         "nvim-lua/plenary.nvim",
-        "nvim-lua/nvim-web-devicons",
+        "kyazdani42/nvim-web-devicons",
         "nvim-telescope/telescope-fzy-native.nvim",
         "nvim-telescope/telescope-github.nvim",
         "nvim-telescope/telescope-packer.nvim",
