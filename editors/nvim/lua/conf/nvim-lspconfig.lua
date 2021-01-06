@@ -1,4 +1,5 @@
 local M = {}
+local path = require("utils").path
 
 local function make_on_attach(config)
   return function(client)
@@ -90,7 +91,8 @@ function M.config()
   local lspconfig  = require("lspconfig")
   local lsp_status = require("lsp-status")
   lsp_status.register_progress()
--- Setup language servers
+
+  -- Setup language servers
   local servers = {
     bashls = {},
     clangd = {
@@ -145,21 +147,42 @@ function M.config()
     },
     rust_analyzer = {},
     solargraph = {},
-    sumneko_lua = {
-      cmd = {'lua-language-server'},
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = {'vim'}
-          },
-          runtime = {
-            version = 'LuaJIT'
+    vimls = {},
+    yamlls = {},
+  }
+
+  local system_name
+  if vim.fn.has("mac") == 1 then
+    system_name = "macOS"
+  elseif vim.fn.has("unix") == 1 then
+    system_name = "Linux"
+  elseif vim.fn.has('win32') == 1 then
+    system_name = "Windows"
+  else
+    print("Unsupported system for sumneko")
+  end
+  -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
+  local sumneko_root_path = vim.fn.expand('$HOME/src/github.com/sumneko/lua-language-server')
+  local sumneko_binary = path.join(sumneko_root_path, "bin", system_name, "lua-language-server")
+  servers.sumneko_lua = {
+    cmd = {sumneko_binary, "-E", path.join(sumneko_root_path, "main.lua") },
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = {'vim'}
+        },
+        runtime = {
+          version = 'LuaJIT',
+          path = vim.split(package.path, ";")
+        },
+        workspace = {
+          library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
           }
         }
       }
-    },
-    vimls = {},
-    yamlls = {},
+    }
   }
 
   local snippet_capabilities = {
