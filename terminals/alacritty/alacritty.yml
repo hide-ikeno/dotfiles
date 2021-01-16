@@ -1,5 +1,16 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator
 
+# Import additional configuration files
+#
+# Imports are# loaded in order, skipping all missing files, with the importing
+# file being loaded last. If a field is already present in a previous import, it
+# will be replaced.
+#
+# All imports must either be absolute paths starting with `/`, or paths relative
+# to the user's home directory starting with `~/`.
+# import:
+#   - ~/.config/alacritty/colorscheme.yml
+
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty it self.
@@ -191,214 +202,10 @@ draw_bold_text_with_bright_colors: true
 # You can define multiple color schemes and use anchors to choose which one
 # Alacritty will use.
 #
-color_schemes:
-  ### Edge (Light variant)
-  edge_light: &edge_light
-    primary:
-      background: "#fafafa"
-      foreground: "#4b505b"
+# --- Import a file from themes dir ---
+import:
+  - ~/.config/alacritty/themes/nightfly.yml
 
-    normal:
-      black: "#4b505b"
-      red: "#d05858"
-      green: "#608e32"
-      yellow: "#be7e05"
-      blue: "#5079be"
-      magenta: "#b05ccc"
-      cyan: "#3a8b84"
-      white: "#fafafa"
-
-    bright:
-      black: "#4b505b"
-      red: "#d05858"
-      green: "#608e32"
-      yellow: "#be7e05"
-      blue: "#5079be"
-      magenta: "#b05ccc"
-      cyan: "#3a8b84"
-      white: "#fafafa"
-
-  ### Edge (Dark Default variant)
-  edge_dark_def: &edge_dark_default
-    primary:
-      background: "#2c2e34"
-      foreground: "#c5cdd9"
-
-    normal:
-      black: "#3e4249"
-      red: "#ec7279"
-      green: "#a0c980"
-      yellow: "#deb974"
-      blue: "#6cb6eb"
-      magenta: "#d38aea"
-      cyan: "#5dbbc1"
-      white: "#c5cdd9"
-
-    bright:
-      black: "#3e4249"
-      red: "#ec7279"
-      green: "#a0c980"
-      yellow: "#deb974"
-      blue: "#6cb6eb"
-      magenta: "#d38aea"
-      cyan: "#5dbbc1"
-      white: "#c5cdd9"
-
-  ### Edge (Dark Aura variant)
-  edge_dark_aura: &edge_dark_aura
-    primary:
-      background: "#2b2d37"
-      foreground: "#c5cdd9"
-
-    normal:
-      black: "#363a49"
-      red: "#ec7279"
-      green: "#a0c980"
-      yellow: "#deb974"
-      blue: "#6cb6eb"
-      magenta: "#d38aea"
-      cyan: "#5dbbc1"
-      white: "#c5cdd9"
-
-    bright:
-      black: "#363a49"
-      red: "#ec7279"
-      green: "#a0c980"
-      yellow: "#deb974"
-      blue: "#6cb6eb"
-      magenta: "#d38aea"
-      cyan: "#5dbbc1"
-      white: "#c5cdd9"
-
-  ### Edge (Dark Neon variant)
-  edge_dark_neon: &edge_dark_neon
-    primary:
-      background: "#2b2d3a"
-      foreground: "#c5cdd9"
-
-    normal:
-      black: "#363a4e"
-      red: "#ec7279"
-      green: "#a0c980"
-      yellow: "#deb974"
-      blue: "#6cb6eb"
-      magenta: "#d38aea"
-      cyan: "#5dbbc1"
-      white: "#c5cdd9"
-
-    bright:
-      black: "#363a4e"
-      red: "#ec7279"
-      green: "#a0c980"
-      yellow: "#deb974"
-      blue: "#6cb6eb"
-      magenta: "#d38aea"
-      cyan: "#5dbbc1"
-      white: "#c5cdd9"
-
-  ### Forest Night
-  forest_night: &forest_night
-    primary:
-      background: "#323d43"
-      foreground: "#d8caac"
-
-    normal:
-      black: "#505a60"
-      red: "#e68183"
-      green: "#a7c080"
-      yellow: "#d9bb80"
-      blue: "#83b6af"
-      magenta: "#d49bb6"
-      cyan: "#87c095"
-      white: "#d8caac"
-
-    bright:
-      black: "#505a60"
-      red: "#e68183"
-      green: "#a7c080"
-      yellow: "#d9bb80"
-      blue: "#83b6af"
-      magenta: "#d49bb6"
-      cyan: "#87c095"
-      white: "#d8caac"
-
-        # 'bg0':        ['#323d43',   '235',  'Black'],
-        # 'bg1':        ['#3c474d',   '236',  'DarkGrey'],
-        # 'bg2':        ['#465258',   '237',  'DarkGrey'],
-        # 'bg3':        ['#505a60',   '238',  'DarkGrey'],
-        # 'bg4':        ['#576268',   '239',  'DarkGrey'],
-        # 'bg_visual':  ['#5d4251',   '52',   'DarkRed'],
-        # 'bg_red':     ['#614b51',   '52',   'DarkRed'],
-        # 'bg_green':   ['#4e6053',   '22',   'DarkGreen'],
-        # 'bg_blue':    ['#415c6d',   '17',   'DarkBlue'],
-        # 'bg_yellow':  ['#5d5c50',   '136',  'DarkBlue'],
-        # 'fg':         ['#d8caac',   '223',  'White'],
-        # 'red':        ['#e68183',   '167',  'Red'],
-        # 'orange':     ['#e39b7b',   '208',  'Red'],
-        # 'yellow':     ['#d9bb80',   '214',  'Yellow'],
-        # 'green':      ['#a7c080',   '142',  'Green'],
-        # 'aqua':       ['#87c095',   '108',  'Cyan'],
-        # 'blue':       ['#83b6af',   '109',  'Blue'],
-        # 'purple':     ['#d39bb6',   '175',  'Magenta'],
-        # 'grey0':      ['#7c8377',   '243',  'DarkGrey'],
-        # 'grey1':      ['#868d80',   '245',  'Grey'],
-        # 'grey2':      ['#999f93',   '247',  'LightGrey'],
-        # 'none':       ['NONE',      'NONE', 'NONE']
-
-  ### Iceberg (dark)
-  iceberg_dark: &iceberg_dark
-    primary:
-      background: "#161821"
-      foreground: "#d2d4de"
-
-      normal:
-        black: "#161821"
-        red: "#e27878"
-        green: "#b4be82"
-        yellow: "#e2a478"
-        blue: "#84a0c6"
-        magenta: "#a093c7"
-        cyan: "#89b8c2"
-        white: "#c6c8d1"
-
-      bright:
-        black: "#6b7089"
-        red: "#e98989"
-        green: "#c0ca8e"
-        yellow: "#e9b189"
-        blue: "#91acd1"
-        magenta: "#ada0d3"
-        cyan: "#95c4ce"
-        white: "#d2d4de"
-
-  ### Iceberg (light)
-  iceberg_light: &iceberg_light
-    primary:
-      background: "#e8e9ec"
-      foreground: "#33374c"
-
-    normal:
-      black: "#dcdfe7"
-      red: "#cc517a"
-      green: "#668e3d"
-      yellow: "#c57339"
-      blue: "#2d539e"
-      magenta: "#7759b4"
-      cyan: "#3f83a6"
-      white: "#33374c"
-
-    bright:
-      black: "#8389a3"
-      red: "#cc3768"
-      green: "#598030"
-      yellow: "#b6662d"
-      blue: "#22478e"
-      magenta: "#6845ad"
-      cyan: "#327698"
-      white: "#262a3f"
-
-# Colors (Edge Aura Dark)
-colors: *forest_night
 
 # Bell
 #
