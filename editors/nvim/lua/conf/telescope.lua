@@ -99,7 +99,7 @@ function M.config()
       }
     }
   }
-  telescope.load_extension("ghcli")
+  telescope.load_extension("gh")
   telescope.load_extension("dap")
 end
 

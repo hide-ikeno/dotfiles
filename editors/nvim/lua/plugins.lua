@@ -401,6 +401,7 @@ return require("packer").startup{
         "nvim-telescope/telescope-github.nvim",
         "nvim-telescope/telescope-packer.nvim",
         "nvim-telescope/telescope-dap.nvim",
+        "nvim-telescope/telescope-symbols.nvim",
       },
       setup = "require'conf.telescope'.setup()",
       config = "require'conf.telescope'.config()",
