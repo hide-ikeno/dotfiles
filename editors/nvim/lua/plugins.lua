@@ -196,6 +196,7 @@ return require("packer").startup{
     use { "sainnhe/edge", opt = true }
     use { "sainnhe/forest-night", opt = true }
     use { "sainnhe/gruvbox-material", opt = true }
+    use { "sainnhe/sonokai", opt = true }
 
     -- A snazzy bufferline for Neovim
     use {
