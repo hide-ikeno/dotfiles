@@ -212,12 +212,6 @@ return require("packer").startup{
       end
     }
 
-    -- neovim status line plugin writtein in lua
-    use {
-      "glepnir/galaxyline.nvim",
-      requires = { "kyazdani42/nvim-web-devicons" },
-    }
-
     -- }}}
 
     -- [[ Filer ]] {{{
