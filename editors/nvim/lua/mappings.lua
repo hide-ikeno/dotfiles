@@ -55,13 +55,13 @@ api.nvim_set_keymap("c", "<C-f>", "<Right>", {noremap = true})
 api.nvim_set_keymap("c", "<C-n>", "<Down>",  {noremap = true})
 api.nvim_set_keymap("c", "<C-p>", "<Up>",    {noremap = true})
 
--- Smart scroll with <C-f>, <C-b>.
-api.nvim_set_keymap("n", "<C-f>",
-  [[max([winheight(0) - 2, 1]) . "\<C-d>" . (line('w$') >= line('$') ? "L" : "M")]],
-  {noremap = true, expr = true})
-api.nvim_set_keymap("n", "<C-b>",
-  [[max([winheight(0) - 2, 1]) . "\<C-u>" . (line('w0') <= 1 ? "H" : "M")]],
-  {noremap = true, expr = true})
+-- -- Smart scroll with <C-f>, <C-b>.
+-- api.nvim_set_keymap("n", "<C-f>",
+--   [[max([winheight(0) - 2, 1]) . "\<C-d>" . (line('w$') >= line('$') ? "L" : "M")]],
+--   {noremap = true, expr = true})
+-- api.nvim_set_keymap("n", "<C-b>",
+--   [[max([winheight(0) - 2, 1]) . "\<C-u>" . (line('w0') <= 1 ? "H" : "M")]],
+--   {noremap = true, expr = true})
 
 -- Enable undo <C-w> and <C-u> in insert mode.
 api.nvim_set_keymap("i", "<C-w>", "<C-g>u<C-w>", {noremap = true})

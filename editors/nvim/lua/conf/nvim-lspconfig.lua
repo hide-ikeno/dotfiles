@@ -11,34 +11,37 @@ local function make_on_attach(config)
     vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- key mappings
-    local opts = {noremap = true, silent = true}
-    vim.api.nvim_buf_set_keymap(0, "n", "ma", "<cmd>lua vim.lsp.buf.code_action()<cr>",     opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>lua vim.lsp.buf.definition()<cr>",      opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>lua vim.lsp.buf.declaration()<cr>",     opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mi", "<cmd>lua vim.lsp.buf.implementation()<cr>",  opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.references()<cr>",      opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mp", "<cmd>lua vim.lsp.buf.peek_definition()<cr>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.rename()<cr>",          opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>lua vim.lsp.buf.hover()<cr>",           opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>lua vim.lsp.buf.signature_help()<cr>",  opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opts)
-    -- diagnostics
-    vim.api.nvim_buf_set_keymap(0, "n", "m]", "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",             opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "m[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",             opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "me", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", opts)
-    vim.api.nvim_buf_set_keymap(0, "n", "mq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",           opts)
+    local opt1 = {noremap = true, silent = true}
+    local opt2 = {noremap = true, silent = true, nowait = true}
+    vim.api.nvim_buf_set_keymap(0, "n", "ma", "<cmd>Lspsaga code_action<CR>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "v", "ma", ":<C-u>Lspsaga range_code_action<CR>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>Lspsaga lsp_finder<CR>",      opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>",     opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>",  opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opt1)
+    -- vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>",      opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mp", "<cmd>Lspsaga preview_definition<CR>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mR", "<cmd>Lspsaga rename<CR>",          opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>Lspsaga hover_doc<CR>",  opt1)
+    -- vim.api.nvim_buf_set_keymap(0, "n", "<C-f>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(1)<CR>", opt2)
+    -- vim.api.nvim_buf_set_keymap(0, "n", "<c-b>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(-1)<cr>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "m?", "<cmd>lspsaga show_line_diagnostics<cr>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "m]", "<cmd>Lspsaga diagnostic_jump_next<CR>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "m[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "me", "<cmd>Lspsaga show_line_diagnostics<CR>", opt1)
+    vim.api.nvim_buf_set_keymap(0, "n", "m?", "<cmd>Lspsaga signature_help<CR>", opt1)
 
     vim.cmd[[augroup nvim_lspconfig_user_autocmds]]
     vim.cmd[[autocmd! * <buffer>]]
     vim.cmd[[augroup end]]
     -- formatting
     if client.resolved_capabilities.document_formatting then
-      vim.cmd[[autocmd nvim_lspconfig_user_autocmds BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
+      vim.cmd[[autocmd nvim_lspconfig_user_autocmds BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil,1000)]]
     end
     if client.resolved_capabilities.document_range_formatting then
-      vim.api.nvim_buf_set_keymap(0, "n", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
-      vim.api.nvim_buf_set_keymap(0, "x", "mf", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
+      vim.api.nvim_buf_set_keymap(0, "n", "m=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opt1)
+      vim.api.nvim_buf_set_keymap(0, "x", "m=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opt1)
     end
 
     -- automatic highlight
@@ -88,9 +91,13 @@ function M.setup()
 end
 
 function M.config()
+  vim.cmd [[packadd lsp-status.nvim]]
+  vim.cmd [[packadd lspsaga.nvim]]
   local lspconfig  = require("lspconfig")
   local lsp_status = require("lsp-status")
   lsp_status.register_progress()
+  local lspsaga = require("lspsaga")
+  lspsaga.init_lsp_saga()
 
   -- Setup language servers
   local servers = {
@@ -98,8 +105,11 @@ function M.config()
     clangd = {
       cmd = {
         'clangd', -- '--background-index',
-        '--clang-tidy', '--completion-style=bundled', '--header-insertion=iwyu',
-        '--suggest-missing-includes', '--cross-file-rename'
+        '--clang-tidy',
+        '--completion-style=bundled',
+        '--header-insertion=iwyu',
+        '--suggest-missing-includes',
+        '--cross-file-rename'
       },
       handlers = lsp_status.extensions.clangd.setup(),
       init_options = {
@@ -117,6 +127,13 @@ function M.config()
       filetypes = {
         "csv", "dockerfile", "eruby", "json", "lua", "make", "markdown", "python", "rst", "sh", "yaml",
       },
+      init_options = {
+        documentFormatting = true,
+        hover = true,
+        documentSymbol = true,
+        codeAction = true,
+        completion = true,
+      },
     },
     fortls = {},
     gopls = {
@@ -127,7 +144,7 @@ function M.config()
     },
     html = {},
     jsonls = {},
-    julials = {},
+    -- julials = {},
     pyright = {
       handlers = {
         -- place holder to ignore the registerCapability messages.

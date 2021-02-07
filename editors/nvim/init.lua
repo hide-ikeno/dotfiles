@@ -1,14 +1,16 @@
 -- ~/.config/nvim/init.lua -- NeoVim configuration
 
 -- Set envs
-require('envs').setup()
+require("envs").setup()
 
 -- Nvim core settings
-require('core').setup()
-require('options')
+require("core").setup()
 
 -- Plugins
 require("plugins")
+
+-- Set options
+require("options")
 
 -- Key mappings
 require("mappings")

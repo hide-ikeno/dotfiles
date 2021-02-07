@@ -25,8 +25,7 @@ local function ensure_nvim_dirs()
   vim.fn.mkdir(nvim_dir.undo, "p")
   vim.fn.mkdir(nvim_dir.view, "p")
   vim.fn.mkdir(nvim_dir.site_packages, "p")
-
-  vim.o.packpath = nvim_dir.site_packages
+  -- vim.o.packpath = nvim_dir.site_packages
 end
 
 --- Set nvim built-in global options on startup {{{1

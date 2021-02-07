@@ -106,17 +106,23 @@ function M.apply_theme(theme_name)
   highlight("StatusLineCommandSep", c.yellow,   nil, nil, nil)
 
   -- VCS, diff
-  highlight("StatusLineVCSBranch",    c.fg,     c.bg1, nil, nil)
-  highlight("StatusLineVCSIcon",      c.orange, c.bg1, nil, nil)
-  highlight("StatusLineDiffAdded",    c.green,  c.bg1, nil, nil)
-  highlight("StatusLineDiffModified", c.blue,   c.bg1, nil, nil)
-  highlight("StatusLineDiffRemoved",  c.red,    c.bg1, nil, nil)
+  highlight("StatusLineVCSBranch",    c.fg,     c.bg2, nil, nil)
+  highlight("StatusLineVCSIcon",      c.orange, c.bg2, nil, nil)
+  highlight("StatusLineDiffAdded",    c.green,  c.bg2, nil, nil)
+  highlight("StatusLineDiffModified", c.blue,   c.bg2, nil, nil)
+  highlight("StatusLineDiffRemoved",  c.red,    c.bg2, nil, nil)
 
-  highlight("StatusLineVCSSep", c.bg1,    nil,   nil, nil)
+  highlight("StatusLineVCSSep", c.bg2,    nil,   nil, nil)
 
   -- File info
   highlight("StatusLineFileType",    c.black, c.bg_blue, nil, nil)
   highlight("StatusLineFileTypeSep", c.bg_blue, nil, nil, nil)
+
+  highlight("StatusLineFileFormat",    c.fg, c.bg4, nil, nil)
+  highlight("StatusLineFileFormatSep", c.bg4, nil, nil, nil)
+
+  highlight("StatusLineFileEncoding",    c.fg, c.bg2, nil, nil)
+  highlight("StatusLineFileEncodingSep", c.bg2, nil, nil, nil)
 
   -- Line column info
   highlight("StatusLineLinCol",  c.fg, c.bg4, nil, nil)
@@ -292,17 +298,21 @@ end
 --   return size
 -- end
 --
--- local function get_file_encoding_and_format()
---   if vim.api.nvim_win_get_width(0) < 80 then
---     return ""
---   end
---   local fenc = vim.bo.fileencoding
---   if fenc == "" then
---     fenc = vim.o.encoding
---   end
---   return string.format(" %s", fenc)
--- end
---
+local function get_file_encoding_and_format(inactive)
+  if inactive or vim.api.nvim_win_get_width(0) < 80 then
+    return ""
+  end
+  local fenc = vim.bo.fileencoding
+  if fenc == "" then
+    fenc = vim.o.encoding
+  end
+  local ff = vim.bo.fileformat
+  return string.format(
+    "%%#StatusLineFileEncodingSep#%s%%#StatusLineFileEncoding#%s%%#StatusLineFileFormat#%s%%#StatusLineFileEncodingSep#%s",
+    separator.left, fenc, ff, separator.right
+  )
+end
+
 -- local function get_file_format()
 --   -- if vim.api.nvim_win_get_width(0) < 80 then
 --   --   return ""
@@ -348,7 +358,7 @@ local function get_line_colmun_info(inactive)
   local hl_lincol  = inactive and "Inactive" or "LinCol"
   local hl_percent = inactive and "Inactive" or "Percent"
   return string.format(
-    "%%#StatusLine%sSep#%s%%#StatusLine%s#%%3l %%-2v%%#StatusLine%s# %%P%%#StatusLine%sSep#%s",
+    "%%#StatusLine%sSep#%s%%#StatusLine%s#%%3l %%-2v %%#StatusLine%s# %%P%%#StatusLine%sSep#%s",
     hl_lincol, separator.left, hl_lincol, hl_percent, hl_percent, separator.right
   )
 end
@@ -378,6 +388,8 @@ local function make_statusline(inactive)
   s = s .. space
   s = s .. "%="
   s = s .. get_filetype(inactive)
+  s = s .. space
+  s = s .. get_file_encoding_and_format(inactive)
   s = s .. space
   s = s .. get_line_colmun_info(inactive)
   s = s .. space
