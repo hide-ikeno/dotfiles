@@ -18,9 +18,6 @@ local function init()
     "filetype",
     "program",
     "vcs",
-    "lsp",
-    "dap",
-    "treesitter",
     "completion",
     "telescope",
   } do packer.use(require('plugins.' .. name)) end

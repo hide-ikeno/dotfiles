@@ -51,6 +51,17 @@ return {
     end
   },
 
+  -- Reveal the commit messages under the cursor
+  {
+    "rhysd/git-messenger.vim",
+    cmd = { "GitMessenger" },
+    keys = { "n", "<Plug>(git-messenger" },
+    setup = function()
+      vim.g.git_messenger_no_default_mappings = true
+      vim.api.nvim_set_keymap("n", "<Space>gm", "<Plug>(git-messenger)", {silent = true})
+    end
+  },
+
   -- More pleasant editing on commit messsages
   {
     "rhysd/committia.vim",
@@ -60,9 +71,9 @@ return {
     end
   },
 
-  -- -- disabled until https://github.com/f-person/git-blame.nvim/issues/11 is solved
-  -- use {
-  --   "f-person/git-blame.nvim",
-  --   event = {"BufRead *", "BufNewFile *"},
-  -- }
+  -- disabled until https://github.com/f-person/git-blame.nvim/issues/11 is solved
+  {
+    "f-person/git-blame.nvim",
+    event = {"BufRead *", "BufNewFile *"},
+  }
 }

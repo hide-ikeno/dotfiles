@@ -24,7 +24,7 @@ local function make_on_attach(config)
     vim.api.nvim_buf_set_keymap(0, "n", "mR", "<cmd>Lspsaga rename<CR>",          opt1)
     vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>Lspsaga hover_doc<CR>",  opt1)
     -- vim.api.nvim_buf_set_keymap(0, "n", "<C-f>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(1)<CR>", opt2)
-    -- vim.api.nvim_buf_set_keymap(0, "n", "<c-b>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(-1)<cr>", opt1)
+    -- vim.api.nvim_buf_set_keymap(0, "n", "<c-b>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(-1)<cr>", opt2)
     vim.api.nvim_buf_set_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opt1)
     vim.api.nvim_buf_set_keymap(0, "n", "m?", "<cmd>lspsaga show_line_diagnostics<cr>", opt1)
     vim.api.nvim_buf_set_keymap(0, "n", "m]", "<cmd>Lspsaga diagnostic_jump_next<CR>", opt1)
@@ -91,8 +91,6 @@ function M.setup()
 end
 
 function M.config()
-  vim.cmd [[packadd lsp-status.nvim]]
-  vim.cmd [[packadd lspsaga.nvim]]
   local lspconfig  = require("lspconfig")
   local lsp_status = require("lsp-status")
   lsp_status.register_progress()

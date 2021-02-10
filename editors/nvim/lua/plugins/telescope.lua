@@ -7,12 +7,12 @@ return {
     { "nvim-telescope/telescope-dap.nvim", opt = true },
     {
       "nvim-telescope/telescope-frecency.nvim",
-      requires = {"tami5/sql.nvim"},
+      requires = {"tami5/sql.nvim", opt = true},
       opt = true,
     },
+    { "nvim-telescope/telescope-fzf-writer.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-ghq.nvim", opt = true },
-    { "nvim-telescope/telescope-github.nvim", opt = true },
     { "nvim-telescope/telescope-packer.nvim", opt = true },
     { "nvim-telescope/telescope-symbols.nvim", opt = true },
   },
@@ -31,12 +31,14 @@ return {
     "<Space>G",
     "<Space>P",
   },
+
   config = function()
     for _, name in pairs {
       'nvim-web-devicons',
       'popup.nvim',
       'sql.nvim',
       'telescope-frecency.nvim',
+      'telescope-fzf-writer.nvim',
       'telescope-fzy-native.nvim',
       'telescope-ghq.nvim',
       'telescope-github.nvim',
@@ -102,6 +104,13 @@ return {
           show_scores = true,
           show_unindexed = true,
         },
+
+        fzf_writer = {
+          minimum_grep_characters = 3,
+          minimum_files_characters = 3,
+          use_highlighter = false
+        },
+
         fzy_native = {
           override_generic_sorter = false,
           override_file_sorter = true,
@@ -115,45 +124,103 @@ return {
     pcall(telescope.load_extension, "gh")
     pcall(telescope.load_extension, "ghq")
 
+    -- find command
+    local ignore_globs = {
+      ".git", ".ropeproject", "__pycache__", ".venv", "venv",
+      "node_modules", "images", "*.min.*", "img", "fonts"
+    }
+    local find_cmd;
+    if vim.fn.executable("fd") then
+      find_cmd = {"fd", ".", "--hidden", "--type", "f"}
+      for _, x in ipairs(ignore_globs) do
+        table.insert(find_cmd, "--exclude")
+        table.insert(find_cmd, x)
+      end
+    elseif vim.fn.executable("rg") then
+      find_cmd = {"rg", "--follow", "--hidden", "--files"}
+      for _, x in ipairs(ignore_globs) do
+        table.insert(find_cmd, "--glob=!" .. x)
+      end
+    elseif vim.fn.executable("ag") then
+      find_cmd = {"ag", "-U", "--hidden", "--follow"}
+      for _, x in ipairs(ignore_globs) do
+        table.insert(find_cmd, "--exclude=" .. x)
+      end
+      for _, x in ipairs({"--nocolor", "--nogroup", "-g", ""}) do
+        table.insert(find_cmd, x)
+      end
+    end
+
     -- mappings
-    -- key mappings
-    local opts = {noremap = true, silent = true}
-    -- key mappings
-    vim.api.nvim_set_keymap("n", "<Space>b", "<cmd>lua require'telescope.builtin'.buffers{ shorten_path = true, initial_mode='normal' }<CR>", opts)
-    -- vim.api.nvim_set_keymap("n", "<Space>f", "<cmd>lua require'telescope.builtin'.find_files{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>f", "<cmd>lua require'telescope.builtin'.find_files{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>h", "<cmd>lua require'telescope.builtin'.help_tags{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>p", "<cmd>lua require'telescope.builtin'.git_files{ shorten_path = true }<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>o", "<cmd>lua require'telescope.builtin'.oldfiles{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>t", "<cmd>lua require'telescope.builtin'.treesitter{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>;", "<cmd>lua require'telescope.builtin'.command_history{}<CR>", opts)
+    local map_builtin = function(key, f, options)
+      local mode = "n"
+      local rhs = string.format(
+        "<cmd>lua require('telescope.builtin')['%s'](%s)<CR>",
+        f,
+        options and vim.inspect(options, { newline = '' }) or ''
+      )
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap(mode, key, rhs, opts)
+    end
 
-    -- LSP
-    vim.api.nvim_set_keymap("n", "<Space>a", "<cmd>lua require'telescope.builtin'.lsp_code_actions{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>r", "<cmd>lua require'telescope.builtin'.lsp_references{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>s", "<cmd>lua require'telescope.builtin'.lsp_document_symbols{}<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>S", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols{}<CR>", opts)
+    local map_extension = function(key, e, f, options)
+      local mode = "n"
+      local rhs = string.format(
+        "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>",
+        e, f,
+        options and vim.inspect(options, { newline = '' }) or ''
+      )
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap(mode, key, rhs, opts)
+    end
 
-    -- grep / search
-    vim.api.nvim_set_keymap("n", "<Space>/", "<cmd>lua require'telescope.builtin'.live_grep{ shorten_path = true }<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>G", "<cmd>lua require'telescope.builtin'.grep_string{ shorten_path = true }<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>l", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", opts)
+    -- File pickers
+    map_builtin("<Space>f", "find_files", { find_command = find_cmd })
+    map_builtin("<Space>p", "git_files", { shorten_path = false })
+    map_builtin("<Space>G", "grep_string", { shorten_path = true })
 
-    -- github CLI integlation
-    vim.api.nvim_set_keymap("n", "<Space>ghi", "<cmd>lua require'telescope.builtin'.gh_issues()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>ghp", "<cmd>lua require'telescope.builtin'.gh_pull_request()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>ghg", "<cmd>lua require'telescope.builtin'.gh_gist()<CR>", opts)
+    -- Vim pickers
+    map_builtin("<Space>b", "buffers", {
+      shorten_path = false, initial_mode = 'normal'
+    })
+    map_builtin("<Space>h", "help_tags", { show_version = true })
+    map_builtin("<Space>;", "command_history")
+    map_builtin("<Space>t", "treesitter")
+    map_builtin("<Space>l", "current_buffer_fuzzy_find", {
+      winblend = 10,
+      border = true,
+      previewer = false,
+      shorten_path = false,
+    })
+
+    -- LSP pickers
+    map_builtin("<Space>a", "lsp_code_actions")
+    map_builtin("<Space>r", "lsp_references")
+    map_builtin("<Space>s", "lsp_documen_symbols")
+    map_builtin("<Space>S", "lsp_workspace_symbols")
+
+    -- Git pickers
+    map_builtin("<Space>gb", "git_branchs", { initial_mode = "normal" })
+    map_builtin("<Space>gc", "git_bcommits", { initial_mode = "normal" })
+    map_builtin("<Space>gC", "git_commits", { initial_mode = "normal" })
+    -- map_builtin("<Space>gs", "git_status", { initial_mode = "normal" })
 
     -- frecency
-    vim.api.nvim_set_keymap("n", "<Space><Space>", "<cmd>lua require'telescope'.extensions.frecency.frecency()<CR>", opts)
+    map_extension("<Space>o", "frecency", "frecency", {
+      shorten_path = true,
+      previewer = false,
+      fzf_separator = "|>",
+    })
 
-    -- packer.nvim
-    vim.api.nvim_set_keymap("n", "<Space>P", "<cmd>lua require'telescope'.extensions.packer.plugins()<CR>", opts)
+    -- fzf-writer
+    map_extension("<Space>/", "fzf_writer", "staged_grep", {
+      layout_strategy = "vertical"
+    })
 
-    -- nvim-dap integration
-    vim.api.nvim_set_keymap("n", "<Space>dc", "<cmd>lua require'telescope'.extensions.dap.commends()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>dC", "<cmd>lua require'telescope'.extensions.dap.configurations()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>dl", "<cmd>lua require'telescope'.extensions.dap.list_breakpoints()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Space>dv", "<cmd>lua require'telescope'.extensions.dap.variables()<CR>", opts)
+    -- nvim-dap inl_defaultctegration
+    map_extension("<Space>dc", "dap", "commands")
+    map_extension("<Space>dC", "dap", "configurations")
+    map_extension("<Space>dl", "dap", "list_breakpoints")
+    map_extension("<Space>dv", "dap", "variables;")
   end,
 }

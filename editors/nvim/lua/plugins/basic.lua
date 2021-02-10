@@ -3,7 +3,6 @@ return {
   { "wbthomason/packer.nvim", opt = true },
 
   { "nvim-lua/plenary.nvim" },
-  { "svermeulen/vimpeccable" },
 
   -- Fix CursorHold performance
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.
@@ -46,14 +45,6 @@ return {
 
       vim.api.nvim_set_keymap("n", "<Leader>x", "<cmd>StripWhitespace<CR>", {noremap = true, silent = true})
     end
-  },
-
-  -- Show keybindings in popup
-  {
-    "liuchengxu/vim-which-key",
-    cmd = {"WhichKey", "WhichKeyVisual"},
-    setup = "require'conf.vim-which-key'.setup()",
-    config = "require'conf.vim-which-key'.config()",
   },
 }
 

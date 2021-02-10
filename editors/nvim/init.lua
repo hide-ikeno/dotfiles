@@ -3,8 +3,8 @@
 -- Set envs
 require("envs").setup()
 
--- Nvim core settings
-require("core").setup()
+-- Nvim startup
+require("startup").setup()
 
 -- Plugins
 require("plugins")

@@ -81,6 +81,14 @@ return {
     end
   },
 
+  -- Show keybindings in popup
+  {
+    "liuchengxu/vim-which-key",
+    cmd = {"WhichKey", "WhichKeyVisual"},
+    setup = "require'conf.vim-which-key'.setup()",
+    config = "require'conf.vim-which-key'.config()",
+  },
+
   -- A high-performance color highlighter for NeoVim
   {
     "norcalli/nvim-colorizer.lua",
@@ -90,7 +98,9 @@ return {
       "ColorizerReloadAllBuffers",
       "ColorizerToggle",
     },
-    config = "require'colorizer'.setup()"
+    config = function()
+      require'colorizer'.setup()
+    end,
   },
 
   -- Breakdown Vim's --startuptime output

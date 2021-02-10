@@ -1,4 +1,4 @@
---- ~/.config/nvim/lua/core.lua
+--- ~/.config/nvim/lua/startup.lua
 local utils = require('utils')
 
 -- Directories to store nvim data

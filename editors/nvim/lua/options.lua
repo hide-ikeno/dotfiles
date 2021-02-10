@@ -1,6 +1,6 @@
 --- ~/.config/nvim/lua/options.lua
 --- Set global options
-local core  = require('core')
+local core  = require('startup')
 local utils = require('utils')
 
 --- Vim files & directories {{{

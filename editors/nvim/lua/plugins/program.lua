@@ -73,17 +73,6 @@ return {
     end
   },
 
-  -- {
-  --   "tyru/caw.vim",
-  --   requires = {
-  --     "context_filetype.vim",
-  --     "vim-repeat",
-  --     "vim-operator-user",
-  --   },
-  --   event = "CursorMoved *",
-  --   setup = "require'conf.caw'.setup()",
-  -- },
-
   -- View and search LSP symbols, tags in Vim/Neovim
   {
     "liuchengxu/vista.vim",
@@ -129,5 +118,38 @@ return {
       vim.g.doge_mapping_comment_jump_forward  = "<M-n>"
       vim.g.doge_mapping_comment_jump_backward = "<M-p>"
     end
-  }
+  },
+
+  -- Language Server Protocol (LSP)
+  {
+    "neovim/nvim-lspconfig",
+    event = {"BufRead *"},
+    requires = {
+      {"nvim-lua/lsp-status.nvim", opt = true},
+      {"glepnir/lspsaga.nvim", opt = true},
+    },
+    setup = function()
+      require'conf.lspconfig'.setup()
+    end,
+    config = function()
+      vim.cmd [[packadd lsp-status.nvim]]
+      vim.cmd [[packadd lspsaga.nvim]]
+      require'conf.lspconfig'.config()
+    end
+  },
+
+  -- Debug Adapter Protocol client implementation for Neovim
+  {
+    "mfussenegger/nvim-dap",
+    ft = { "c", "cpp", "python", "rust", },
+    requires = {
+      { "mfussenegger/nvim-dap-python", opt = true },
+      { "theHamsta/nvim-dap-virtual-text", opt = true },
+    },
+    config = function()
+      vim.cmd[[packadd nvim-dap-python]]
+      vim.cmd[[packadd nvim-dap-virtual-text]]
+      require'conf.dap'.config()
+    end
+  },
 }
