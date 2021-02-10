@@ -3,7 +3,6 @@ return {
   { "wbthomason/packer.nvim", opt = true },
 
   { "nvim-lua/plenary.nvim" },
-  { "svermeulen/vimpeccable" },
 
   -- Fix CursorHold performance
   -- TODO: remove it if https://github.com/neovim/neovim/issues/12587 is fixed.

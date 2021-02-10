@@ -5,7 +5,11 @@ return {
   {
     "kana/vim-operator-replace",
     requires = { "kana/vim-operator-user" },
-    config = function()
+    keys = {
+      { "n", "<Plug>(operator-replace)" },
+      { "x", "<Plug>(operator-replace)" },
+    },
+    setup = function()
       vim.api.nvim_set_keymap("n", "_", "<Plug>(operator-replace)", {})
       vim.api.nvim_set_keymap("x", "_", "<Plug>(operator-replace)", {})
     end,
@@ -26,20 +30,20 @@ return {
       vim.g.textobj_sandwich_no_default_key_mappings = 1
 
       -- Key mappings
-      local options = {silent = true}
+      local opts = {silent = true}
 
       vim.api.nvim_set_keymap("n", "sd",
       "<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
-      options)
+      opts)
       vim.api.nvim_set_keymap("n", "sr",
       "<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)",
-      options)
+      opts)
       vim.api.nvim_set_keymap("n", "sd",
       "<Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
-      options)
+      opts)
       vim.api.nvim_set_keymap("n", "sr",
       "<Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)",
-      options)
+      opts)
 
       vim.api.nvim_set_keymap("n", "sa", "<Plug>(operator-sandwich-add)",     {})
       vim.api.nvim_set_keymap("x", "sa", "<Plug>(operator-sandwich-add)",     {})
@@ -84,7 +88,6 @@ return {
   -- Smart align
   {
     "junegunn/vim-easy-align",
-    -- event = "CursorMoved *",
     keys = {
       {"n", "<Plug>(EasyAlign)"},
       {"v", "<Plug>(EasyAlign)"},

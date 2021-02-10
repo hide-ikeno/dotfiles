@@ -73,17 +73,6 @@ return {
     end
   },
 
-  -- {
-  --   "tyru/caw.vim",
-  --   requires = {
-  --     "context_filetype.vim",
-  --     "vim-repeat",
-  --     "vim-operator-user",
-  --   },
-  --   event = "CursorMoved *",
-  --   setup = "require'conf.caw'.setup()",
-  -- },
-
   -- View and search LSP symbols, tags in Vim/Neovim
   {
     "liuchengxu/vista.vim",
