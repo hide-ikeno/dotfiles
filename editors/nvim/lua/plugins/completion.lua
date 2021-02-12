@@ -1,8 +1,10 @@
 return {
   {
     "hrsh7th/nvim-compe",
+    event = { "InsertEnter *" },
     config = function()
-      require"compe".setup {
+      local compe = require("compe")
+      compe.setup {
         enabled      = true,
         autocomplete = true,
         debug        = false,
@@ -19,12 +21,25 @@ return {
           tags          = true,
           snippets_nvim = false,
           treesitter    = true,
-        },
+        }
       }
       local opts = { silent = true, expr = true }
       vim.api.nvim_set_keymap("i", "<C-Space>", [[compe#complete()]], opts)
       vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close('<C-e>')]], opts)
       vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm('<CR>')]], opts)
+
+      -- We have to register sources manually, because packadd doesn't source
+      -- files from "after" directory inside "opt" directory.
+      -- See https://github.com/vim/vim/issues/1994
+      for _, src in ipairs{
+        "buffer", "calc", "nvim_lua", "path", "snippets_nvim", "spell",
+        "tags", "treesitter", "vsnip"
+      } do
+        vim.g["loaded_compe_"..src] = true
+        compe.register_source(src, require("compe_"..src))
+      end
+      vim.g.loaded_compe_nvim_lsp = true
+      require("compe_nvim_lsp").attach()
     end
   },
   {
