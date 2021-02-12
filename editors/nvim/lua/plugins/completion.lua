@@ -1,28 +1,30 @@
 return {
   {
     "hrsh7th/nvim-compe",
-    event = {"InsertEnter *"},
     config = function()
-      require("compe").setup{
-        enabled = true,
+      require"compe".setup {
+        enabled      = true,
         autocomplete = true,
-        debug = false,
-        min_length = 2,
-        preselect = "always",
+        debug        = false,
+        min_length   = 1,
+        preselect    = "always",
         source = {
-          -- builtin
-          path = true,
-          buffer = true,
-          tags = true,
-          spell = true,
-          calc = true,
-          -- Neovim specific
-          nvim_lsp = true,
-          nvim_lua = true,
-          -- external plugins
-          vsnip = true,
-        }
+          path          = true,
+          buffer        = true,
+          calc          = true,
+          vsnip         = true,
+          nvim_lsp      = true,
+          nvim_lua      = true,
+          spell         = true,
+          tags          = true,
+          snippets_nvim = false,
+          treesitter    = true,
+        },
       }
+      local opts = { silent = true, expr = true }
+      vim.api.nvim_set_keymap("i", "<C-Space>", [[compe#complete()]], opts)
+      vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close('<C-e>')]], opts)
+      vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm('<CR>')]], opts)
     end
   },
   {
@@ -33,6 +35,13 @@ return {
       vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
       -- Plugin snippets directories
       -- vim.g.vsnip_snippet_dirs = { vim.fn.stdpath("config") .. "/snippets" }
+    end,
+    config = function()
+      local opts = { expr = true }
+      vim.api.nvim_set_keymap("i", "<Tab>", [[vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>']], opts)
+      vim.api.nvim_set_keymap("s", "<Tab>", [[vsnip#available(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']], opts)
+      vim.api.nvim_set_keymap("i", "<S-Tab>", [[vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']], opts)
+      vim.api.nvim_set_keymap("s", "<S-Tab>", [[vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']], opts)
     end,
   }
 }

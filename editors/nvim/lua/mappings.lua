@@ -157,10 +157,6 @@ api.nvim_set_keymap("n", "s|", ":<C-u>vsplit<CR>", {noremap = true, silent = tru
 -- equal size window
 api.nvim_set_keymap("n", "s=", "<C-w>=<CR>", {noremap = true, silent = true})
 
--- Move windown with TAB
-api.nvim_set_keymap("n", "<Tab>",   "<C-w>w", {noremap = true, silent = true})
-api.nvim_set_keymap("n", "<S-Tab>", "<C-w>W", {noremap = true, silent = true})
-
 -- Resize window by Shift+arrow
 api.nvim_set_keymap("n", "<S-Left>",  "<C-w><", {noremap = true})
 api.nvim_set_keymap("n", "<S-Right>", "<C-w>>", {noremap = true})

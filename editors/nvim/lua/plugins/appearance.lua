@@ -13,7 +13,7 @@ return {
       require("bufferline").setup{
         options = {
           mappings = true,
-          always_show_bufferline = false,
+          always_show_bufferline = true,
         }
       }
     end

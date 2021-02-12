@@ -88,6 +88,8 @@ return {
           n = {
             ["q"] = actions.close,
             ["<Space>"] = actions.toggle_selection,
+            ["<C-n>"] = actions.move_selection_next,
+            ["<C-p>"] = actions.move_selection_previous,
             ["<C-q>"] = actions.send_to_qflist,
             ["<M-q>"] = actions.send_selected_to_qflist,
           },

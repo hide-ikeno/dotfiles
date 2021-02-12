@@ -101,7 +101,7 @@ vim.o.switchbuf = "useopen,usetab,vsplit"
 -- Keywork completion
 vim.o.showfulltag  = true             -- Show tag and tidy search in completion
 vim.o.complete     = "."              -- No wins, buffs, tags, include scanning
-vim.o.completeopt  = "menuone,noselect,noinsert"
+vim.o.completeopt  = "menuone,noselect"
 
 -- Diff mode
 vim.o.diffopt      = "filler,iwhite,internal,algorithm:histogram,indent-heuristic"
