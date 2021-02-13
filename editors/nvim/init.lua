@@ -1,5 +1,8 @@
 -- ~/.config/nvim/init.lua -- NeoVim configuration
 
+-- for vim.opt
+require("core.opt")
+
 -- Set envs
 require("envs").setup()
 
@@ -16,7 +19,7 @@ require("options")
 require("mappings")
 
 -- Filetype settings
-require("filetype").setup()
+require("ftplugin").setup()
 
 -- Appearance
 -- require("style")
