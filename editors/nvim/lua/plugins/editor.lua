@@ -63,16 +63,7 @@ return {
     end,
     config =  function()
       vim.g["textobj#sandwich#stimeoutlen"] = 100
-      -- vim.g["sandwich#recipes"] = vim.tbl_flatten({
-      --   { buns = {'「', '」'} },
-      --   { buns = {'【', '】'} },
-      --   { buns = {'（', '）'} },
-      --   { buns = {'『', '』'} },
-      --   { buns = {[[\(]], [[\)]]},  filetype = {"vim"}, nesting = 1 },
-      --   { buns = {[[\%(]], [[\)]]}, filetype = {"vim"}, nesting = 1 },
-      --   vim.g["sandwich#default_recipes"]
-      -- })
-      vim.cmd[[ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) ]]
+      vim.cmd[[let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)]]
       vim.cmd[[
         let g:sandwich#recipes += [{'buns': ['「', '」']}, {'buns': ['【', '】']}, {'buns': ['（', '）']}, {'buns': ['『', '』']}]
       ]]

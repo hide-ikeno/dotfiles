@@ -36,41 +36,21 @@ return {
 
   -- Comment plugin
   {
-    "b3nj5m1n/kommentary",
-    keys = {
-      {"n", "<Plug>kommentary_" },
-      {"v", "<Plug>kommentary_" },
-    },
-    setup = function()
-      vim.g.kommentary_create_default_mappings = false
-      vim.api.nvim_set_keymap("n", "<leader>cc", "<Plug>kommentary_line_default",  {silent = true})
-      vim.api.nvim_set_keymap("n", "<leader>c", "<Plug>kommentary_motion_default", {silent = true})
-      vim.api.nvim_set_keymap("v", "<leader>c", "<Plug>kommentary_visual_default", {silent = true})
-    end,
+    "terrortylor/nvim-comment",
     config = function()
-      local conf = require("kommentray.config")
-      conf.configure_language("c", {
-        single_line_comment_string = false,
-        multi_line_comment_strings = {"/*", "*/"},
-      })
-      conf.configure_language("cpp", {
-        single_line_comment_string = "//",
-        multi_line_comment_strings = {"/*", "*/"},
-        prefer_single_line_comments = true,
-      })
-      conf.configure_language("lua", {
-        prefer_single_line_comments = true,
-      })
-      conf.configure_language("python", {
-        single_line_comment_string = "#",
-        multi_line_comment_strings = false,
-      })
-      conf.configure_language("rust", {
-        single_line_comment_string = "//",
-        multi_line_comment_strings = {"/*", "*/"},
-        prefer_single_line_comments = true,
-      })
-    end
+      require('nvim_comment').setup {
+        -- Linters prefer comment and line to have a space in between markers
+        marker_padding = true,
+        -- should comment out empty or whitespace only lines
+        comment_empty = false,
+        -- Should key mappings be created
+        create_mappings = true,
+        -- Normal mode mapping left hand side
+        line_mapping = "<Leader>cc",
+        -- Visual/Operator mapping left hand side
+        operator_mapping = "<Leader>c"
+      }
+    end,
   },
 
   -- View and search LSP symbols, tags in Vim/Neovim
