@@ -72,11 +72,15 @@ M.path = (function()
   }
 end)()
 
---- set global options
-function M.set_global_options(options)
-  for k, v in pairs(options) do
-    vim.api.nvim_set_option(k, v)
-  end
+-- Get a variable with defaults
+function M.get_var(name, default_value)
+  local ok, data = pcall(vim.api.nvim_get_var, name)
+  return ok and data or default_value
+end
+
+function M.buf_get_var(bufnr, name, default_value)
+  local ok, data = pcall(vim.api.nvim_buf_get_var, bufnr, name)
+  return ok and data or default_value
 end
 
 --- create augroups
