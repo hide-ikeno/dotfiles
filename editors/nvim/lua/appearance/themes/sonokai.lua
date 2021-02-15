@@ -136,7 +136,7 @@ end
 local theme = {
   -- base
   Base     = { fg = colors.fg,   bg = conf.transparent_background and colors.none or colors.bg1 },
-  Inactive = { fg = colors.grey, bg = conf.transparent_background and colors.none or colors.bg1 },
+  Inactive = { fg = colors.grey, bg = colors.bg1 },
 
   -- vi mode
   Normal   = { fg = colors.black, bg = colors.bg_blue,  attr = "bold" },
@@ -149,7 +149,7 @@ local theme = {
   -- file
   FileIcon     = { fg = colors.blue,   bg = colors.bg4 },
   FileName     = { fg = colors.fg,     bg = colors.bg4 },
-  FileModified = { fg = colors.orange, bg = colors.bg4 },
+  FileModified = { fg = colors.orange, bg = colors.bg1 },
   FileReadonly = { fg = colors.red,    bg = colors.bg1 },
   FileSize     = { fg = colors.green,  bg = colors.bg1 },
   FileFormat   = { fg = colors.fg,     bg = colors.bg1 },
@@ -172,15 +172,15 @@ local theme = {
   NearestSymbol = { fg = colors.purple, bg = colors.bg0 },
 
   -- diagnostic
-  DiagnosticError   = { fg = colors.red,    bg = colors.bg0 },
-  DiagnosticWarning = { fg = colors.yellow, bg = colors.bg0 },
-  DiagnosticInfo    = { fg = colors.blue,   bg = colors.bg0 },
-  DiagnosticHint    = { fg = colors.green,  bg = colors.bg0 },
+  -- DiagnosticError   = { fg = colors.red,    bg = colors.bg0 },
+  -- DiagnosticWarning = { fg = colors.yellow, bg = colors.bg0 },
+  -- DiagnosticInfo    = { fg = colors.blue,   bg = colors.bg0 },
+  -- DiagnosticHint    = { fg = colors.green,  bg = colors.bg0 },
 
-  -- DiagnosticError   = { fg = colors.black, bg = colors.bg_red   },
-  -- DiagnosticWarning = { fg = colors.black, bg = colors.yellow   },
-  -- DiagnosticInfo    = { fg = colors.black, bg = colors.bg_blue  },
-  -- DiagnosticHint    = { fg = colors.black, bg = colors.bg_green },
+  DiagnosticError   = { fg = colors.black, bg = colors.bg_red   },
+  DiagnosticWarning = { fg = colors.black, bg = colors.yellow   },
+  DiagnosticInfo    = { fg = colors.black, bg = colors.bg_blue  },
+  DiagnosticHint    = { fg = colors.black, bg = colors.bg_green },
 }
 
 return theme
