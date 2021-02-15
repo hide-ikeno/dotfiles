@@ -92,8 +92,8 @@ end
 
 function M.config()
   local lspconfig  = require("lspconfig")
-  local lsp_status = require("lsp-status")
-  lsp_status.register_progress()
+  -- local lsp_status = require("lsp-status")
+  -- lsp_status.register_progress()
   local lspsaga = require("lspsaga")
   lspsaga.init_lsp_saga()
 
@@ -109,7 +109,7 @@ function M.config()
         '--suggest-missing-includes',
         '--cross-file-rename'
       },
-      handlers = lsp_status.extensions.clangd.setup(),
+      -- handlers = lsp_status.extensions.clangd.setup(),
       init_options = {
         clangdFileStatus = true,
         usePlaceholders = true,
@@ -213,7 +213,8 @@ function M.config()
   for server, config in pairs(servers) do
     config.on_attach = make_on_attach(config)
     config.capabilities = vim.tbl_deep_extend(
-      "keep", config.capabilities or {}, lsp_status.capabilities, snippet_capabilities
+      -- "keep", config.capabilities or {}, lsp_status.capabilities, snippet_capabilities
+      "keep", config.capabilities or {}, snippet_capabilities
       )
 
     lspconfig[server].setup(config)
