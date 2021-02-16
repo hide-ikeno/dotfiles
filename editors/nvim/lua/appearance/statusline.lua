@@ -268,7 +268,7 @@ local function diagnostic_info(inactive)
   if active_clients then
     local levels = {
       error = "Error",
-      warn = "Warnings",
+      warn = "Warning",
       info = "Information",
       hint = "Hint",
     } local icons = {
