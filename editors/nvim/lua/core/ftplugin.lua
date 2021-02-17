@@ -1,4 +1,5 @@
 local M = {}
+local event = require("core.event")
 
 function M.setup()
   --- Global options for filetypes
@@ -42,16 +43,17 @@ function M.setup()
   vim.g.xml_syntax_folding = 1
 
   --- Register filetype events
-  vim.cmd("augroup user_filetype_event")
-  vim.cmd("autocmd!")
-  vim.cmd("autocmd FileType *       lua require('ftplugin').ftplugin_common()")
-  vim.cmd("autocmd FileType c,cpp   lua require('ftplugin').ftplugin_c_cpp()")
-  vim.cmd("autocmd FileType fortran lua require('ftplugin').ftplugin_fortran()")
-  vim.cmd("autocmd FileType help    lua require('ftplugin').ftplugin_help()")
-  vim.cmd("autocmd FileType ruby    lua require('ftplugin').ftplugin_ruby()")
-  vim.cmd("autocmd FileType toml    lua require('ftplugin').ftplugin_toml()")
-  vim.cmd("autocmd FileType vim     lua require('ftplugin').ftplugin_vim()")
-  vim.cmd("augroup END")
+  event.create_augroups({
+    user_ftplugin = {
+      {"FileType", "*",       "lua require'core.ftplugin'.ftplugin_common()"},
+      {"FileType", "c, cpp",  "lua require'core.ftplugin'.ftplugin_c_cpp()"},
+      {"FileType", "fortran", "lua require'core.ftplugin'.ftplugin_fortran()"},
+      {"FileType", "help",    "lua require'core.ftplugin'.ftplugin_help()"},
+      {"FileType", "ruby",    "lua require'core.ftplugin'.ftplugin_ruby()"},
+      {"FileType", "toml",    "lua require'core.ftplugin'.ftplugin_toml()"},
+      {"FileType", "vim",     "lua require'core.ftplugin'.ftplugin_vim()"},
+    }
+  })
 end
 
 --- ftplugin
