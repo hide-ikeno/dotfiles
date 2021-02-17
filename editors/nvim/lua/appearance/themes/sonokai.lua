@@ -6,7 +6,7 @@ local conf = {
 }
 
 local colors
-if conf == "default" then
+if conf.style == "default" then
   colors = {
     black       = { "#181819", 237 },
     bg0         = { "#2c2e34", 235 },

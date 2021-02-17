@@ -162,12 +162,12 @@ function M.config()
   vim.fn["which_key#register"]('s', 'g:which_key_s_map')
 
   -- which-key events
-  vim.cmd("augroup user-plugin-which-key")
-  vim.cmd("autocmd!")
-  vim.cmd[[
-    autocmd FileType which_key set laststatus=0 | autocmd BufLeave <buffer> set laststatus=2
-  ]]
-  vim.cmd("augroup END")
+  require("core.event").create_augroups({
+    user_plugin_which_key = {
+      { "FileType", "which_key", "set laststatus=0" },
+      { "BufLeave", "<buffer>", "set laststatus=2" }
+    }
+  })
 end
 
 return M

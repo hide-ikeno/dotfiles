@@ -168,10 +168,11 @@ return {
       vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(eskk:toggle)", {silent = true})
 
       -- easy escape with 'jj'
-      vim.cmd("augroup user-plugin-eskk")
-      vim.cmd("autocmd!")
-      vim.cmd("autocmd User eskk-initialize-post EskkMap -remap jj <ESC>")
-      vim.cmd("augroup END")
+      require'core.event'.create_augroups({
+        user_plugin_eskk = {
+          {"User", "eskk-initialize-post", "Eskk -remap jj <ESC>"}
+        }
+      })
     end
   },
 
@@ -180,10 +181,13 @@ return {
     "thinca/vim-qfreplace",
     ft = {"qf"},
     config = function()
-      vim.cmd("augroup qfreplace_setup")
-      vim.cmd("autocmd!")
-      vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", {noremap = true})
-      vim.cmd("augroup END")
+      require'core.event'.create_augroups({
+        user_plugin_qfreplace = {
+          {"FileType", "qf", function()
+            vim.api.nvim_buf_set_keymap(0, "n", "R", "<cmd>Qfreplace<CR>", {noremap = true})
+          end},
+        }
+      })
     end
   },
 }
