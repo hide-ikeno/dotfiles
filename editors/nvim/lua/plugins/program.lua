@@ -108,9 +108,9 @@ return {
       -- {"nvim-lua/lsp-status.nvim", opt = true},
       {"glepnir/lspsaga.nvim", opt = true},
     },
-    setup = function()
-      require'conf.lspconfig'.setup()
-    end,
+    -- setup = function()
+    --   require'conf.lspconfig'.setup()
+    -- end,
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
       vim.cmd [[packadd lspsaga.nvim]]

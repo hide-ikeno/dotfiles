@@ -295,7 +295,7 @@ local function diagnostic_info(inactive)
       hl_right = "DiagnosticError"
     end
     if data.warn ~= nil and data.warn > 0 then
-      if not hl_left then hl_left = "DiagnosticWarn" end
+      if not hl_left then hl_left = "DiagnosticWarning" end
       s = s .. string.format("%%#StatusLineDiagnosticWarning# %s %s ", icons.warn, data.warn)
       hl_right = "DiagnosticWarning"
     end

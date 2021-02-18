@@ -54,7 +54,7 @@ end
 
 function plugins.auto_compile()
   local file = vim.fn.expand("%:p")
-  if file:match(plugin_config_dir) then
+  if file:match("nvim/lua/plugins/%a+.lua") then
     plugins.compile()
   end
 end

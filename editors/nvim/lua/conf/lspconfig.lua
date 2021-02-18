@@ -1,5 +1,5 @@
 local M = {}
-local path = require("utils").path
+local globals = require("core.globals")
 
 local function make_on_attach(config)
   return function(client)
@@ -11,33 +11,35 @@ local function make_on_attach(config)
     vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- key mappings
+    local buf_keymap = vim.api.nvim_buf_set_keymap
     local opt1 = {noremap = true, silent = true}
     local opt2 = {noremap = true, silent = true, nowait = true}
-    vim.api.nvim_buf_set_keymap(0, "n", "ma", "<cmd>Lspsaga code_action<CR>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "v", "ma", ":<C-u>Lspsaga range_code_action<CR>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "md", "<cmd>Lspsaga lsp_finder<CR>",      opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>",     opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>",  opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opt1)
-    -- vim.api.nvim_buf_set_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>",      opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "mp", "<cmd>Lspsaga preview_definition<CR>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "mR", "<cmd>Lspsaga rename<CR>",          opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "mh", "<cmd>Lspsaga hover_doc<CR>",  opt1)
-    -- vim.api.nvim_buf_set_keymap(0, "n", "<C-f>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(1)<CR>", opt2)
-    -- vim.api.nvim_buf_set_keymap(0, "n", "<c-b>", "<cmd>lua require'lspsaga.hover'.smart_scroll_hover(-1)<cr>", opt2)
-    vim.api.nvim_buf_set_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "m?", "<cmd>lspsaga show_line_diagnostics<cr>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "m]", "<cmd>Lspsaga diagnostic_jump_next<CR>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "m[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "me", "<cmd>Lspsaga show_line_diagnostics<CR>", opt1)
-    vim.api.nvim_buf_set_keymap(0, "n", "m?", "<cmd>Lspsaga signature_help<CR>", opt1)
 
-    vim.cmd[[augroup nvim_lspconfig_user_autocmds]]
+    buf_keymap(0, "n", "<C-f>", "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>", opt2)
+    buf_keymap(0, "n", "<C-b>", "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>", opt2)
+    buf_keymap(0, "n", "ma", "<cmd>Lspsaga code_action<CR>", opt1)
+    buf_keymap(0, "v", "ma", ":<C-u>Lspsaga range_code_action<CR>", opt1)
+    buf_keymap(0, "n", "md", "<cmd>Lspsaga preview_definition<CR>", opt1)
+    buf_keymap(0, "n", "mf", "<cmd>Lspsaga lsp_finder<CR>",      opt1)
+    buf_keymap(0, "n", "mh", "<cmd>Lspsaga hover_doc<CR>",  opt1)
+    buf_keymap(0, "n", "m?", "<cmd>Lspsaga signature_help<CR>", opt1)
+    buf_keymap(0, "n", "mR", "<cmd>Lspsaga rename<CR>",          opt1)
+    buf_keymap(0, "n", "m]", "<cmd>Lspsaga diagnostic_jump_next<CR>", opt1)
+    buf_keymap(0, "n", "m[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opt1)
+    buf_keymap(0, "n", "me", "<cmd>Lspsaga show_line_diagnostics<CR>", opt1)
+
+    buf_keymap(0, "n", "mD", "<cmd>lua vim.lsp.buf.declaration()<CR>",     opt1)
+    buf_keymap(0, "n", "mi", "<cmd>lua vim.lsp.buf.implementation()<CR>",  opt1)
+    buf_keymap(0, "n", "mt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opt1)
+    buf_keymap(0, "n", "mr", "<cmd>lua vim.lsp.buf.references()<CR>",      opt1)
+    buf_keymap(0, "n", "mo", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opt1)
+
+    vim.cmd[[augroup user_plugin_lspconfig]]
     vim.cmd[[autocmd! * <buffer>]]
     vim.cmd[[augroup end]]
     -- formatting
     if client.resolved_capabilities.document_formatting then
-      vim.cmd[[autocmd nvim_lspconfig_user_autocmds BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil,1000)]]
+      vim.cmd[[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil,1000)]]
     end
     if client.resolved_capabilities.document_range_formatting then
       vim.api.nvim_buf_set_keymap(0, "n", "m=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opt1)
@@ -46,8 +48,8 @@ local function make_on_attach(config)
 
     -- automatic highlight
     if client.resolved_capabilities.document_highlight then
-      vim.cmd[[autocmd nvim_lspconfig_user_autocmds CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
-      vim.cmd[[autocmd nvim_lspconfig_user_autocmds CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
+      vim.cmd[[autocmd user_plugin_lspconfig CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
+      vim.cmd[[autocmd user_plugin_lspconfig CursorMoved <buffer> lua vim.lsp.buf.clear_references()]]
     end
     if config.after then
       config.after(client)
@@ -55,15 +57,42 @@ local function make_on_attach(config)
   end
 end
 
-function M.setup()
-  -- Variables
-  vim.fn.sign_define("LspDiagnosticsErrorSign",       { text = "", texthl = "LspDiagnosticError"      })
-  vim.fn.sign_define("LspDiagnosticsWarningSign",     { text = "", texthl = "LspDiagnosticWarning"    })
-  vim.fn.sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
-  vim.fn.sign_define("LspDiagnosticsHintSign",        { text = "", texthl = "LspDiagnosticHint"       })
+function M.config()
+  -- [[ Configure builtin lsp]]
+  local sign_define = vim.fn.sign_define
+  sign_define("LspDiagnosticsErrorSign",       { text = "", texthl = "LspDiagnosticError"      })
+  sign_define("LspDiagnosticsWarningSign",     { text = "", texthl = "LspDiagnosticWarning"    })
+  sign_define("LspDiagnosticsInformationSign", { text = "", texthl = "LspDiagnosticInformtion" })
+  sign_define("LspDiagnosticsHintSign",        { text = "", texthl = "LspDiagnosticHint"       })
 
-  -- Configure built in LSP
-  --vim.lsp.set_log_level("debug")
+  vim.lsp.protocol.CompletionItemKind = {
+    " [text]",
+    "Ƒ [method]",
+    " [function]",
+    " [constructor]",
+    "ﰠ [field]",
+    " [variable]",
+    " [class]",
+    " [interface]",
+    " [module]",
+    " [property]",
+    " [unit]",
+    " [value]",
+    " [enum]",
+    " [key]",
+    "﬌ [snippet]",
+    " [color]",
+    " [file]",
+    " [reference]",
+    " [folder]",
+    " [enum member]",
+    " [constant]",
+    " [struct]",
+    "⌘ [event]",
+    " [operator]",
+    "♛ [type]"
+  }
+
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       underline = true,
@@ -88,9 +117,7 @@ function M.setup()
       end
     end
   end
-end
 
-function M.config()
   local lspconfig  = require("lspconfig")
   -- local lsp_status = require("lsp-status")
   -- lsp_status.register_progress()
@@ -102,9 +129,10 @@ function M.config()
     bashls = {},
     clangd = {
       cmd = {
-        'clangd', -- '--background-index',
+        'clangd',
+        '--background-index',
         '--clang-tidy',
-        '--completion-style=bundled',
+        -- '--completion-style=bundled',
         '--header-insertion=iwyu',
         '--suggest-missing-includes',
         '--cross-file-rename'
@@ -144,16 +172,6 @@ function M.config()
     jsonls = {},
     -- julials = {},
     pyright = {
-      handlers = {
-        -- place holder to ignore the registerCapability messages.
-        -- See https://github.com/neovim/neovim/issues/13448
-        ['client/registerCapability'] = function(_, _, _, _)
-          return {
-            result = nil;
-            error = nil;
-          }
-        end
-      },
       settings = {
         python = {
           formatting = { provider = 'black' }
@@ -164,40 +182,6 @@ function M.config()
     solargraph = {},
     vimls = {},
     yamlls = {},
-  }
-
-  local system_name
-  if vim.fn.has("mac") == 1 then
-    system_name = "macOS"
-  elseif vim.fn.has("unix") == 1 then
-    system_name = "Linux"
-  elseif vim.fn.has('win32') == 1 then
-    system_name = "Windows"
-  else
-    print("Unsupported system for sumneko")
-  end
-  -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
-  local sumneko_root_path = vim.fn.expand('$HOME/src/github.com/sumneko/lua-language-server')
-  local sumneko_binary = path.join(sumneko_root_path, "bin", system_name, "lua-language-server")
-  servers.sumneko_lua = {
-    cmd = {sumneko_binary, "-E", path.join(sumneko_root_path, "main.lua") },
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = {'vim'}
-        },
-        runtime = {
-          version = 'LuaJIT',
-          path = vim.split(package.path, ";")
-        },
-        workspace = {
-          library = {
-            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-          }
-        }
-      }
-    }
   }
 
   local snippet_capabilities = {
@@ -219,6 +203,41 @@ function M.config()
 
     lspconfig[server].setup(config)
   end
+
+  -- Lua language server
+  local system_name
+  if globals.is_mac then
+    system_name = "macOS"
+  elseif globals.is_linux then
+    system_name = "Linux"
+  elseif globals.is_windows then
+    system_name = "Windows"
+  else
+    print("Unsupported system for sumneko")
+  end
+  local sumneko_root_path = vim.fn.expand('$HOME/src/github.com/sumneko/lua-language-server')
+  local sumneko_binary = string.format("%s/bin/%s/lua-language-server", sumneko_root_path, system_name)
+  lspconfig.sumneko_lua.setup {
+    cmd = {sumneko_binary, "-E", sumneko_root_path.."/main.lua" },
+    on_attach = make_on_attach({}),
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = {'vim', "packer_plugins"}
+        },
+        runtime = {
+          version = 'LuaJIT',
+          path = vim.split(package.path, ";")
+        },
+        workspace = {
+          library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+          }
+        }
+      }
+    }
+  }
 
 end
 
