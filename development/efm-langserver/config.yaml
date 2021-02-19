@@ -1,7 +1,9 @@
 version: 2
 
 root-markers:
-  - .git/
+  - .hg
+  - .svn
+  - .git
 
 tools:
   eruby-erb: &eruby-erb

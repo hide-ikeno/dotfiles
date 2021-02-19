@@ -114,7 +114,7 @@ return {
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
       vim.cmd [[packadd lspsaga.nvim]]
-      require'conf.lspconfig'.config()
+      require'conf.lspconfig'
     end
   },
 

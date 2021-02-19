@@ -406,4 +406,3 @@ function M.setup(theme_name)
 end
 
 return M
-
