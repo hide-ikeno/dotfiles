@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-  require'nvim-treesitter.configs'.setup{
+  require'nvim-treesitter.configs'.setup {
     -- one of 'all', 'language', or a list of languages
     ensure_installed = "all",
     -- [[ Highlight ]]
@@ -10,7 +10,7 @@ function M.config()
       disable = {},
       custom_captures = {
         -- ["foo.bar"] = "Identifier"
-      }
+      },
     },
     -- [[ Incremental selection ]]
     incremental_selection = {
@@ -18,33 +18,29 @@ function M.config()
       disable = {},
       keymaps = {
         -- mappings for incremental selection (visual mappings)
-        init_selection    = "<M-v>",   -- maps in normal mode to init the node/scope selection
-        node_incremental  = "<M-v>",   -- increment to the upper named parent
+        init_selection = "<M-v>", -- maps in normal mode to init the node/scope selection
+        node_incremental = "<M-v>", -- increment to the upper named parent
         scope_incremental = "<C-M-v>", -- increment to the upper scope (as defined in locals.scm)
-        node_decremental  = "<M-V>",   -- decrement to the previous node
-      }
+        node_decremental = "<M-V>", -- decrement to the previous node
+      },
     },
     -- [[ Refactor ]]
     refactor = {
-      highlight_definitions = {
-        enable = true
-      },
-      highlight_current_scope = {
-        enable = true
-      },
+      highlight_definitions = { enable = true },
+      highlight_current_scope = { enable = true },
       smart_rename = {
         enable = true,
         keymaps = {
-          smart_rename = "grr"         -- mapping to rename reference under cursor
-        }
+          smart_rename = "grr", -- mapping to rename reference under cursor
+        },
       },
       navigation = {
         enable = true,
         keymaps = {
-          goto_definition  = "gnd",    -- mapping to go to definition of symbol under cursor
-          list_definitions = "gnD"     -- mapping to list all definitions in current file
-        }
-      }
+          goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
+          list_definitions = "gnD", -- mapping to list all definitions in current file
+        },
+      },
     },
     -- [[ Text objects ]]
     textobjects = {
@@ -68,16 +64,12 @@ function M.config()
           ["im"] = "@call.inner",
           ["ad"] = "@comment.outer",
           ["id"] = "@comment.inner",
-        }
+        },
       },
       swap = {
         enable = true,
-        swap_next = {
-          ["<Leader>s"] = "@parameter.inner",
-        },
-        swap_previous = {
-          ["<Leader>S"] = "@parameter.inner",
-        },
+        swap_next = { ["<Leader>s"] = "@parameter.inner" },
+        swap_previous = { ["<Leader>S"] = "@parameter.inner" },
       },
     },
   }

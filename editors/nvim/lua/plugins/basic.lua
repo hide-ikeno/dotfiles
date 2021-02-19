@@ -18,33 +18,45 @@ return {
       vim.g.tmux_navigator_no_mappings = 1
 
       -- Key mappings
-      local opt = {noremap = true, silent = true}
-      vim.api.nvim_set_keymap("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>",  opt)
-      vim.api.nvim_set_keymap("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>",  opt)
-      vim.api.nvim_set_keymap("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>",    opt)
+      local opt = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>", opt)
+      vim.api.nvim_set_keymap("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>", opt)
+      vim.api.nvim_set_keymap("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>", opt)
       vim.api.nvim_set_keymap("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opt)
 
-      vim.api.nvim_set_keymap("t", "<M-h>", "<cmd>TmuxNavigateLeft<CR>",  opt)
-      vim.api.nvim_set_keymap("t", "<M-j>", "<cmd>TmuxNavigateDown<CR>",  opt)
-      vim.api.nvim_set_keymap("t", "<M-k>", "<cmd>TmuxNavigateUp<CR>",    opt)
+      vim.api.nvim_set_keymap("t", "<M-h>", "<cmd>TmuxNavigateLeft<CR>", opt)
+      vim.api.nvim_set_keymap("t", "<M-j>", "<cmd>TmuxNavigateDown<CR>", opt)
+      vim.api.nvim_set_keymap("t", "<M-k>", "<cmd>TmuxNavigateUp<CR>", opt)
       vim.api.nvim_set_keymap("t", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opt)
-    end
+    end,
   },
 
   -- Better whitespace highlighting
   {
     "ntpeters/vim-better-whitespace",
-    event = {"BufNewFile *", "BufRead *"},
+    event = { "BufNewFile *", "BufRead *" },
     setup = function()
-      vim.g.better_whitespace_enabled     = 1
-      vim.g.strip_whitespace_on_save      = 1
+      vim.g.better_whitespace_enabled = 1
+      vim.g.strip_whitespace_on_save = 1
       vim.g.show_spaces_that_precede_tabs = 1
-      vim.g.better_whitespace_filetypes_blacklist = {
-        'diff', 'gitcommit', 'defx', 'denite', 'qf', 'help', 'markdown', 'packer', 'which_key'
-      }
+      vim.g.better_whitespace_filetypes_blacklist =
+        {
+          'diff',
+          'gitcommit',
+          'defx',
+          'denite',
+          'qf',
+          'help',
+          'markdown',
+          'packer',
+          'which_key',
+        }
 
-      vim.api.nvim_set_keymap("n", "<Leader>x", "<cmd>StripWhitespace<CR>", {noremap = true, silent = true})
-    end
+      vim.api.nvim_set_keymap(
+        "n", "<Leader>x", "<cmd>StripWhitespace<CR>",
+        { noremap = true, silent = true }
+      )
+    end,
   },
 }
 

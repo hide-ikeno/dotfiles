@@ -3,10 +3,7 @@ return {
   { "tpope/vim-repeat" },
 
   -- Even better % navigation and highlight mathching words
-  {
-    "andymass/vim-matchup",
-    event = { "CursorHold" },
-  },
+  { "andymass/vim-matchup", event = { "CursorHold" } },
 
   -- Imporove foldtext for better looks
   { "lambdalisue/readablefold.vim" },
@@ -39,15 +36,13 @@ return {
   -- Make blockwise visual mode more useful
   {
     "kana/vim-niceblock",
-    keys = {
-      { "v", "<Plug>(niceblock-" }
-    },
+    keys = { { "v", "<Plug>(niceblock-" } },
     setup = function()
       vim.g.niceblock_no_default_key_mappings = 1
-      vim.api.nvim_set_keymap("v", "I",  "<Plug>(niceblock-I)",  {})
+      vim.api.nvim_set_keymap("v", "I", "<Plug>(niceblock-I)", {})
       vim.api.nvim_set_keymap("v", "gI", "<Plug>(niceblock-gI)", {})
-      vim.api.nvim_set_keymap("v", "A",  "<Plug>(niceblock-A)",  {})
-    end
+      vim.api.nvim_set_keymap("v", "A", "<Plug>(niceblock-A)", {})
+    end,
   },
 
   -- Smart line join
@@ -64,27 +59,25 @@ return {
       vim.api.nvim_set_keymap("v", "J", "<Plug>(jplus)", {})
       vim.api.nvim_set_keymap("n", "<Leader>J", "<Plug>(jplus-input)", {})
       vim.api.nvim_set_keymap("v", "<Leader>J", "<Plug>(jplus-input)", {})
-    end
+    end,
   },
 
   -- The killring-alike plugin with no default mappings.
   -- (Use this plugin until https://github.com/neovim/neovim/issues/1822 is fixed)
   {
     "bfredl/nvim-miniyank",
-    keys = {
-      { "n", "<Plug>(miniyank-" },
-    },
+    keys = { { "n", "<Plug>(miniyank-" } },
     setup = function()
       vim.g.miniyank_maxitems = 100
       vim.api.nvim_set_keymap("n", "p", "<Plug>(miniyank-autoput)", {})
       vim.api.nvim_set_keymap("n", "P", "<Plug>(miniyank-autoPut)", {})
-    end
+    end,
   },
 
   -- Show keybindings in popup
   {
     "liuchengxu/vim-which-key",
-    cmd = {"WhichKey", "WhichKeyVisual"},
+    cmd = { "WhichKey", "WhichKeyVisual" },
     setup = "require'conf.vim-which-key'.setup()",
     config = "require'conf.vim-which-key'.config()",
   },
@@ -98,14 +91,9 @@ return {
       "ColorizerReloadAllBuffers",
       "ColorizerToggle",
     },
-    config = function()
-      require'colorizer'.setup()
-    end,
+    config = function() require'colorizer'.setup() end,
   },
 
   -- Breakdown Vim's --startuptime output
-  {
-    "tweekmonster/startuptime.vim",
-    cmd = "StartupTime",
-  },
+  { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
 }

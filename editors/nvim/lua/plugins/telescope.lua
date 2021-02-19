@@ -7,7 +7,7 @@ return {
     { "nvim-telescope/telescope-dap.nvim", opt = true },
     {
       "nvim-telescope/telescope-frecency.nvim",
-      requires = {"tami5/sql.nvim", opt = true},
+      requires = { "tami5/sql.nvim", opt = true },
       opt = true,
     },
     { "nvim-telescope/telescope-fzf-writer.nvim", opt = true },
@@ -44,7 +44,7 @@ return {
       'telescope-github.nvim',
       'telescope-packer.nvim',
       'telescope-symbols.nvim',
-    } do vim.cmd('packadd '..name) end
+    } do vim.cmd('packadd ' .. name) end
 
     local telescope = require("telescope")
     local actions = require("telescope.actions")
@@ -98,11 +98,7 @@ return {
 
       extensions = {
         frecency = {
-          ignore_patterns = {
-            "*.git/*",
-            "*/tmp/*",
-            "*/build/*",
-          },
+          ignore_patterns = { "*.git/*", "*/tmp/*", "*/build/*" },
           show_scores = true,
           show_unindexed = true,
         },
@@ -110,7 +106,7 @@ return {
         fzf_writer = {
           minimum_grep_characters = 3,
           minimum_files_characters = 3,
-          use_highlighter = false
+          use_highlighter = false,
         },
 
         fzy_native = {
@@ -128,27 +124,35 @@ return {
 
     -- find command
     local ignore_globs = {
-      ".git", ".ropeproject", "__pycache__", ".venv", "venv",
-      "node_modules", "images", "*.min.*", "img", "fonts"
+      ".git",
+      ".ropeproject",
+      "__pycache__",
+      ".venv",
+      "venv",
+      "node_modules",
+      "images",
+      "*.min.*",
+      "img",
+      "fonts",
     }
     local find_cmd;
     if vim.fn.executable("fd") then
-      find_cmd = {"fd", ".", "--hidden", "--type", "f"}
+      find_cmd = { "fd", ".", "--hidden", "--type", "f" }
       for _, x in ipairs(ignore_globs) do
         table.insert(find_cmd, "--exclude")
         table.insert(find_cmd, x)
       end
     elseif vim.fn.executable("rg") then
-      find_cmd = {"rg", "--follow", "--hidden", "--files"}
+      find_cmd = { "rg", "--follow", "--hidden", "--files" }
       for _, x in ipairs(ignore_globs) do
         table.insert(find_cmd, "--glob=!" .. x)
       end
     elseif vim.fn.executable("ag") then
-      find_cmd = {"ag", "-U", "--hidden", "--follow"}
+      find_cmd = { "ag", "-U", "--hidden", "--follow" }
       for _, x in ipairs(ignore_globs) do
         table.insert(find_cmd, "--exclude=" .. x)
       end
-      for _, x in ipairs({"--nocolor", "--nogroup", "-g", ""}) do
+      for _, x in ipairs({ "--nocolor", "--nogroup", "-g", "" }) do
         table.insert(find_cmd, x)
       end
     end
@@ -157,8 +161,7 @@ return {
     local map_builtin = function(key, f, options)
       local mode = "n"
       local rhs = string.format(
-        "<cmd>lua require('telescope.builtin')['%s'](%s)<CR>",
-        f,
+        "<cmd>lua require('telescope.builtin')['%s'](%s)<CR>", f,
         options and vim.inspect(options, { newline = '' }) or ''
       )
       local opts = { noremap = true, silent = true }
@@ -168,8 +171,7 @@ return {
     local map_extension = function(key, e, f, options)
       local mode = "n"
       local rhs = string.format(
-        "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>",
-        e, f,
+        "<cmd>lua require('telescope').extensions['%s']['%s'](%s)<CR>", e, f,
         options and vim.inspect(options, { newline = '' }) or ''
       )
       local opts = { noremap = true, silent = true }
@@ -182,18 +184,16 @@ return {
     map_builtin("<Space>G", "grep_string", { shorten_path = true })
 
     -- Vim pickers
-    map_builtin("<Space>b", "buffers", {
-      shorten_path = false, initial_mode = 'normal'
-    })
+    map_builtin(
+      "<Space>b", "buffers", { shorten_path = false, initial_mode = 'normal' }
+    )
     map_builtin("<Space>h", "help_tags", { show_version = true })
     map_builtin("<Space>;", "command_history")
     map_builtin("<Space>t", "treesitter")
-    map_builtin("<Space>l", "current_buffer_fuzzy_find", {
-      winblend = 10,
-      border = true,
-      previewer = false,
-      shorten_path = false,
-    })
+    map_builtin(
+      "<Space>l", "current_buffer_fuzzy_find",
+      { winblend = 10, border = true, previewer = false, shorten_path = false }
+    )
 
     -- LSP pickers
     map_builtin("<Space>a", "lsp_code_actions")
@@ -208,16 +208,15 @@ return {
     -- map_builtin("<Space>gs", "git_status", { initial_mode = "normal" })
 
     -- frecency
-    map_extension("<Space>o", "frecency", "frecency", {
-      shorten_path = true,
-      previewer = false,
-      fzf_separator = "|>",
-    })
+    map_extension(
+      "<Space>o", "frecency", "frecency",
+      { shorten_path = true, previewer = false, fzf_separator = "|>" }
+    )
 
     -- fzf-writer
-    map_extension("<Space>/", "fzf_writer", "staged_grep", {
-      layout_strategy = "vertical"
-    })
+    map_extension(
+      "<Space>/", "fzf_writer", "staged_grep", { layout_strategy = "vertical" }
+    )
 
     -- nvim-dap inl_defaultctegration
     map_extension("<Space>dc", "dap", "commands")

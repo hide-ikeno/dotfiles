@@ -2,7 +2,6 @@
 -- (See https://github.com/neovim/neovim/pull/13479)
 -- TODO:
 -- Use this script until the above PR is merged.
-
 --[[ To use a more declarative syntax, you could do something like this:
 
 local function set_opts(opts_table)
@@ -16,8 +15,7 @@ set_opts {
   fillchars = { eob = "~" },
 }
 
---]]
-
+--]] --
 --[[ Global option names
 
 For those wondering how to get the values at the top level,
@@ -30,23 +28,19 @@ setfenv(function()
     mouse = 'n'
 end, vim.opt)()
 
---]]
-
+--]] --
 local if_nil = function(a, b)
-  if a == nil then
-    return b
-  end
+  if a == nil then return b end
   return a
 end
 
-local singular_values = {
-  ['boolean'] = true,
-  ['number']  = true,
-  ['nil']     = true,
-}
+local singular_values =
+  { ['boolean'] = true, ['number'] = true, ['nil'] = true }
 
 local set_key_value = function(t, key_value_str)
-  assert(string.find(key_value_str, ":"), "Must have a :" .. tostring(key_value_str))
+  assert(
+    string.find(key_value_str, ":"), "Must have a :" .. tostring(key_value_str)
+  )
 
   local key, value = unpack(vim.split(key_value_str, ":"))
   key = vim.trim(key)
@@ -57,22 +51,16 @@ end
 
 local convert_vimoption_to_lua = function(option, val)
   -- Short circuit if we've already converted!
-  if type(val) == 'table' then
-    return val
-  end
+  if type(val) == 'table' then return val end
 
-  if singular_values[type(val)] then
-    return val
-  end
+  if singular_values[type(val)] then return val end
 
   if type(val) == "string" then
     -- TODO: Bad hax I think
     if string.find(val, ":") then
       local result = {}
       local items = vim.split(val, ",")
-      for _, item in ipairs(items) do
-        set_key_value(result, item)
-      end
+      for _, item in ipairs(items) do set_key_value(result, item) end
 
       return result
     else
@@ -97,9 +85,7 @@ end
 
 local remove_duplicate_values = function(t)
   local result = {}
-  for _, v in ipairs(t) do
-    result[v] = true
-  end
+  for _, v in ipairs(t) do result[v] = true end
 
   return vim.tbl_keys(result)
 end
@@ -107,15 +93,9 @@ end
 local remove_value = function(t, val)
   if vim.tbl_islist(t) then
     local remove_index = nil
-    for i, v in ipairs(t) do
-      if v == val then
-        remove_index = i
-      end
-    end
+    for i, v in ipairs(t) do if v == val then remove_index = i end end
 
-    if remove_index then
-      table.remove(t, remove_index)
-    end
+    if remove_index then table.remove(t, remove_index) end
   else
     t[val] = nil
   end
@@ -126,10 +106,8 @@ end
 local add_value = function(current, new)
   if singular_values[type(current)] then
     error(
-      "This is not possible to do. Please do something different: "
-      .. tostring(current)
-      .. " // "
-      .. tostring(new)
+      "This is not possible to do. Please do something different: " ..
+        tostring(current) .. " // " .. tostring(new)
     )
   end
 
@@ -168,9 +146,7 @@ local convert_lua_to_vimoption = function(t)
 end
 
 local clean_value = function(v)
-  if singular_values[type(v)] then
-    return v
-  end
+  if singular_values[type(v)] then return v end
 
   local result = v:gsub('^,', '')
 
@@ -181,17 +157,13 @@ local opt_mt
 
 opt_mt = {
   __index = function(t, k)
-    if k == '_value' then
-      return rawget(t, k)
-    end
+    if k == '_value' then return rawget(t, k) end
 
-    return setmetatable({ _option = k, }, opt_mt)
+    return setmetatable({ _option = k }, opt_mt)
   end,
 
   __newindex = function(t, k, v)
-    if k == '_value' then
-      return rawset(t, k, v)
-    end
+    if k == '_value' then return rawset(t, k, v) end
 
     if type(v) == 'table' then
       local new_value
@@ -206,9 +178,7 @@ opt_mt = {
       return
     end
 
-    if v == nil then
-      v = ''
-    end
+    if v == nil then v = '' end
 
     -- TODO: Figure out why nvim_set_option doesn't override values the same way.
     -- @bfredl said he will fix this for me, so I can just use nvim_set_option
@@ -237,9 +207,7 @@ opt_mt = {
 
     local existing = if_nil(left._value, vim.o[left._option])
     local current = convert_vimoption_to_lua(left._option, existing)
-    if not current then
-      left._value = convert_vimoption_to_lua(right)
-    end
+    if not current then left._value = convert_vimoption_to_lua(right) end
 
     left._value = add_value(current, right)
     return left
@@ -250,13 +218,11 @@ opt_mt = {
 
     local existing = if_nil(left._value, vim.o[left._option])
     local current = convert_vimoption_to_lua(left._option, existing)
-    if not current then
-      return left
-    end
+    if not current then return left end
 
     left._value = remove_value(current, right)
     return left
-  end
+  end,
 }
 
 vim.opt = setmetatable({}, opt_mt)
@@ -264,5 +230,5 @@ vim.opt = setmetatable({}, opt_mt)
 return {
   convert_vimoption_to_lua = convert_vimoption_to_lua,
   opt = vim.opt,
-  opt_mt = opt_mt
+  opt_mt = opt_mt,
 }

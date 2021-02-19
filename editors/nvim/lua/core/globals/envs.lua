@@ -1,9 +1,7 @@
 local envs = {}
 local globals = require("core.globals")
 
-local function is_empty_string(str)
-  return str == nil or str == ""
-end
+local function is_empty_string(str) return str == nil or str == "" end
 
 local function is_directory(filename)
   local stat = vim.loop.fs_stat(filename)
@@ -19,7 +17,7 @@ local function configure_path(new_paths, path_var)
       if not is_empty_string(x) then
         local y = vim.fn.expand(x)
         if is_directory(y) and not vim.tbl_contains(paths, y) then
-          paths[#paths+1] = y
+          paths[#paths + 1] = y
         end
       end
     end
@@ -36,7 +34,8 @@ end
 
 function envs:set_variables()
   -- Set PATH/MANPATH so that Nvim GUI frontend can recognize these variables
-  vim.env.PATH = configure_path({
+  vim.env.PATH = configure_path(
+    {
       "~/.poetry/bin",
       "~/.yarn/bin",
       "~/.cargo/bin",
@@ -54,16 +53,19 @@ function envs:set_variables()
       "/usr/local/sbin",
       "/usr/sbin",
       "/sbin",
-    }, os.getenv("PATH"))
+    }, os.getenv("PATH")
+  )
 
-  vim.env.MANPATH = configure_path({
+  vim.env.MANPATH = configure_path(
+    {
       "~/.local/share/man",
       "/usr/share/man/",
       "/usr/local/share/man/ja",
       "/usr/local/share/man/",
       "/Applications/Xcode.app/Contents/Developer/usr/share/man",
       "/opt/intel/man/",
-    }, os.getenv("MANPATH"))
+    }, os.getenv("MANPATH")
+  )
 end
 
 return envs
