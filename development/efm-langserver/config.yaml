@@ -170,7 +170,7 @@ languages:
 
   python:
     # - <<: *python-flake8
-    - <<: *python-mypy
+    # - <<: *python-mypy
     # - <<: *python-autopep8
     # - <<: *python-yapf
     - <<: *python-black

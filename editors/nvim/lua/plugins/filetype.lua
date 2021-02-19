@@ -12,7 +12,7 @@ return {
     config = function()
       vim.cmd [[packadd nvim-treesitter-refactor]]
       vim.cmd [[packadd nvim-treesitter-textobjects]]
-      require'conf.treesitter'.config()
+      require('conf.treesitter').config()
     end,
   },
 

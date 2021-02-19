@@ -133,7 +133,7 @@ return {
     config = function()
       -- vim.cmd [[packadd lsp-status.nvim]]
       vim.cmd [[packadd lspsaga.nvim]]
-      require 'conf.lspconfig'
+      require('conf.lspconfig')
     end,
   },
 
@@ -148,7 +148,7 @@ return {
     config = function()
       vim.cmd [[packadd nvim-dap-python]]
       vim.cmd [[packadd nvim-dap-virtual-text]]
-      require'conf.dap'.config()
+      require("conf.dap")
     end,
   },
 }
