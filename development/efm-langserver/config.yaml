@@ -1,4 +1,8 @@
 version: 2
+
+root-markers:
+  - .git/
+
 tools:
   eruby-erb: &eruby-erb
     lint-command: 'erb -x -T - | ruby -c'
@@ -56,10 +60,20 @@ tools:
       - '%f:%l:%c: %tote: %m'
 
   python-black: &python-black
-    format-command: 'black'
+    format-command: 'black --quiet -'
+    format-stdin: true
+
+  python-autopep8: &python-autopep8
+    format-command: 'autopep8 -'
+    format-stdin: true
+
+  python-yapf: &python-yapf
+    format-command: 'yapf --quiet'
+    format-stdin: true
 
   python-isort: &python-isort
-    format-command: 'isort'
+    format-command: 'isort --quiet -'
+    format-stdin: true
 
   dockerfile-hadolint: &dockerfile-hadolint
     lint-command: 'hadolint'
@@ -113,6 +127,20 @@ tools:
     format-command: 'lua-format -i'
     format-stdin: true
 
+  blade-blade-formatter: &blade-blade-formatter
+    format-command: 'blade-formatter --stdin'
+    format-stdin: true
+
+  mix_credo: &mix_credo
+    lint-command: "mix credo suggest --format=flycheck --read-from-stdin ${INPUT}"
+    lint-stdin: true
+    lint-ignore-exit-code: true
+    lint-formats:
+      - '%f:%l:%c: %m'
+    root-markers:
+      - mix.lock
+      - mix.excitetranslate
+
   any-excitetranslate: &any-excitetranslate
     hover-command: 'excitetranslate'
     hover-stdin: true
@@ -139,7 +167,10 @@ languages:
     - <<: *yaml-yamllint
 
   python:
+    # - <<: *python-flake8
     - <<: *python-mypy
+    # - <<: *python-autopep8
+    # - <<: *python-yapf
     - <<: *python-black
     - <<: *python-isort
 
@@ -173,6 +204,12 @@ languages:
 
   lua:
     - <<: *lua-lua-format
+
+  blade:
+    - <<: *blade-blade-formatter
+
+  elixir:
+    - <<: *mix_credo
 
   # _:
   #   - <<: *any-excitetranslate
