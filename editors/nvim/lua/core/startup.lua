@@ -2,7 +2,7 @@
 local globals = require("core.globals")
 local opt = vim.opt
 
---- Ensure cache and data directories exist {{{1
+--- Ensure cache and data directories exist
 local function ensure_nvim_dirs()
   -- NOTE: this function must be called after setting ENVS
   vim.fn.mkdir(globals.nvim_dir.backup, "p")
@@ -12,7 +12,7 @@ local function ensure_nvim_dirs()
   vim.fn.mkdir(globals.nvim_dir.site_packages, "p")
 end
 
---- Set nvim built-in global options on startup {{{1
+--- Set nvim built-in global options on startup
 local function set_encodings()
   -- Set default text encoding
   opt.encoding = "utf-8"
@@ -43,9 +43,9 @@ local function enable_truecolor()
   opt.termguicolors = true
 end
 
---- Set nvim default global vars on startup {{{1
+--- Set nvim default global vars on startup
 
---- Python, Node.js providers {{{2
+--- Python, Node.js providers
 local function set_providers()
   --[[
     Set python2/python3 interpretor (required to setup plugins using neovim
@@ -64,7 +64,7 @@ local function set_providers()
   vim.g.loaded_perl_provider = 0
 end
 
---- Set mapleader, localmapleader, and other prefix keys for keymap {{{2
+--- Set mapleader, localmapleader, and other prefix keys for keymap
 local function set_prefix_keys()
   --[[ Leader/Localleader keys ]]
   vim.g.mapleader = ";"
@@ -105,28 +105,11 @@ local function disable_builtin_plugins()
   vim.g.loaded_zipPlugin = 1
 end
 
---- Initialize {{{1
-local function init()
-  if vim.fn.has("vim_starting") then
-    ensure_nvim_dirs()
-    disable_builtin_plugins()
-    set_encodings()
-    enable_truecolor()
-    set_providers()
-    set_prefix_keys()
-  end
+--- Run
+ensure_nvim_dirs()
+disable_builtin_plugins()
+set_encodings()
+enable_truecolor()
+set_providers()
+set_prefix_keys()
 
-  require("core.pack").ensure_plugins()
-  require("core.options")
-  require("core.mappings")
-  require("core.ftplugin").setup()
-  require("core.event").load_autocmds()
-
-  vim.cmd [[command! PackerCompile lua require('core.pack').compile()]]
-  vim.cmd [[command! PackerInstall lua require('core.pack').install()]]
-  vim.cmd [[command! PackerUpdate  lua require('core.pack').update()]]
-  vim.cmd [[command! PackerSync    lua require('core.pack').sync()]]
-  vim.cmd [[command! PackerClean   lua require('core.pack').clean()]]
-end
-
-init()

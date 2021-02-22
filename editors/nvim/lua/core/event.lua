@@ -48,7 +48,7 @@ end
 function M.load_autocmds()
   local definitions = {
     user_event_packer = {
-      { "BufWritePost", "*.lua", "lua require'core.pack'.auto_compile()" },
+      { "BufWritePost", "*.lua", "lua require'plugins'.auto_compile()" },
     },
     user_event_bufs = {
       { "BufWritePre", "/tmp/*", "setlocal noundofile" },

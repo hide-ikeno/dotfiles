@@ -63,7 +63,9 @@ local function vi_mode(inactive)
   local mode = vim.api.nvim_get_mode()['mode']
   local label = current_mode_label[mode]
   local hl = inactive and "Inactive" or current_mode_hi_groups[mode]
-  return string.format("%s%%#StatusLine%s#%s%s", left_separator(hl), hl, label, right_separator(hl))
+  return string.format(
+    "%s%%#StatusLine%s#%s%s", left_separator(hl), hl, label, right_separator(hl)
+  )
 end
 
 -- File info
@@ -78,10 +80,12 @@ local function file_readonly(inactive)
 end
 
 local function file_modified(inactive)
-  if vim.tbl_contains({ "help", "denite", "fzf", "tagbar" }, vim.bo.filetype) then return "" end
+  if vim.tbl_contains({ "help", "denite", "fzf", "tagbar" }, vim.bo.filetype) then
+    return ""
+  end
   local hl = inactive and "Inactive" or "FileModified"
   if vim.bo.modifiable then
-    if vim.bo.modified then return string.format("%%#StatusLine%s# ", hl) end
+    if vim.bo.modified then return string.format("%%#StatusLine%s#  ", hl) end
   end
   return ""
 end
@@ -195,7 +199,8 @@ end
 local function line_colmun_info(inactive)
   local hl = inactive and "Inactive" or "LineColumn"
   return string.format(
-    "%s%%#StatusLine%s#  %%3l/%%L  %%-2v%s", left_separator(hl), hl, right_separator(hl)
+    "%s%%#StatusLine%s#  %%3l/%%L  %%-2v%s", left_separator(hl), hl,
+    right_separator(hl)
   )
 end
 
@@ -219,11 +224,13 @@ local function git_info(inactive)
         hl_right = "DiffAdded"
       end
       if data.changed ~= nil and data.changed > 0 then
-        s = s .. " %#StatusLineDiffModified#" .. icon.diff_modified .. data.changed
+        s = s .. " %#StatusLineDiffModified#" .. icon.diff_modified ..
+              data.changed
         hl_right = "DiffModified"
       end
       if data.removed ~= nil and data.removed > 0 then
-        s = s .. " %#StatusLineDiffRemoved#" .. icon.diff_removed .. data.removed
+        s = s .. " %#StatusLineDiffRemoved#" .. icon.diff_removed ..
+              data.removed
         hl_right = "DiffRemoved"
       end
       s = s .. string.format("%%#StatusLine%sSep#%s", hl_right, separator.right)
@@ -239,8 +246,14 @@ local function diagnostic_info(inactive)
   local active_clients = vim.lsp.get_active_clients()
 
   if active_clients then
-    local levels = { error = "Error", warn = "Warning", info = "Information", hint = "Hint" }
-    local icons = { error = " ", warn = " ", info = " ", hint = " " }
+    local levels = {
+      error = "Error",
+      warn = "Warning",
+      info = "Information",
+      hint = "Hint",
+    }
+    local icons =
+      { error = " ", warn = " ", info = " ", hint = " " }
     local data = {}
     local bufnr = vim.api.nvim_get_current_buf()
     for k, level in pairs(levels) do
@@ -255,26 +268,40 @@ local function diagnostic_info(inactive)
     local hl_left, hl_right
     if data.error ~= nil and data.error > 0 then
       if not hl_left then hl_left = "DiagnosticError" end
-      s = s .. string.format("%%#StatusLineDiagnosticError# %s %s ", icons.error, data.error)
+      s = s ..
+            string.format(
+          "%%#StatusLineDiagnosticError# %s %s ", icons.error, data.error
+        )
       hl_right = "DiagnosticError"
     end
     if data.warn ~= nil and data.warn > 0 then
       if not hl_left then hl_left = "DiagnosticWarning" end
-      s = s .. string.format("%%#StatusLineDiagnosticWarning# %s %s ", icons.warn, data.warn)
+      s = s ..
+            string.format(
+          "%%#StatusLineDiagnosticWarning# %s %s ", icons.warn, data.warn
+        )
       hl_right = "DiagnosticWarning"
     end
     if data.info ~= nil and data.info > 0 then
       if not hl_left then hl_left = "DiagnosticInfo" end
-      s = s .. string.format("%%#StatusLineDiagnosticInfo# %s %s ", icons.info, data.info)
+      s = s ..
+            string.format(
+          "%%#StatusLineDiagnosticInfo# %s %s ", icons.info, data.info
+        )
       hl_right = "DiagnosticInfo"
     end
     if data.hint ~= nil and data.hint > 0 then
       if not hl_left then hl_left = "DiagnosticHint" end
-      s = s .. string.format("%%#StatusLineDiagnosticHint# %s %s ", icons.hint, data.hint)
+      s = s ..
+            string.format(
+          "%%#StatusLineDiagnosticHint# %s %s ", icons.hint, data.hint
+        )
       hl_right = "DiagnosticHint"
     end
     if #s > 0 then
-      return string.format("%s%s%s", left_separator(hl_left), s, right_separator(hl_right))
+      return string.format(
+        "%s%s%s", left_separator(hl_left), s, right_separator(hl_right)
+      )
     end
   end
   return ""
@@ -298,15 +325,19 @@ local function highlight(group, guifg, ctermfg, guibg, ctermbg, attr)
 end
 
 local function apply_theme()
-  if type(M.theme) == 'string' then M.theme = require('appearance.themes.' .. M.theme) end
+  if type(M.theme) == 'string' then
+    M.theme = require('appearance.themes.' .. M.theme)
+  end
   local base_bg = M.theme['Base'].bg
   for group, colors in pairs(M.theme) do
     highlight(
-      "StatusLine" .. group, colors.fg[1], colors.fg[2], colors.bg[1], colors.bg[2], colors.attr
+      "StatusLine" .. group, colors.fg[1], colors.fg[2], colors.bg[1],
+      colors.bg[2], colors.attr
     )
     if group ~= "Base" then
       highlight(
-        "StatusLine" .. group .. "Sep", colors.bg[1], colors.bg[2], base_bg[1], base_bg[2], nil
+        "StatusLine" .. group .. "Sep", colors.bg[1], colors.bg[2], base_bg[1],
+        base_bg[2], nil
       )
     end
   end
@@ -357,9 +388,12 @@ local function statusline_augroup()
     "TermOpen",
   }
   vim.cmd(
-    "autocmd " .. table.concat(events, ",") .. " * setlocal statusline=%!v:lua.statusline_active()"
+    "autocmd " .. table.concat(events, ",") ..
+      " * setlocal statusline=%!v:lua.statusline_active()"
   )
-  vim.cmd("autocmd WinLeave,BufLeave * setlocal statusline=%!v:lua.statusline_inactive()")
+  vim.cmd(
+    "autocmd WinLeave,BufLeave * setlocal statusline=%!v:lua.statusline_inactive()"
+  )
   vim.cmd("augroup END")
 end
 
