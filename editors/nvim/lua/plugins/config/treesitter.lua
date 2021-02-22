@@ -1,6 +1,9 @@
 local M = {}
 
 function M.config()
+  vim.cmd [[packadd nvim-treesitter-refactor]]
+  vim.cmd [[packadd nvim-treesitter-textobjects]]
+
   require'nvim-treesitter.configs'.setup {
     -- one of 'all', 'language', or a list of languages
     ensure_installed = "all",
