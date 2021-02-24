@@ -147,10 +147,13 @@ tools:
       - setup.cfg
       - mypy.ini
 
-  black-action-format: &black-action-format
-    commands:
-      - command: 'black --quiet --safe ${INPUT}'
-        title: 'black format'
+  black-format: &black-format
+    format-command: 'black --quiet -'
+    format-stdin: true
+
+  isort-format: &isort-format
+    format-command: 'isort --stdout --profile black -'
+    format-stdin: true
 
   pydocstyle-lint: &pydocstyle-lint
     lint-command: 'pydocstyle ${INPUT}'
@@ -271,7 +274,7 @@ tools:
 
   prettier-action-fix: &prettier-action-fix
     commands:
-      - command: 'npx --no-install prettier --write ${INPUT}'
+      - command: 'npx --no-install prettier --fix --write ${INPUT}'
         title: 'prettier fix'
 
   excitetranslate-hover: &excitetranslate-hover
@@ -380,7 +383,8 @@ languages:
     # - <<: *flake8-lint
     # - <<: *pylint-lint
     # - <<: *mypy-lint
-    - <<: *black-action-format
+    - <<: *black-format
+    - <<: *isort-format
     # - <<: *pydocstyle-lint
 
   ruby:
