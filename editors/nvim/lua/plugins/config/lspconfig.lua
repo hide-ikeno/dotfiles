@@ -118,7 +118,23 @@ local custom_attach = function(client, bufnr)
   -- if client.resolved_capabilities.document_formatting then
   --   vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
   -- end
-  local ft_auto_format = { "go", "json", "lua", "python", "rst", "rust", "sh" }
+  local ft_auto_format = {
+    "css",
+    "go",
+    "graphql",
+    "json",
+    "lua",
+    "python",
+    "rst",
+    "ruby",
+    "rust",
+    "scss",
+    "sh",
+    "typescript",
+    "vue",
+    "yaml",
+  }
+
   if vim.tbl_contains(ft_auto_format, filetype) then
     vim.cmd [[autocmd user_plugin_lspconfig BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
   end
@@ -187,7 +203,7 @@ lspconfig.efm.setup {
              lspconfig.util.path.dirname(fname)
   end,
   filetypes = {
-    "eruby",
+    "asciidoc",
     "css",
     "csv",
     "dockerfile",
@@ -203,6 +219,8 @@ lspconfig.efm.setup {
     "lua",
     "python",
     "php",
+    "ruby",
+    "scss",
     "sh",
     "typescript",
     "vim",
