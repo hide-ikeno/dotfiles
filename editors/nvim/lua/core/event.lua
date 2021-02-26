@@ -31,7 +31,9 @@ function M.create_augroups(groups)
         command = cmd_or_func
       else
         table.insert(M._funcs, cmd_or_func)
-        command = ([[lua require'%s'._funcs[%d]()]]):format(M.name, #M._funcs)
+        command = ([[lua require'core.%s'._funcs[%d]()]]):format(
+          M.name, #M._funcs
+        )
       end
       table.insert(
         cmds, string.format("autocmd %s %s %s", events, patterns, command)
