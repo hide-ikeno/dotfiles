@@ -245,8 +245,12 @@ function M.load_plugins(use, _)
     setup = function() vim.g.committia_min_window_width = 100 end,
   }
 
-  -- disabled until https://github.com/f-person/git-blame.nvim/issues/11 is solved
-  use { "f-person/git-blame.nvim", event = { "BufRead *", "BufNewFile *" } }
+  -- Git blame plugin for Neovim written in lua
+  use {
+    "f-person/git-blame.nvim",
+    event = { "BufRead *", "BufNewFile *" },
+    setup = function() vim.g.gitblame_enabled = 0 end,
+  }
 
   -- [[ Filetypes, Syntax ]]
   -- Nvim Treesitter configurations and abstraction layer
