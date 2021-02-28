@@ -48,18 +48,17 @@ end
 --- Python, Node.js providers
 local function set_providers()
   --[[
-    Set python2/python3 interpretor (required to setup plugins using neovim
-    python API).
+    Set python3 interpretor (required to setup plugins using neovim python API).
 
     It is recommended to create virtualenvs for and only for neovim (install
     pynvim + development tools) and set python3_host_prog and python_host_prog
     to point the corresponding python interpreters.
   --]]
   vim.g.python3_host_prog = vim.env.HOME .. "/.asdf/shims/python3"
-  vim.g.python_host_prog = vim.env.HOME .. "/.asdf/shims/python2"
   -- Set Node.js provider
   vim.g.node_host_prog = vim.env.XDG_DATA_HOME .. "/npm/bin/neovim-node-host"
-  -- Disable ruby/perl support in neovim
+  -- Disable python2/ruby/perl support in neovim
+  vim.g.loaded_python_provider = 0
   vim.g.loaded_ruby_provider = 0
   vim.g.loaded_perl_provider = 0
 end
