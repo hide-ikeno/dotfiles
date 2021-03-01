@@ -1,23 +1,156 @@
 local M = {}
 
-function M.config()
-  for _, name in pairs {
-    'nvim-web-devicons',
-    'popup.nvim',
-    'sql.nvim',
-    'telescope-frecency.nvim',
-    'telescope-fzf-writer.nvim',
-    'telescope-fzy-native.nvim',
-    'telescope-ghq.nvim',
-    'telescope-github.nvim',
-    'telescope-packer.nvim',
-    'telescope-symbols.nvim',
-  } do vim.cmd('packadd ' .. name) end
+-- [[ Custom Pickers ]]
 
+function M.edit_nvim_config()
+  require('telescope.builtin').find_files {
+    find_command = M._find_command,
+    prompt_title = "~ dotfiles ~",
+    shorten_path = false,
+    cwd = "~/.config/nvim",
+
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.65 },
+  }
+end
+
+function M.edit_zsh_config()
+  require('telescope.builtin').find_files {
+    find_command = M._find_command,
+    prompt_title = "~ dotfiles ~",
+    shorten_path = false,
+    cwd = "~/.config/zsh",
+
+    file_ignore_patterns = { ".zcompdump", ".zcompcache", ".*.zwc" },
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.55 },
+  }
+end
+
+function M.fd()
+  require("telescope.builtin").find_files { find_command = M._find_command }
+end
+
+function M.fd_all()
+  require("telescope.builtin").find_files { find_command = M._find_all_command }
+end
+
+function M.git_files()
+  local opts = require("telescope.themes").get_dropdown {
+    previewer = false,
+    shorten_path = false,
+  }
+  require("telescope.builtin").git_files(opts)
+end
+
+function M.grep_prompt()
+  require("telescope.builtin").grep_string {
+    shorten_path = true,
+    search = vim.fn.input("Grep String > "),
+  }
+end
+
+function M.grep_last_search()
+  local register = vim.fn.getreg('/'):gsub('\\<', ''):gsub('\\>', ''):gsub(
+    "\\C", ""
+  )
+  local opts = { shorten_path = true, word_match = "-w", search = register }
+  require("telescope.builtin").grep_string(opts)
+end
+
+function M.live_grep()
+  require("telescope").extensions.fzf_writer.staged_grep {
+    shorten_path = true,
+    previewer = false,
+  }
+end
+
+function M.file_browser()
+  require("telescope.builtin").file_browser {
+    sorting_strategy = "ascending",
+    scroll_strategy = "cycle",
+    prompt_position = "top",
+  }
+end
+
+function M.buffers()
+  require("telescope.builtin").buffers {
+    shorten_path = false,
+    initial_mode = "normal",
+  }
+end
+
+function M.current_buffer_fuzzy_find()
+  local opts = require("telescope.themes").get_dropdown {
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  }
+  require("telescope.builtin").current_buffer_fuzzy_find(opts)
+end
+
+function M.oldfiles() require("telescope").extensions.frecency.frecency() end
+
+function M.help_tags()
+  require("telescope.builtin").help_tags { show_version = true }
+end
+
+M.pickers = setmetatable(
+  {}, {
+    __index = function(_, k)
+      if M[k] then
+        return M[k]
+      else
+        return require("telescope.builtin")[k]
+      end
+    end,
+  }
+)
+
+-- setup: called befor loading telescope.nvim
+function M.setup()
+  -- find command
+  local ignore_globs = {
+    ".git",
+    ".ropeproject",
+    "__pycache__",
+    ".venv",
+    "venv",
+    "node_modules",
+    "images",
+    "*.min.*",
+    "img",
+    "fonts",
+  }
+  local find_cmd, find_all_cmd;
+  if vim.fn.executable("fd") then
+    find_cmd = { "fd", ".", "--hidden", "--follow", "--type", "f" }
+    find_all_cmd = vim.deepcopy(find_cmd)
+    table.insert(find_all_cmd, "--no-ignore")
+    for _, x in ipairs(ignore_globs) do
+      table.insert(find_cmd, "--exclude")
+      table.insert(find_cmd, x)
+    end
+  elseif vim.fn.executable("rg") then
+    find_cmd = { "rg", "--follow", "--hidden", "--files" }
+    find_all_cmd = vim.deepcopy(find_cmd)
+    table.insert(find_all_cmd, "--no-ignore")
+    for _, x in ipairs(ignore_globs) do
+      table.insert(find_cmd, "--glob=!" .. x)
+    end
+  end
+
+  M._find_command = find_cmd
+  M._find_all_command = find_all_cmd
+end
+
+-- config: called after telescope.nvim is loaded
+function M.config()
   local telescope = require("telescope")
   local actions = require("telescope.actions")
   local previewers = require("telescope.previewers")
   local sorters = require("telescope.sorters")
+
   telescope.setup {
     defaults = {
       prompt_position = "top",
@@ -49,8 +182,8 @@ function M.config()
         -- insert mode
         i = {
           ["<Tab>"] = actions.toggle_selection,
-          ["<C-q>"] = actions.send_to_qflist,
-          ["<M-q>"] = actions.send_selected_to_qflist,
+          ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+          ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
         },
         -- normal mode
         n = {
@@ -58,8 +191,8 @@ function M.config()
           ["<Space>"] = actions.toggle_selection,
           ["<C-n>"] = actions.move_selection_next,
           ["<C-p>"] = actions.move_selection_previous,
-          ["<C-q>"] = actions.send_to_qflist,
-          ["<M-q>"] = actions.send_selected_to_qflist,
+          ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+          ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
         },
       },
     },
@@ -69,6 +202,10 @@ function M.config()
         ignore_patterns = { "*.git/*", "*/tmp/*", "*/build/*" },
         show_scores = true,
         show_unindexed = true,
+        workspaces = {
+          ["conf"] = vim.env.XDG_CONFIG_HOME,
+          ["data"] = vim.env.XDG_DATA_HOME,
+        },
       },
 
       fzf_writer = {
@@ -90,50 +227,19 @@ function M.config()
   pcall(telescope.load_extension, "gh")
   pcall(telescope.load_extension, "ghq")
 
-  -- find command
-  local ignore_globs = {
-    ".git",
-    ".ropeproject",
-    "__pycache__",
-    ".venv",
-    "venv",
-    "node_modules",
-    "images",
-    "*.min.*",
-    "img",
-    "fonts",
-  }
-  local find_cmd;
-  if vim.fn.executable("fd") then
-    find_cmd = { "fd", ".", "--hidden", "--type", "f" }
-    for _, x in ipairs(ignore_globs) do
-      table.insert(find_cmd, "--exclude")
-      table.insert(find_cmd, x)
-    end
-  elseif vim.fn.executable("rg") then
-    find_cmd = { "rg", "--follow", "--hidden", "--files" }
-    for _, x in ipairs(ignore_globs) do
-      table.insert(find_cmd, "--glob=!" .. x)
-    end
-  elseif vim.fn.executable("ag") then
-    find_cmd = { "ag", "-U", "--hidden", "--follow" }
-    for _, x in ipairs(ignore_globs) do
-      table.insert(find_cmd, "--exclude=" .. x)
-    end
-    for _, x in ipairs({ "--nocolor", "--nogroup", "-g", "" }) do
-      table.insert(find_cmd, x)
-    end
-  end
-
   -- mappings
-  local map_builtin = function(key, f, options)
+  local set_keymap = function(key, f, options, buffer)
     local mode = "n"
     local rhs = string.format(
-      "<cmd>lua require('telescope.builtin')['%s'](%s)<CR>", f,
+      "<cmd>lua require('plugins.config.telescope').pickers['%s'](%s)<CR>", f,
       options and vim.inspect(options, { newline = '' }) or ''
     )
-    local opts = { noremap = true, silent = true }
-    vim.api.nvim_set_keymap(mode, key, rhs, opts)
+    local map_opts = { noremap = true, silent = true }
+    if buffer then
+      vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_opts)
+    else
+      vim.api.nvim_set_keymap(mode, key, rhs, map_opts)
+    end
   end
 
   local map_extension = function(key, e, f, options)
@@ -146,45 +252,41 @@ function M.config()
     vim.api.nvim_set_keymap(mode, key, rhs, opts)
   end
 
+  -- Call telescope on command line mode
+  vim.api.nvim_set_keymap(
+    "c", "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)",
+    { noremap = true, nowait = true }
+  )
+
   -- File pickers
-  map_builtin("<Space>f", "find_files", { find_command = find_cmd })
-  map_builtin("<Space>p", "git_files", { shorten_path = false })
-  map_builtin("<Space>G", "grep_string", { shorten_path = true })
+  set_keymap("<Space>en", "edit_nvim_config")
+  set_keymap("<Space>ez", "edit_zsh_config")
+
+  set_keymap("<Space>fd", "fd")
+  set_keymap("<Space>fD", "fd_all")
+  set_keymap("<Space>fe", "file_browser")
+  set_keymap("<Space>fg", "live_grep")
+  set_keymap("<Space>fG", "grep_prompt")
+  set_keymap("<Space>fo", "oldfiles")
+  set_keymap("<Space>ft", "git_files")
+  set_keymap("<Space>f/", "grep_last_search")
 
   -- Vim pickers
-  map_builtin(
-    "<Space>b", "buffers", { shorten_path = false, initial_mode = 'normal' }
-  )
-  map_builtin("<Space>h", "help_tags", { show_version = true })
-  map_builtin("<Space>;", "command_history")
-  map_builtin("<Space>t", "treesitter")
-  map_builtin(
-    "<Space>l", "current_buffer_fuzzy_find",
-    { winblend = 10, border = true, previewer = false, shorten_path = false }
-  )
+  set_keymap("<Space>fb", "buffers")
+  set_keymap("<Space>fh", "help_tags")
+  set_keymap("<Space>ff", "current_buffer_fuzzy_find")
 
   -- LSP pickers
-  map_builtin("<Space>a", "lsp_code_actions")
-  map_builtin("<Space>r", "lsp_references")
-  map_builtin("<Space>s", "lsp_documen_symbols")
-  map_builtin("<Space>S", "lsp_workspace_symbols")
+  set_keymap("<Space>la", "lsp_code_actions")
+  set_keymap("<Space>lr", "lsp_references")
+  set_keymap("<Space>ls", "lsp_documen_symbols")
+  set_keymap("<Space>lS", "lsp_workspace_symbols")
 
   -- Git pickers
-  map_builtin("<Space>gb", "git_branchs", { initial_mode = "normal" })
-  map_builtin("<Space>gc", "git_bcommits", { initial_mode = "normal" })
-  map_builtin("<Space>gC", "git_commits", { initial_mode = "normal" })
-  -- map_builtin("<Space>gs", "git_status", { initial_mode = "normal" })
-
-  -- frecency
-  map_extension(
-    "<Space>o", "frecency", "frecency",
-    { shorten_path = true, previewer = false, fzf_separator = "|>" }
-  )
-
-  -- fzf-writer
-  map_extension(
-    "<Space>/", "fzf_writer", "staged_grep", { layout_strategy = "vertical" }
-  )
+  set_keymap("<Space>gb", "git_branchs", { initial_mode = "normal" })
+  set_keymap("<Space>gc", "git_bcommits", { initial_mode = "normal" })
+  set_keymap("<Space>gC", "git_commits", { initial_mode = "normal" })
+  set_keymap("<Space>gs", "git_status", { initial_mode = "normal" })
 
   -- nvim-dap inl_defaultctegration
   map_extension("<Space>dc", "dap", "commands")

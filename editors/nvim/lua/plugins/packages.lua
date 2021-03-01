@@ -108,12 +108,12 @@ function M.load_plugins(use, _)
   }
 
   -- Show keybindings in popup
-  use {
-    "liuchengxu/vim-which-key",
-    cmd = { "WhichKey", "WhichKeyVisual" },
-    setup = require("plugins.config.vim-which-key").setup,
-    config = require("plugins.config.vim-which-key").config,
-  }
+  -- use {
+  --   "liuchengxu/vim-which-key",
+  --   cmd = { "WhichKey", "WhichKeyVisual" },
+  --   setup = require("plugins.config.vim-which-key").setup,
+  --   config = require("plugins.config.vim-which-key").config,
+  -- }
 
   -- A high-performance color highlighter for NeoVim
   use {
@@ -212,7 +212,7 @@ function M.load_plugins(use, _)
         { '╭', '╮', '╰', '╯' }
       vim.g.lazygit_use_neovim_remote = 0
       vim.api.nvim_set_keymap(
-        "n", "<Space>gs", "<cmd>LazyGit<CR>", { noremap = true, silent = true }
+        "n", "<Space>gl", "<cmd>LazyGit<CR>", { noremap = true, silent = true }
       )
     end,
   }
@@ -447,18 +447,35 @@ function M.load_plugins(use, _)
     },
     cmd = { "Telescope" },
     keys = {
-      "<Space>b",
-      "<Space>f",
-      "<Space>h",
-      "<Space>l",
-      "<Space>p",
-      "<Space>t",
-      "<Space>;",
-      "<Space>/",
-      "<Space>G",
-      "<Space>P",
+      "<Space>en",
+      "<Space>ez",
+      "<Space>fb",
+      "<Space>fd",
+      "<Space>fD",
+      "<Space>fe",
+      "<Space>ff",
+      "<Space>fg",
+      "<Space>fG",
+      "<Space>fh",
+      "<Space>fo",
+      "<Space>f/",
     },
-    config = require("plugins.config.telescope").config,
+    setup = function() require("plugins.config.telescope").setup() end,
+    config = function()
+      for _, name in pairs {
+        'nvim-web-devicons',
+        'popup.nvim',
+        'sql.nvim',
+        'telescope-frecency.nvim',
+        'telescope-fzf-writer.nvim',
+        'telescope-fzy-native.nvim',
+        'telescope-ghq.nvim',
+        'telescope-github.nvim',
+        'telescope-packer.nvim',
+        'telescope-symbols.nvim',
+      } do vim.cmd('packadd ' .. name) end
+      require("plugins.config.telescope").config()
+    end,
   }
 end
 

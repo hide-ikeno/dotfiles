@@ -256,7 +256,7 @@ lspconfig.jsonls.setup { on_attach = custom_attach }
 -- https://github.com/microsoft/pyright
 lspconfig.pyright.setup {
   on_attach = custom_attach,
-  -- settings = { python = { formatting = { provider = "black" } } },
+  settings = { python = { formatting = { provider = "black" } } },
 }
 
 -- https://github.com/rust-analyzer/rust-analyzer
