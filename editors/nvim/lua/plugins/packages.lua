@@ -45,6 +45,13 @@ function M.load_plugins(use, _)
     setup = require("plugins.config.vim-better-whitespace").setup,
   }
 
+  -- A file explorer tree for neovim written in lua
+  use {
+    "kyazdani42/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeRefresh", "NvimTreeFindFile" },
+    setup = require("plugins.config.nvim-tree").setup,
+    config = require("plugins.config.nvim-tree").config,
+  }
   -- [[ Editor ]]
   -- Enable repeating supported plugin maps with "."
   use { "tpope/vim-repeat" }
@@ -54,6 +61,36 @@ function M.load_plugins(use, _)
 
   -- Imporove foldtext for better looks
   use { "lambdalisue/readablefold.vim" }
+
+  -- Better glance searched information
+  use {
+    "kevinhwang91/nvim-hlslens",
+    config = function()
+      local opts = { silent = true, noremap = true }
+      vim.api.nvim_set_keymap(
+        "n", "n",
+        "<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require'hlslens'.start()<CR>",
+        opts
+      )
+      vim.api.nvim_set_keymap(
+        "n", "N",
+        "<cmd>execute('normal! ' . v:count1 . 'N')<CR><cmd>lua require'hlslens'.start()<CR>",
+        opts
+      )
+      vim.api.nvim_set_keymap(
+        "n", "*", "*<cmd>lua require'hlslens'.start()<CR>", opts
+      )
+      vim.api.nvim_set_keymap(
+        "n", "#", "#<cmd>lua require'hlslens'.start()<CR>", opts
+      )
+      vim.api.nvim_set_keymap(
+        "n", "g*", "g*<cmd>lua require'hlslens'.start()<CR>", opts
+      )
+      vim.api.nvim_set_keymap(
+        "n", "g#", "g#<cmd>lua require'hlslens'.start()<CR>", opts
+      )
+    end,
+  }
 
   -- Enhanced f/t
   use {
