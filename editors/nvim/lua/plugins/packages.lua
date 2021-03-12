@@ -52,6 +52,7 @@ function M.load_plugins(use, _)
     setup = require("plugins.config.nvim-tree").setup,
     config = require("plugins.config.nvim-tree").config,
   }
+
   -- [[ Editor ]]
   -- Enable repeating supported plugin maps with "."
   use { "tpope/vim-repeat" }
@@ -91,6 +92,9 @@ function M.load_plugins(use, _)
       )
     end,
   }
+
+  -- Preview the contents of register
+  use { "tversteeg/registers.nvim" }
 
   -- Enhanced f/t
   use {
