@@ -148,6 +148,23 @@ function M.load_plugins(use, _)
     end,
   }
 
+  -- Enhanced increment/decrement plugin for Neovim.
+  use {
+    "monaqa/dial.nvim",
+    keys = {
+      { "n", "<Plug>(dial-" },
+      { "v", "<Plug>(dial-" },
+    },
+    setup = function()
+      vim.api.nvim_set_keymap("n", "<C-a>", "<Plug>(dial-increment)", {})
+      vim.api.nvim_set_keymap("n", "<C-x>", "<Plug>(dial-decrement)", {})
+      vim.api.nvim_set_keymap("v", "<C-a>", "<Plug>(dial-increment)", {})
+      vim.api.nvim_set_keymap("v", "<C-x>", "<Plug>(dial-decrement)", {})
+      vim.api.nvim_set_keymap("v", "g<C-a>", "<Plug>(dial-increment-additional)", {})
+      vim.api.nvim_set_keymap("v", "g<C-x>", "<Plug>(dial-decrement-additional)", {})
+    end
+  }
+
   -- Show keybindings in popup
   -- use {
   --   "liuchengxu/vim-which-key",
@@ -474,6 +491,7 @@ function M.load_plugins(use, _)
       { "nvim-lua/popup.nvim", opt = true },
       { "nvim-lua/plenary.nvim", opt = true },
       { "kyazdani42/nvim-web-devicons", opt = true },
+      { "nvim-telescope/telescope-cheat.nvim", opt = true },
       { "nvim-telescope/telescope-dap.nvim", opt = true },
       {
         "nvim-telescope/telescope-frecency.nvim",
@@ -507,6 +525,7 @@ function M.load_plugins(use, _)
         'nvim-web-devicons',
         'popup.nvim',
         'sql.nvim',
+        'telescope-cheat.nvim',
         'telescope-frecency.nvim',
         'telescope-fzf-writer.nvim',
         'telescope-fzy-native.nvim',
